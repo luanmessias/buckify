@@ -21,10 +21,22 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
+      "@/*": ["*"],
+      "@/components": ["components/"],
+      "@/views": ["views/"],
+      "@/assets": ["assets/"],
+      "@/utils": ["utils/"],
+      "@/store": ["store/"],
+      "@/router": ["router/"],
     },
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.vue",
+    "vite.config.*",
+    "types/**/*.d.ts",
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

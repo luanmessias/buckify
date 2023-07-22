@@ -1,16 +1,13 @@
 <template>
   <div>
-    Running vue app
+    <h1>Dashboard</h1>
   </div>
-
-  <RouterView />
 </template>
 
 <script>
 export default {
   setup () {
     
-
 
     return {}
   }
