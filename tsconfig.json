@@ -22,12 +22,12 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["*"],
-      "@/components": ["components/"],
-      "@/views": ["views/"],
       "@/assets": ["assets/"],
+      "@/components": ["components/"],
+      "@/routes": ["routes/"],
+      "@/stores": ["stores/"],
       "@/utils": ["utils/"],
-      "@/store": ["store/"],
-      "@/router": ["router/"],
+      "@/views": ["views/"]
     },
   },
   "include": [
