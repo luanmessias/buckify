@@ -26,6 +26,7 @@
       "@/components": ["components/"],
       "@/routes": ["routes/"],
       "@/stores": ["stores/"],
+      "@/stories": ["stories/"],
       "@/utils": ["utils/"],
       "@/views": ["views/"]
     },
