@@ -1,48 +1,49 @@
 <template>
-  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }} </button>
+    <button 
+      :type="type"
+      :class="`${styles.base} ${selectedTheme} ${selectedSize}`" 
+      :theme="theme"
+      :size="size"
+      @click="onClick" 
+    >
+      {{ label }}
+    </button>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import './button.css';
+  import { computed } from 'vue';
 
-const props = withDefaults(defineProps<{
-  /**
-   * The label of the button
-   */
-  label: string,
-  /**
-   * primary or secondary button
-   */
-  primary?: boolean,
-  /**
-   * size of the button
-   */
-  size?: 'small' | 'medium' | 'large',
-  /**
-   * background color of the button
-   */
-  backgroundColor?: string,
+  const props = defineProps<{
+    label: string;
+    type: 'button' | 'submit' | 'reset';
+    theme: 'primary' | 'secondary';
+    size: 'small' | 'medium' | 'large';
+    onClick: () => void;
+  }>();
 
-}>(), { primary: false });
+  const styles = {
+    base: 'flex items-center justify-center rounded-md text-sm h-14',
+    theme: {
+      primary: 'bg-primary-500 hover:bg-primary-700 text-white',
+      secondary: 'bg-gray-500 hover:bg-gray-700 text-white',
+    },
+    size: {
+      small: 'w-20',
+      medium: 'w-40',
+      large: 'w-60',
+      full: 'w-full',
+    },
+  };
 
-const emit = defineEmits<{
-  (e: 'click', id: number): void;
-}>();
 
-const classes = computed(() => ({
-  'storybook-button': true,
-  'storybook-button--primary': props.primary,
-  'storybook-button--secondary': !props.primary,
-  [`storybook-button--${props.size || 'medium'}`]: true
-}));
+  const selectedTheme = computed(() => {
+    const theme = props.theme as keyof typeof styles.theme;
+    return styles.theme[theme];
+  });
 
-const style = computed(() => ({
-  backgroundColor: props.backgroundColor
-}));
-
-const onClick = () => {
-  emit("click", 1)
-};
+  const selectedSize = computed(() => {
+    const size = props.size as keyof typeof styles.size;
+    return styles.size[size];
+  });
 
 </script>
