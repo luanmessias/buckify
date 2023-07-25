@@ -6,6 +6,7 @@
       :size="size"
       @click="onClick" 
     >
+      <slot/>
       {{ label }}
     </button>
 </template>
@@ -22,10 +23,10 @@
   }>();
 
   const styles = {
-    base: 'flex items-center justify-center rounded-md text-sm h-14',
+    base: 'flex items-center justify-center rounded-md text-sm h-14 transition-colors duration-200 ease-in-out',
     theme: {
       primary: 'bg-primary-500 hover:bg-primary-700 text-white',
-      secondary: 'bg-gray-500 hover:bg-gray-700 text-white',
+      secondary: 'bg-white hover:bg-gray-200 text-neutral-500 border border-neutral-100',
     },
     size: {
       small: 'w-20',
