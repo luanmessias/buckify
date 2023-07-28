@@ -1,18 +1,17 @@
 <template>
     <RouterLink
-      v-if="to && !disabled"
+      v-if="to || !disabled"
       :to="to"
       :type="type"
       :class="`${styles.base} ${selectedTheme} ${selectedSize}`" 
       :theme="theme"
       :size="size"
-      @click="onClick" 
     >
       <slot />
       {{ label }}
     </RouterLink>
     <button
-      v-if="!to && !disabled"
+      v-if="!to || !disabled"
       :type="type"
       :class="`${styles.base} ${selectedTheme} ${selectedSize}`" 
       :theme="theme"
@@ -37,15 +36,34 @@
   import { computed } from 'vue';
   import { RouterLink } from 'vue-router';
 
-  const props = defineProps<{
-    label: string;
-    type: 'button' | 'submit' | 'reset';
-    theme: 'primary' | 'secondary';
-    size: 'small' | 'medium' | 'large';
-    disabled: boolean;
-    to: string;
-    onClick: () => void;
-  }>();
+  const props = defineProps({
+    label: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String as () => 'button' | 'submit' | 'reset',
+      default: 'button',
+    },
+    theme: {
+      type: String as () => 'primary' | 'secondary',
+      default: 'primary',
+    },
+    size: {
+      type: String as () => 'small' | 'medium' | 'large',
+      default: 'medium',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    to: {
+      type: String,
+    },
+    onClick: {
+      type: Function as unknown as () => () => void,
+    },
+  });
 
   const styles = {
     base: 'flex items-center justify-center gap-1 rounded-md text-sm h-14 transition-colors duration-200 ease-in-out',
