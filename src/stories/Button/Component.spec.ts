@@ -1,4 +1,4 @@
-import { it, expect, describe } from "vitest"
+import { describe, expect, it } from "vitest";
 
 import { mount } from "@vue/test-utils";
 
@@ -12,6 +12,15 @@ const wrapper = mount(Button, { props });
 
 
 describe('ButtonComponent', () => {
+  describe.only('render', () => {
+    it('should be a router link', async () => {
+      const to = '/test';
+      await wrapper.setProps({ to });
+
+      expect(wrapper.html()).toContain(`href="${to}"`);
+    });
+  });
+
   describe('props', () => {
     it('should render label', () => {
       expect(wrapper.text()).toBe(props.label);

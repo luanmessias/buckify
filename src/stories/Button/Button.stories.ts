@@ -8,30 +8,38 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      description: 'The label of the button'
+    },
+    disabled: {
+      description: 'Whether the button is disabled'
+    },
+    type: {
+      control: 'select',
+      description: 'The type of the button',
+      options: ['button', 'submit', 'reset']
+    },
     theme: {
       control: 'select',
       description: 'The theme of the button',
-      options: ['primary', 'secondary', 'disabled'],
+      options: ['primary', 'secondary', 'disabled']
     },
     size: {
       control: 'select',
       description: 'The size of the button',
-      options: ['small', 'medium', 'large', 'full'],
+      options: ['small', 'medium', 'large', 'full']
     },
     onClick: {
       action: 'clicked',
-      description: 'Click of the button',
+      description: 'Click of the button'
     },
     to: {
-      description: 'The route to link to',
-    },
+      description: 'The route to link to'
+    }
   },
   args: {
-    type: 'button',
-    theme: 'primary',
-    size: 'medium',
     onClick: () => console.log('clicked'),
-    label: 'Button',
+    label: 'Button'
   }
 } satisfies Meta<typeof Button>
 

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.24% </span>
+                <span class="strong">89.13% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>83/93</span>
+                <span class='fraction'>82/92</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.24% </span>
+                <span class="strong">89.13% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>83/93</span>
+                <span class='fraction'>82/92</span>
             </div>
         
             
@@ -158,25 +158,7 @@
 <a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -187,6 +169,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -247,106 +237,116 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-    &lt;RouterLink
-      v-if="to || !disabled"
-      :to="to"
-      :type="type"
-      :class="`${styles.base} ${selectedTheme} ${selectedSize}`" 
-      :theme="theme"
-      :size="size"
-    &gt;
-      &lt;slot /&gt;
-<span class="cstat-no" title="statement not covered" >      {{ label }}</span>
-    &lt;/RouterLink&gt;
-    &lt;button
-      v-if="!<span class="branch-0 cbranch-no" title="branch not covered" >to || !disabled"</span>
-      :type="type"
-      :class="`${styles.base} ${selectedTheme} ${selectedSize}`" 
-      :theme="theme"
-      :size="size"
-      @click<span class="fstat-no" title="function not covered" >="onClick" </span>
-    &gt;
-      &lt;slot /&gt;
-      {{ label<span class="branch-0 cbranch-no" title="branch not covered" > }}</span>
-<span class="cstat-no" title="statement not covered" >    &lt;/button&gt;</span>
-<span class="cstat-no" title="statement not covered" >    &lt;div</span>
-<span class="cstat-no" title="statement not covered" >      v-else</span>
-<span class="cstat-no" title="statement not covered" >      :class="`${styles.base} ${selectedTheme} ${selectedSize}`" </span>
-<span class="cstat-no" title="statement not covered" >      :theme="theme"</span>
-<span class="cstat-no" title="statement not covered" >      :size="size"</span>
-<span class="cstat-no" title="statement not covered" >    &gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;slot /&gt;</span>
-<span class="cstat-no" title="statement not covered" >      {{ label }}</span>
-    &lt;/div&gt;
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+  &lt;RouterLink
+    v-if="<span class="branch-0 cbranch-no" title="branch not covered" >to &amp;&amp; !<span class="branch-0 cbranch-no" title="branch not covered" >disabled"</span></span>
+<span class="cstat-no" title="statement not covered" >    :to="to"</span>
+<span class="cstat-no" title="statement not covered" >    :type="type"</span>
+<span class="cstat-no" title="statement not covered" >    :class="`${styles.base} ${selectedTheme} ${selectedSize}`"</span>
+<span class="cstat-no" title="statement not covered" >    :theme="theme"</span>
+<span class="cstat-no" title="statement not covered" >    :size="size"</span>
+<span class="cstat-no" title="statement not covered" >  &gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;slot /&gt;</span>
+<span class="cstat-no" title="statement not covered" >    {{ label }}</span>
+<span class="cstat-no" title="statement not covered" >  &lt;/RouterLink&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;button</span>
+    v-else-if="!to &amp;&amp; !disabled"
+    :type="type"
+    :class="`${styles.base} ${selectedTheme} ${selectedSize}`"
+    :theme="theme"
+    :size="size"
+    @click<span class="fstat-no" title="function not covered" >="onClick"</span>
+  &gt;
+    &lt;slot /&gt;
+    {{ label }}
+  &lt;/button&gt;
+  &lt;div
+    v-else
+    :class="`${styles.base} ${styles.theme.disabled} ${selectedSize}`"
+    :size="size"
+  &gt;
+    &lt;slot /&gt;
+    {{ label }}
+  &lt;/div&gt;
 &lt;/template&gt;
 &nbsp;
 &lt;script lang="ts" setup&gt;
   import { computed } from 'vue';
-  import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';
 &nbsp;
   const props = defineProps({
     label: {
       type: String,
-      required: true,
+      required: true
     },
     type: {
       type: String as () =&gt; 'button' | 'submit' | 'reset',
-      default: 'button',
+      default: 'button'
     },
     theme: {
-      type: String as () =&gt; 'primary' | 'secondary',
-      default: 'primary',
+      type: String as () =&gt; 'primary' | 'secondary' | 'disabled',
+      default: 'primary'
     },
     size: {
       type: String as () =&gt; 'small' | 'medium' | 'large',
-      default: 'medium',
+      default: 'medium'
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     to: {
       type: String,
+      default: undefined
     },
     onClick: {
-      type: Function as unknown as () =&gt; () =&gt; void,
-    },
-  });
+      type: Function as unknown as () =&gt; () =&gt; void
+    }
+  })
 &nbsp;
   const styles = {
     base: 'flex items-center justify-center gap-1 rounded-md text-sm h-14 transition-colors duration-200 ease-in-out',
     theme: {
       primary: 'bg-primary-500 hover:bg-primary-700 text-white',
       secondary: 'bg-white hover:bg-gray-200 text-neutral-500 border border-neutral-100',
-      disabled: 'bg-neutral-100 text-neutral-300 cursor-not-allowed',
+      disabled: 'bg-neutral-100 text-neutral-300 cursor-not-allowed'
     },
     size: {
       small: 'w-20',
       medium: 'w-40',
       large: 'w-60',
-      full: 'w-full',
-    },
-  };
+      full: 'w-full'
+    }
+  }
 &nbsp;
   const selectedTheme = computed(() =&gt; {
-    const theme = props.theme as keyof typeof styles.theme;
-    return styles.theme[theme];
-  });
+    const theme = props.theme as keyof typeof styles.theme
+    return styles.theme[theme]
+  })
 &nbsp;
   const selectedSize = computed(() =&gt; {
-    const size = props.size as keyof typeof styles.size;
-    return styles.size[size];
-  });
-&nbsp;
-&lt;/script&gt;</pre></td></tr></table></pre>
+    const size = props.size as keyof typeof styles.size
+    return styles.size[size]
+  })
+&lt;/script&gt;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-28T20:52:02.796Z
+                at 2023-07-29T22:03:30.749Z
             </div>
         <script src="prettify.js"></script>
         <script>
