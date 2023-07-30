@@ -33,8 +33,7 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
-  console.log("🚀 ~ file: Component.vue:37 ~ RouterLink:", RouterLink)
+  import { RouterLink } from 'vue-router';
 
   const props = defineProps({
     label: {
@@ -59,7 +58,6 @@ import { RouterLink } from 'vue-router';
     },
     to: {
       type: String,
-      default: undefined
     },
     onClick: {
       type: Function as unknown as () => () => void

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.13% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>82/92</span>
+                <span class='fraction'>91/91</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.13% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>82/92</span>
+                <span class='fraction'>91/91</span>
             </div>
         
             
@@ -154,30 +154,28 @@
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -249,17 +247,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
   &lt;RouterLink
-    v-if="<span class="branch-0 cbranch-no" title="branch not covered" >to &amp;&amp; !<span class="branch-0 cbranch-no" title="branch not covered" >disabled"</span></span>
-<span class="cstat-no" title="statement not covered" >    :to="to"</span>
-<span class="cstat-no" title="statement not covered" >    :type="type"</span>
-<span class="cstat-no" title="statement not covered" >    :class="`${styles.base} ${selectedTheme} ${selectedSize}`"</span>
-<span class="cstat-no" title="statement not covered" >    :theme="theme"</span>
-<span class="cstat-no" title="statement not covered" >    :size="size"</span>
-<span class="cstat-no" title="statement not covered" >  &gt;</span>
-<span class="cstat-no" title="statement not covered" >    &lt;slot /&gt;</span>
-<span class="cstat-no" title="statement not covered" >    {{ label }}</span>
-<span class="cstat-no" title="statement not covered" >  &lt;/RouterLink&gt;</span>
-<span class="cstat-no" title="statement not covered" >  &lt;button</span>
+    v-if="to &amp;&amp; !disabled"
+    :to="to"
+    :type="type"
+    :class="`${styles.base} ${selectedTheme} ${selectedSize}`"
+    :theme="theme"
+    :size="size"
+  &gt;
+    &lt;slot /&gt;
+    {{ label }}
+  &lt;/RouterLink&gt;
+  &lt;button
     v-else-if="!to &amp;&amp; !disabled"
     :type="type"
     :class="`${styles.base} ${selectedTheme} ${selectedSize}`"
@@ -282,7 +280,7 @@
 &nbsp;
 &lt;script lang="ts" setup&gt;
   import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
+  import { RouterLink } from 'vue-router';
 &nbsp;
   const props = defineProps({
     label: {
@@ -307,7 +305,6 @@ import { RouterLink } from 'vue-router';
     },
     to: {
       type: String,
-      default: undefined
     },
     onClick: {
       type: Function as unknown as () =&gt; () =&gt; void
@@ -346,7 +343,7 @@ import { RouterLink } from 'vue-router';
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-29T22:03:30.749Z
+                at 2023-07-30T20:34:58.205Z
             </div>
         <script src="prettify.js"></script>
         <script>

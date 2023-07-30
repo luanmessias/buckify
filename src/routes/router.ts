@@ -1,6 +1,6 @@
 import * as vueRouter from 'vue-router';
 
-const _routes: Array<vueRouter.RouteRecordRaw> = [
+export const _routes: Array<vueRouter.RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('@/views/Home.vue'),

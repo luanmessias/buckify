@@ -1,57 +1,86 @@
-import { describe, expect, it } from "vitest";
+import { mount } from '@vue/test-utils'
+import { describe, it, vi, expect } from 'vitest'
+import Button from './Component.vue'
+import { RouterLinkStub } from '@vue/test-utils'
 
-import { mount } from "@vue/test-utils";
-
-import Button from "./Component.vue";
+vi.mock('vue-router')
 
 const props = {
-  label: 'Click me!',
-};
+  label: 'Click me!'
+}
 
-const wrapper = mount(Button, { props });
-
+const wrapper = mount(Button, {
+  props,
+  global: {
+    stubs: {
+      RouterLink: RouterLinkStub
+    }
+  }
+})
 
 describe('ButtonComponent', () => {
-  describe.only('render', () => {
-    it('should be a router link', async () => {
-      const to = '/test';
-      await wrapper.setProps({ to });
+  describe('render types', () => {
+    it('should render the RouterLink type', async () => {
+      await wrapper.setProps({ to: '/' })
+      expect(wrapper.findComponent(RouterLinkStub).exists()).toBe(true)
+    })
 
-      expect(wrapper.html()).toContain(`href="${to}"`);
-    });
-  });
+    it('should render a button type', async () => {
+      await wrapper.setProps({
+        to: undefined,
+        type: 'button'
+      })
+      expect(wrapper.find('button').exists()).toBe(true)
+    })
+
+    it('should render a submit type', async () => {
+      await wrapper.setProps({
+        to: undefined,
+        type: 'submit'
+      })
+      expect(wrapper.find('button').attributes('type')).toBe('submit')
+    })
+
+    it('should render a reset type', async () => {
+      await wrapper.setProps({
+        to: undefined,
+        type: 'reset'
+      })
+      expect(wrapper.find('button').attributes('type')).toBe('reset')
+    })
+  })
 
   describe('props', () => {
     it('should render label', () => {
-      expect(wrapper.text()).toBe(props.label);
-    });
+      expect(wrapper.text()).toBe(props.label)
+    })
 
     it('should render the given type', async () => {
-      const type = 'submit';
-      await wrapper.setProps({ type });
-      
-      expect(wrapper.html()).toContain(`type="${type}"`);
-    });
+      const type = 'submit'
+      await wrapper.setProps({ type })
+
+      expect(wrapper.html()).toContain(`type="${type}"`)
+    })
 
     it('should render the given theme', async () => {
-      const theme = 'secondary';
-      await wrapper.setProps({ theme });
+      const theme = 'secondary'
+      await wrapper.setProps({ theme })
 
-      expect(wrapper.html()).toContain('bg-white');
-    });
+      expect(wrapper.html()).toContain('bg-white')
+    })
 
     it('should render the given size', async () => {
-      const size = 'full';
-      await wrapper.setProps({ size });
+      const size = 'full'
+      await wrapper.setProps({ size })
 
-      expect(wrapper.html()).toContain('w-full');
-    });
+      expect(wrapper.html()).toContain('w-full')
+    })
 
     it('should render the given disabled', async () => {
-      const disabled = true;
-      await wrapper.setProps({ disabled });
+      const disabled = true
+      await wrapper.setProps({ disabled })
 
-      expect(wrapper.html()).toContain('bg-neutral-100');
-    });
-  });
-});
+      expect(wrapper.html()).toContain('bg-neutral-100')
+    })
+  })
+})
