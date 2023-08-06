@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import Button from './'
+import BaseButton from './'
 import YtIcon from './img/icon.vue'
 
 const meta = {
   title: 'Navigation/Button',
-  component: Button,
+  component: BaseButton,
   tags: ['autodocs'],
   argTypes: {
     label: {
@@ -41,7 +41,7 @@ const meta = {
     onClick: () => console.log('clicked'),
     label: 'Button'
   }
-} satisfies Meta<typeof Button>
+} satisfies Meta<typeof BaseButton>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -56,16 +56,16 @@ export const Secondary: Story = {
 
 export const WithIcon: Story = {
   render: (args) => ({
-    components: { YtIcon, Button },
+    components: { YtIcon, BaseButton },
     setup() {
       return {
         args,
       };
     },
     template: `
-      <Button v-bind="args">
+      <BaseButton v-bind="args">
         <YtIcon />
-      </Button>
+      </BaseButton>
     `,
   }),
   args: {

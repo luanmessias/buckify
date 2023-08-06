@@ -1,8 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`ButtonComponent > render > should render 1`] = `"<router-link-stub to=\\"/demo\\" ariacurrentvalue=\\"page\\" type=\\"button\\" class=\\"flex items-center justify-center gap-1 rounded-md text-sm h-14 transition-colors duration-200 ease-in-out bg-primary-500 hover:bg-primary-700 text-white w-40\\" theme=\\"primary\\" size=\\"medium\\"></router-link-stub>"`;
-
-exports[`ButtonComponent > should render the default button 1`] = `
-"<!--v-if-->
-<button type=\\"button\\" class=\\"flex items-center justify-center gap-1 rounded-md text-sm h-14 transition-colors duration-200 ease-in-out bg-primary-500 hover:bg-primary-700 text-white w-40\\" theme=\\"primary\\" size=\\"medium\\"> Click me!</button>"
-`;

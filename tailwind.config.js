@@ -3,6 +3,9 @@ export default {
   content: ['./src/**/*.{html,js,jsx,tsx,vue}'],
   theme: {
     extend: {
+      fontSize: {
+        xxs: ['0.625rem', { lineHeight: '0.875rem' }]
+      },
       colors: {
         white: '#ffffff',
         black: {
@@ -11,7 +14,7 @@ export default {
           200: '#8A8A8A',
           300: '#545454',
           400: '#333333',
-          500: '#000000',
+          500: '#000000'
         },
         success: {
           50: '#EAF8EE',
@@ -84,12 +87,12 @@ export default {
           700: '#65867D',
           800: '#4E6861',
           900: '#3C4F4A'
-        },
+        }
       },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
-        serif: ['Roboto Slab', 'serif'],
-      },
+        serif: ['Roboto Slab', 'serif']
+      }
     }
   },
   plugins: []
