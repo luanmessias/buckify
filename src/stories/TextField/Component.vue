@@ -1,7 +1,7 @@
 <template>
   <div 
     :class="[
-      `flex flex-col relative rounded-md border bg-secondary-50 p-3`,
+      `text-input flex flex-col relative rounded-md border bg-secondary-50 p-3`,
       props.error ? 'border-red-500' : 'border-secondary-100',
       props.size === 'small' && 'w-40',
       props.size === 'medium' && 'w-60',
@@ -12,7 +12,7 @@
   >
     <input 
       :id="id"
-      :type="inputType"
+      :type="type"
       :class="[
         `bg-transparent text-sm peer`
       ]"
@@ -40,7 +40,7 @@
     <span
       v-if="props.feedback"
       :class="[
-        `absolute text-xxs text-neutral-200 left-3 top-1/2 opacity-0 transition-all`,
+        `feedback absolute text-xxs text-neutral-200 left-3 top-1/2 opacity-0 transition-all`,
         props.error && `text-red-500 translate-y-6 opacity-100`
       ]"
       v-text="props.feedback"
@@ -91,10 +91,9 @@ import PasswordToggle from './fragments/PasswordToggle';
     },
     feedback: {
       type: String,
-      default: 'asdasdasda'
     },
     type: {
-      type: String,
+      type: String as () => 'text' | 'password' | 'email' | 'number' | 'tel' | 'url',
       default: 'text'
     },
     showEye: {
@@ -113,7 +112,6 @@ import PasswordToggle from './fragments/PasswordToggle';
 
   const textInput = ref('');
   const inputType = ref(props.type);
-
 
   const togglePasswordDisplay = () => {
     inputType.value = inputType.value === 'password' ? 'text' : 'password';

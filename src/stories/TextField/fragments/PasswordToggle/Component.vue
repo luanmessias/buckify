@@ -1,5 +1,5 @@
 <template>
-  <div @click="togglePasswordDisplay">
+  <div  @click="togglePasswordDisplay">
     <EyeOnIcon v-if="props.type === 'text'" />
     <EyeOffIcon v-else />
   </div>
