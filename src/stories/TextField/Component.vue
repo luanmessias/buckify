@@ -1,25 +1,34 @@
 <template>
   <div 
-    :class="`
-      ${styles.base.default}
-      ${selectedSize}
-      ${props.error ? styles.base.error : ''}
-      ${showEye ? styles.base.password : ''}
-    `"
+    :class="[
+      `flex flex-col relative rounded-md border bg-secondary-50 p-3`,
+      props.error ? 'border-red-500' : 'border-secondary-100',
+      props.size === 'small' && 'w-40',
+      props.size === 'medium' && 'w-60',
+      props.size === 'large' && 'w-80',
+      props.size === 'full' && 'w-full',
+      showClear || showEye && 'pr-12'
+    ]"
   >
     <input 
       :id="id"
       :type="inputType"
-      :class="`${styles.input}`"
+      :class="[
+        `bg-transparent text-sm peer`
+      ]"
       v-model="textInput"
+      v-bind="$attrs"
+      @input="setFieldValue"
     />
     <label 
       :for="id" 
-      :class="`
-        ${styles.label.default}
-        ${textInput ? styles.label.active : ''}
-        ${props.error ? styles.label.error : ''}
-      `"
+      :class="[
+        `absolute left-3 top-1/2 -translate-y-1/2 text-x transition-all`,
+        `text-neutral-200 cursor-text`,
+        `peer-focus:text-xxs peer-focus:-translate-y-5`,
+        textInput && `text-xxs -translate-y-5 text-neutral-500`,
+        props.error && `text-red-500`
+      ]"
     > 
       {{ label }}
       <span 
@@ -30,25 +39,35 @@
     </label>
     <span
       v-if="props.feedback"
-      :class="`
-        ${styles.feedback.default}
-        ${props.error && styles.feedback.error}
-      `"
+      :class="[
+        `absolute text-xxs text-neutral-200 left-3 top-1/2 opacity-0 transition-all`,
+        props.error && `text-red-500 translate-y-6 opacity-100`
+      ]"
       v-text="props.feedback"
     />
     <PasswordToggle
       v-if="showEye"
       @toggle-password-display="togglePasswordDisplay"
       :type="inputType"
-      :class="`${styles.password.default}`"
+      :class="[
+        `absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`
+      ]"
+    />
+    <ClearInput
+      v-if="showClear && textInput && !showEye"
+      @clear-input="textInput = ''"
+      :class="[
+        `absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`
+      ]"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref } from 'vue';
+  import { ref } from 'vue';
+import ClearInput from './fragments/ClearInput';
 import PasswordToggle from './fragments/PasswordToggle';
-  
+
   const props = defineProps({
     id: {
       type: String,
@@ -81,45 +100,28 @@ import PasswordToggle from './fragments/PasswordToggle';
     showEye: {
       type: Boolean,
       default: false
+    },
+    fieldValue: {
+      type: String,
+      default: ''
+    },
+    showClear: {
+      type: Boolean,
+      default: false
     }
   });
 
   const textInput = ref('');
   const inputType = ref(props.type);
 
-  const styles = {
-    base: {
-      default: 'flex flex-col relative rounded-md border border-transparent bg-secondary-50 p-3',
-      error: 'border-red-500',
-      password: 'pr-10'
-    },
-    input: 'bg-transparent text-sm peer',
-    label: {
-      default: 'absolute left-3 top-1/2 -translate-y-1/2 text-xs text-neutral-200 cursor-text peer-focus:text-xxs peer-focus:-translate-y-5 transition-all',
-      active: 'text-xxs -translate-y-5 text-neutral-500',
-      error: 'text-red-500'
-    },
-    size: {
-      small: 'w-40',
-      medium: 'w-60',
-      large: 'w-80',
-      full: 'w-full'
-    },
-    feedback: {
-      default: 'absolute text-xxs text-neutral-200 left-3 top-1/2 opacity-0 transition-all',
-      error: 'text-red-500 translate-y-6 opacity-100'
-    },
-    password: {
-      default: 'absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer'
-    }
-  };
-
-  const selectedSize = computed(() => {
-    const size = props.size as keyof typeof styles.size
-    return styles.size[size]
-  })
 
   const togglePasswordDisplay = () => {
     inputType.value = inputType.value === 'password' ? 'text' : 'password';
+  }
+
+  const emits = defineEmits(['setFieldValue'])
+
+  const setFieldValue = () => {
+    emits('setFieldValue', textInput.value)
   }
 </script>
