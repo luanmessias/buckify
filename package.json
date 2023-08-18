@@ -11,7 +11,7 @@
     "build-storybook": "storybook build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {
     "pinia": "^2.1.4",
@@ -29,7 +29,7 @@
     "@storybook/vue3-vite": "^7.1.0",
     "@types/node": "^20.4.2",
     "@vitejs/plugin-vue": "^4.2.3",
-    "@vitest/coverage-istanbul": "^0.34.1",
+    "@vitest/coverage-istanbul": "^0.34.2",
     "@vitest/coverage-v8": "^0.33.0",
     "@vitest/ui": "^0.34.1",
     "@vue/test-utils": "^2.4.1",

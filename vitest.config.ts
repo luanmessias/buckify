@@ -9,7 +9,8 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     coverage: {
-      provider: 'istanbul'
+      provider: 'v8',
+      reporter: ['text', 'json', 'html']
     }
   }
 })
