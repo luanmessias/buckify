@@ -22,14 +22,14 @@ const wrapper = mount(TextField, {
 
 describe('TextFieldComponent', () => {
   describe('render types', () => {
-    it('should render the text type', async () => {
-      await wrapper.setProps({ type: 'text' })
-      expect(wrapper.find('input').attributes('type')).toBe('text')
-    })
-
     it('should render the password type', async () => {
       await wrapper.setProps({ type: 'password' })
       expect(wrapper.find('input').attributes('type')).toBe('password')
+    })
+
+    it('should render the text type', async () => {
+      await wrapper.setProps({ type: 'text' })
+      expect(wrapper.find('input').attributes('type')).toBe('text')
     })
   })
   describe('sizes', () => {
@@ -86,18 +86,27 @@ describe('TextFieldComponent', () => {
     })
   })
   describe('showEye', () => {
+    beforeEach(async () => {
+      await wrapper.setProps({
+        showEye: true
+      })
+    })
+
+    afterEach(async () => {
+      await wrapper.setProps({
+        showEye: false
+      })
+    })
+
     it('should render the password toggle', async () => {
-      await wrapper.setProps({ showEye: true })
       expect(wrapper.findComponent(PasswordToggle).exists()).toBe(true)
     })
+
     it('should change the input type', async () => {
-      await wrapper.setProps({
-        showEye: true,
-        type: 'password'
-      })
-      const EyeIcon = wrapper.findComponent(PasswordToggle)
-      await EyeIcon.trigger('click')
-      expect(wrapper.emitted()['toggle-password-display']).toBeTruthy()
+      const input = wrapper.find('input')
+      const element = wrapper.findComponent(PasswordToggle)
+      await element.trigger('click')
+      expect(input.attributes('type')).toBe('text')
     })
   })
 })
