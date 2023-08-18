@@ -21,19 +21,15 @@
     <slot />
     {{ label }}
   </button>
-  <div
-    v-else
-    :class="`${styles.base} ${styles.theme.disabled} ${selectedSize}`"
-    :size="size"
-  >
+  <div v-else :class="`${styles.base} ${styles.theme.disabled} ${selectedSize}`" :size="size">
     <slot />
     {{ label }}
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
+  import { computed } from 'vue'
+  import { RouterLink } from 'vue-router'
 
   const props = defineProps({
     label: {
@@ -57,7 +53,7 @@ import { RouterLink } from 'vue-router';
       default: false
     },
     to: {
-      type: String,
+      type: String
     },
     onClick: {
       type: Function as unknown as () => () => void

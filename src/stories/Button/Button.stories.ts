@@ -46,7 +46,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = { }
+export const Primary: Story = {}
 
 export const Secondary: Story = {
   args: {
@@ -59,23 +59,23 @@ export const WithIcon: Story = {
     components: { YtIcon, BaseButton },
     setup() {
       return {
-        args,
-      };
+        args
+      }
     },
     template: `
       <BaseButton v-bind="args">
         <YtIcon />
       </BaseButton>
-    `,
+    `
   }),
   args: {
-    theme: 'secondary',
-  },
-};
+    theme: 'secondary'
+  }
+}
 
 export const Disabled: Story = {
   args: {
     disabled: true,
     theme: 'disabled'
-  },
-};
+  }
+}

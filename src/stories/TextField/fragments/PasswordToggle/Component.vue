@@ -1,20 +1,20 @@
 <template>
-  <div  @click="togglePasswordDisplay">
+  <div @click="togglePasswordDisplay">
     <EyeOnIcon v-if="props.type === 'text'" />
     <EyeOffIcon v-else />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import EyeOffIcon from './assets/EyeOff.vue';
-import EyeOnIcon from './assets/EyeOn.vue';
+  import EyeOffIcon from './assets/EyeOff.vue'
+  import EyeOnIcon from './assets/EyeOn.vue'
 
   const props = defineProps({
     type: {
       type: String,
       required: true,
       options: ['password', 'text']
-    },
+    }
   })
 
   const emit = defineEmits(['togglePasswordDisplay'])
@@ -22,5 +22,4 @@ import EyeOnIcon from './assets/EyeOn.vue';
   const togglePasswordDisplay = () => {
     emit('togglePasswordDisplay')
   }
-
 </script>

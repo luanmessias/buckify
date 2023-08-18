@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-  import ClearIcon from './assets/ClearIcon.vue';
+  import ClearIcon from './assets/ClearIcon.vue'
 
   const emit = defineEmits(['clearInput'])
 

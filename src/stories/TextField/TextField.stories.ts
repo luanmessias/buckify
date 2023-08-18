@@ -32,16 +32,15 @@ const meta = {
       control: 'select',
       description: 'The type of the text field',
       options: ['text', 'password', 'email', 'number', 'tel', 'url']
-    },
+    }
   },
   args: {
     label: 'Text field',
-    id: 'text-field',
+    id: 'text-field'
   }
 } satisfies Meta<typeof BaseTextField>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = { }
-
+export const Primary: Story = {}

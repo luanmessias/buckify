@@ -1,3 +1,3 @@
-import BaseButton from './Component.vue';
+import BaseButton from './Component.vue'
 
 export default BaseButton

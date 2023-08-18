@@ -1,9 +1,5 @@
-import * as pin from 'pinia';
+import * as pin from 'pinia'
 
-const useAuthStore = pin.defineStore('auth', () => {
+const useAuthStore = pin.defineStore('auth', () => {})
 
-});
-
-export default {
-
-}
+export default {}

@@ -1,4 +1,4 @@
-import * as vueRouter from 'vue-router';
+import * as vueRouter from 'vue-router'
 
 export const _routes: Array<vueRouter.RouteRecordRaw> = [
   {
@@ -17,6 +17,5 @@ const router = vueRouter.createRouter({
   history: vueRouter.createWebHistory(),
   routes: _routes
 })
-
 
 export default router

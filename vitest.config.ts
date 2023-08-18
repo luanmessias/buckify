@@ -9,7 +9,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     coverage: {
-      provider: 'istanbul',
+      provider: 'istanbul'
     }
   }
 })

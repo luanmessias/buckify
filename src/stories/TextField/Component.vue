@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     :class="[
       `text-input flex flex-col relative rounded-md border bg-secondary-50 p-3`,
       props.error ? 'border-red-500' : 'border-secondary-100',
@@ -7,21 +7,19 @@
       props.size === 'medium' && 'w-60',
       props.size === 'large' && 'w-80',
       props.size === 'full' && 'w-full',
-      showClear || showEye && 'pr-12'
+      showClear || (showEye && 'pr-12')
     ]"
   >
-    <input 
+    <input
       :id="id"
       :type="type"
-      :class="[
-        `bg-transparent text-sm peer`
-      ]"
+      :class="[`bg-transparent text-sm peer`]"
       v-model="textInput"
       v-bind="$attrs"
       @input="setFieldValue"
     />
-    <label 
-      :for="id" 
+    <label
+      :for="id"
       :class="[
         `absolute left-3 top-1/2 -translate-y-1/2 text-x transition-all`,
         `text-neutral-200 cursor-text`,
@@ -29,13 +27,9 @@
         textInput && `text-xxs -translate-y-5 text-neutral-500`,
         props.error && `text-red-500`
       ]"
-    > 
+    >
       {{ label }}
-      <span 
-        v-if="required"
-        class="font-bold"
-        v-text="'*'"
-      />
+      <span v-if="required" class="font-bold" v-text="'*'" />
     </label>
     <span
       v-if="props.feedback"
@@ -49,24 +43,20 @@
       v-if="showEye"
       @toggle-password-display="togglePasswordDisplay"
       :type="inputType"
-      :class="[
-        `absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`
-      ]"
+      :class="[`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`]"
     />
     <ClearInput
       v-if="showClear && textInput && !showEye"
       @clear-input="textInput = ''"
-      :class="[
-        `absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`
-      ]"
+      :class="[`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`]"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
-import ClearInput from './fragments/ClearInput';
-import PasswordToggle from './fragments/PasswordToggle';
+  import { ref } from 'vue'
+  import ClearInput from './fragments/ClearInput'
+  import PasswordToggle from './fragments/PasswordToggle'
 
   const props = defineProps({
     id: {
@@ -90,7 +80,7 @@ import PasswordToggle from './fragments/PasswordToggle';
       default: false
     },
     feedback: {
-      type: String,
+      type: String
     },
     type: {
       type: String as () => 'text' | 'password' | 'email' | 'number' | 'tel' | 'url',
@@ -108,13 +98,13 @@ import PasswordToggle from './fragments/PasswordToggle';
       type: Boolean,
       default: false
     }
-  });
+  })
 
-  const textInput = ref('');
-  const inputType = ref(props.type);
+  const textInput = ref('')
+  const inputType = ref(props.type)
 
   const togglePasswordDisplay = () => {
-    inputType.value = inputType.value === 'password' ? 'text' : 'password';
+    inputType.value = inputType.value === 'password' ? 'text' : 'password'
   }
 
   const emits = defineEmits(['setFieldValue'])
