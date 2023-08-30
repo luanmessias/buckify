@@ -23,7 +23,12 @@ const wrapper = mount(TextField, {
 describe('TextFieldComponent', () => {
   describe('render types', () => {
     it('should render the password type', async () => {
-      await wrapper.setProps({ type: 'password' })
+      const wrapper = mount(TextField, {
+        props: {
+          ...props,
+          type: 'password'
+        }
+      })
       expect(wrapper.find('input').attributes('type')).toBe('password')
     })
 
@@ -86,27 +91,24 @@ describe('TextFieldComponent', () => {
     })
   })
   describe('showEye', () => {
-    beforeEach(async () => {
+    it('should render the password toggle', async () => {
       await wrapper.setProps({
         showEye: true
       })
-    })
-
-    afterEach(async () => {
-      await wrapper.setProps({
-        showEye: false
-      })
-    })
-
-    it('should render the password toggle', async () => {
       expect(wrapper.findComponent(PasswordToggle).exists()).toBe(true)
     })
 
     it('should change the input type', async () => {
-      const input = wrapper.find('input')
-      const element = wrapper.findComponent(PasswordToggle)
-      await element.trigger('click')
-      expect(input.attributes('type')).toBe('text')
+      const wrapper = mount(TextField, {
+        props: {
+          ...props,
+          type: 'password',
+          showEye: true
+        }
+      })
+      const toggleButton = wrapper.findComponent(PasswordToggle)
+      await toggleButton.trigger('click')
+      expect(wrapper.find('input').attributes('type')).toBe('text')
     })
   })
 })

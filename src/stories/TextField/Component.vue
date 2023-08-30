@@ -12,7 +12,7 @@
   >
     <input
       :id="id"
-      :type="type"
+      :type="inputType"
       :class="[`bg-transparent text-sm peer`]"
       v-model="textInput"
       v-bind="$attrs"
