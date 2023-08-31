@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import TextField from './Component.vue'
 import PasswordToggle from './fragments/PasswordToggle'
+import ClearInput from './fragments/ClearInput'
 
 const props = {
   id: 'testing-input',
@@ -98,7 +99,7 @@ describe('TextFieldComponent', () => {
       expect(wrapper.findComponent(PasswordToggle).exists()).toBe(true)
     })
 
-    it('should change the input type', async () => {
+    it('should change the input type to text', async () => {
       const wrapper = mount(TextField, {
         props: {
           ...props,
@@ -109,6 +110,40 @@ describe('TextFieldComponent', () => {
       const toggleButton = wrapper.findComponent(PasswordToggle)
       await toggleButton.trigger('click')
       expect(wrapper.find('input').attributes('type')).toBe('text')
+    })
+
+    it('should change the input type to password', async () => {
+      const wrapper = mount(TextField, {
+        props: {
+          ...props,
+          type: 'text',
+          showEye: true
+        }
+      })
+      const toggleButton = wrapper.findComponent(PasswordToggle)
+      await toggleButton.trigger('click')
+      expect(wrapper.find('input').attributes('type')).toBe('password')
+    })
+  })
+  describe('clear button', () => {
+    it('should render the password toggle', async () => {
+      await wrapper.setProps({
+        showClear: true,
+        showEye: false
+      })
+      await wrapper.find('input').setValue('testing')
+      expect(wrapper.findComponent(ClearInput).exists()).toBe(true)
+    })
+
+    it('should clear the input', async () => {
+      await wrapper.setProps({
+        showClear: true,
+        showEye: false
+      })
+      await wrapper.find('input').setValue('testing')
+      const clearButton = wrapper.findComponent(ClearInput)
+      await clearButton.trigger('click')
+      expect(wrapper.find('input').element.value).toBe('')
     })
   })
 })

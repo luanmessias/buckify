@@ -48,7 +48,7 @@
     <ClearInput
       v-if="showClear && textInput && !showEye"
       @clear-input="textInput = ''"
-      :class="[`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`]"
+      :class="[`clear absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`]"
     />
   </div>
 </template>
