@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      `text-input flex flex-col relative rounded-md border bg-secondary-50 p-3`,
+      `text-input flex flex-col relative h-12 rounded-md border bg-secondary-50 p-3`,
       props.error ? 'border-red-500' : 'border-secondary-100',
       props.size === 'small' && 'w-40',
       props.size === 'medium' && 'w-60',
