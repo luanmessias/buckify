@@ -100,7 +100,7 @@
     }
   })
 
-  const textInput = ref('')
+  const textInput = ref(props.fieldValue)
   const inputType = ref(props.type)
 
   const togglePasswordDisplay = () => {

@@ -43,4 +43,45 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    id: 'text-field-primary',
+    label: 'Text field primary'
+  }
+}
+
+export const Required: Story = {
+  args: {
+    id: 'text-field-required',
+    label: 'Text field required',
+    required: true
+  }
+}
+
+export const password: Story = {
+  args: {
+    id: 'text-field-password',
+    label: 'Text field password',
+    type: 'password',
+    showEye: true
+  }
+}
+
+export const WithClear: Story = {
+  args: {
+    id: 'text-field-clear',
+    label: 'Text field with clear',
+    showClear: true,
+    fieldValue: 'Text field with clear'
+  }
+}
+
+export const Error: Story = {
+  args: {
+    id: 'text-field-error',
+    label: 'Text field error',
+    feedback: 'Error message',
+    error: true,
+    showClear: true
+  }
+}
