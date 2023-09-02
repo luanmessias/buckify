@@ -18,3 +18,25 @@ select {
 * {
   box-sizing: border-box;
 }
+
+/* Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 rounded-full;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}

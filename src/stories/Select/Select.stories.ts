@@ -29,14 +29,33 @@ const meta = {
       description: 'The feedback of the text field'
     },
     options: {
-      control: 'select',
-      description: 'The options of the select field',
-      options: ['option1', 'option2', 'option3']
+      control: 'array',
+      description: 'The options of the select field'
     }
   },
   args: {
     label: 'Text field',
-    id: 'text-field'
+    id: 'text-field',
+    options: [
+      { id: '1', label: 'Option 1' },
+      { id: '2', label: 'Option 2' },
+      { id: '3', label: 'Option 3' },
+      { id: '4', label: 'Option 4' },
+      { id: '5', label: 'Option 5' },
+      { id: '6', label: 'Option 6' },
+      { id: '7', label: 'Option 7' },
+      { id: '8', label: 'Option 8' },
+      { id: '9', label: 'Option 9' },
+      { id: '10', label: 'Option 10' }
+    ]
+  },
+  parameters: {
+    docs: {
+      story: {
+        inline: false,
+        iframeHeight: 280
+      }
+    }
   }
 } satisfies Meta<typeof BaseSelect>
 
@@ -45,8 +64,33 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    id: 'text-field-primary',
-    label: 'Text field primary',
-    options: ['option1', 'option2', 'option3']
+    id: 'select-primary',
+    label: 'Select primary'
+  }
+}
+
+export const NoOptions: Story = {
+  args: {
+    id: 'select-no-options',
+    label: 'Select no options',
+    options: []
+  }
+}
+
+export const Required: Story = {
+  args: {
+    id: 'select-required',
+    label: 'Select required',
+    required: true
+  }
+}
+
+export const Error: Story = {
+  args: {
+    id: 'select-feedback-error',
+    label: 'Select feedback error',
+    feedback: 'Error message',
+    required: true,
+    error: true
   }
 }
