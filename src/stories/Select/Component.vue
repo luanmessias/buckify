@@ -13,7 +13,7 @@
     <input
       type="text"
       :id="id"
-      :class="['cursor-pointer bg-transparent']"
+      :class="['selected cursor-pointer bg-transparent']"
       v-model="selectedOptionLabel"
       readonly
     />
@@ -28,7 +28,7 @@
       ]"
     >
       {{ label }}
-      <span v-if="required" class="font-bold" v-text="'*'" />
+      <span v-if="required" class="required-label font-bold" v-text="'*'" />
     </label>
     <span
       v-if="props.feedback"
@@ -48,14 +48,14 @@
       <ul
         v-if="showOptions"
         :class="[
-          `absolute overflow-y-auto overflow-x-hidden h-auto left-0 top-12 w-full`,
+          `select__options absolute overflow-y-auto overflow-x-hidden h-auto left-0 top-12 w-full`,
           `bg-secondary-50 border border-secondary-100 rounded-md`,
           `max-h-40`
         ]"
       >
         <li
           v-if="selectOptions.length === 0"
-          class="h-12 flex items-center px-3 cursor-pointer text-neutral-500 text-xs"
+          class="select__option h-12 flex items-center px-3 cursor-pointer text-neutral-500 text-xs"
           v-text="'No options'"
         />
         <li
@@ -63,7 +63,7 @@
           v-for="option in selectOptions"
           :key="option.id"
           :class="[
-            `h-10 flex items-center px-3 cursor-pointer text-xs text-neutral-500`,
+            `select__option h-10 flex items-center px-3 cursor-pointer text-xs text-neutral-500`,
             `hover:bg-secondary-100 hover:text-secondary-500`,
             selectedOption === option.id && `bg-secondary-200 text-secondary-500`
           ]"
