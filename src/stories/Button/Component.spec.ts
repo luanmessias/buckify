@@ -83,4 +83,18 @@ describe('ButtonComponent', () => {
       expect(wrapper.html()).toContain('bg-neutral-100')
     })
   })
+
+  describe('events', () => {
+    it('should emit click event', async () => {
+      const onClick = vi.fn()
+      const wrapper = mount(Button, {
+        props: {
+          label: 'Click me!',
+          onClick
+        }
+      })
+      await wrapper.find('button').trigger('click')
+      expect(onClick).toHaveBeenCalled()
+    })
+  })
 })

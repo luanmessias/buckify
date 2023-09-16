@@ -1,0 +1,20 @@
+<template>
+  <svg
+    v-bind="$attrs"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="19"
+      height="19"
+      rx="4.5"
+      fill="#EAECED"
+      stroke="#BEC3C7"
+    />
+  </svg>
+</template>

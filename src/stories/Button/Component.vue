@@ -21,7 +21,11 @@
     <slot />
     {{ label }}
   </button>
-  <div v-else :class="`${styles.base} ${styles.theme.disabled} ${selectedSize}`" :size="size">
+  <div
+    v-else
+    :class="`${styles.base} ${styles.theme.disabled} ${selectedSize}`"
+    :size="size"
+  >
     <slot />
     {{ label }}
   </div>
@@ -64,7 +68,8 @@
     base: 'flex items-center justify-center gap-1 rounded-md text-sm h-14 transition-colors duration-200 ease-in-out',
     theme: {
       primary: 'bg-primary-500 hover:bg-primary-700 text-white',
-      secondary: 'bg-white hover:bg-gray-200 text-neutral-500 border border-neutral-100',
+      secondary:
+        'bg-white hover:bg-gray-200 text-neutral-500 border border-neutral-100',
       disabled: 'bg-neutral-100 text-neutral-300 cursor-not-allowed'
     },
     size: {
