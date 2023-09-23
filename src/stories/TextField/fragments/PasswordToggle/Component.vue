@@ -1,13 +1,18 @@
 <template>
   <div @click="togglePasswordDisplay">
-    <EyeOnIcon v-if="props.type === 'text'" />
-    <EyeOffIcon v-else />
+    <SvgIcon
+      v-if="props.type === 'text'"
+      name="eye-on"
+      size="md"
+      stroke-width="2"
+      stroke-color="text-neutral-300"
+    />
+    <SvgIcon v-else name="eye-off" size="md" stroke-width="2" stroke-color="text-neutral-300" />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import EyeOffIcon from './assets/EyeOff.vue'
-  import EyeOnIcon from './assets/EyeOn.vue'
+  import SvgIcon from '@Stories/SvgIcon'
 
   const props = defineProps({
     type: {

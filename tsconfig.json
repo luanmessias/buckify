@@ -4,11 +4,7 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,31 +19,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": [
-        "*"
-      ],
-      "@/assets": [
-        "assets/"
-      ],
-      "@/components": [
-        "components/"
-      ],
-      "@/routes": [
-        "routes/"
-      ],
-      "@/stores": [
-        "stores/"
-      ],
-      "@/stories": [
-        "stories/"
-      ],
-      "@/utils": [
-        "utils/"
-      ],
-      "@/views": [
-        "views/"
-      ]
-    },
+      "@/*": ["src/*"],
+      "@Assets": ["src/assets/"],
+      "@Stories": ["src/stories/"],
+      "@TailwindConfig": ["tailwind.config.js"]
+    }
   },
   "include": [
     "src/**/*.ts",
@@ -55,7 +31,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "vite.config.*",
-    "types/**/*.d.ts",
+    "types/**/*.d.ts"
   ],
   "references": [
     {

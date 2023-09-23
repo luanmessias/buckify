@@ -38,10 +38,14 @@
       ]"
       v-text="props.feedback"
     />
-    <ArrowIcon
+    <SvgIcon
+      name="triangle"
+      size="xs"
+      color="text-neutral-300"
       :class="[
-        `absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer`,
-        showOptions && `transform rotate-180`
+        `absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-neutral-300`,
+        showOptions && `transform rotate-180`,
+        props.error && `text-red-500`
       ]"
     />
     <transition name="options">
@@ -77,7 +81,7 @@
 
 <script lang="ts" setup>
   import { ref, onMounted, onUnmounted, computed } from 'vue'
-  import ArrowIcon from './assets/ArrowIcon.vue'
+  import SvgIcon from '@Stories/SvgIcon'
 
   type OptionType = {
     id: string

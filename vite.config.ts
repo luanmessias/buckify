@@ -1,20 +1,23 @@
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { defineConfig } from 'vite'
+import svgLoader from 'vite-svg-loader'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  plugins: [vue()],
+  build: {
+    commonjsOptions: {
+      include: ['tailwind.config.js']
+    }
+  },
+  plugins: [vue(), svgLoader()],
   base: './',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src/'),
-      '@/assets': path.resolve(__dirname, 'src/assets'),
-      '@/components': path.resolve(__dirname, 'src/components'),
-      '@/routes': path.resolve(__dirname, 'src/routes'),
-      '@/stores': path.resolve(__dirname, 'src/stores'),
-      '@/stories': path.resolve(__dirname, 'src/stories'),
-      '@/utils': path.resolve(__dirname, 'src/utils'),
-      '@/views': path.resolve(__dirname, 'src/views')
+      '@': fileURLToPath(new URL('./src/', import.meta.url)),
+      '@Assets': fileURLToPath(new URL('./src/assets/', import.meta.url)),
+      '@Stories': fileURLToPath(new URL('./src/stories/', import.meta.url)),
+      '@TailwindConfig': fileURLToPath(new URL('./tailwind.config.js', import.meta.url))
     }
   }
 })

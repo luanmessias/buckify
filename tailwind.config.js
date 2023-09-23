@@ -11,6 +11,15 @@ export default {
         lg: ['1.125rem', { lineHeight: '1.75rem' }],
         xl: ['1.25rem', { lineHeight: '1.75rem' }]
       },
+      icon: {
+        size: {
+          xs: '0.75rem',
+          sm: '1.25rem',
+          md: '1.75rem',
+          lg: '2.5rem',
+          xl: '3.5rem'
+        }
+      },
       colors: {
         white: '#ffffff',
         black: {

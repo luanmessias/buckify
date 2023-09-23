@@ -1,11 +1,11 @@
 <template>
   <div @click="setClearInput">
-    <ClearIcon />
+    <SvgIcon name="close" size="md" stroke-width="2" stroke-color="text-neutral-300" />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import ClearIcon from './assets/ClearIcon.vue'
+  import SvgIcon from '@Stories/SvgIcon'
 
   const emit = defineEmits(['clearInput'])
 

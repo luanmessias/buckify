@@ -1,29 +1,31 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
+import { mergeConfig } from 'vite'
+
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    {
-      name: '@storybook/addon-postcss',
-      options: {
-        cssLoaderOptions: {
-          importLoaders: 1
-        },
-        postcssLoaderOptions: {
-          implementation: require('postcss')
-        }
-      }
-    },
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm'
+    '@storybook/addon-styling'
   ],
+  core: {
+    builder: '@storybook/builder-vite'
+  },
   framework: {
     name: '@storybook/vue3-vite',
     options: {}
   },
   docs: {
     autodocs: 'tag'
+  },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      optimizeDeps: {
+        include: ['storybook-dark-mode']
+      }
+    })
   }
 }
+
 export default config

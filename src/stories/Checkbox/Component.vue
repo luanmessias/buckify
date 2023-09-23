@@ -52,10 +52,7 @@
       {{ props.label }}
       <span
         v-if="props.required"
-        :class="[
-          'required-label font-bold',
-          props.error ? 'text-red-500' : 'text-neutral-500'
-        ]"
+        :class="['required-label font-bold', props.error ? 'text-red-500' : 'text-neutral-500']"
         v-text="'*'"
       />
     </label>
@@ -64,8 +61,8 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue'
-  import CheckboxIcon from './assets/Checkbox.svg.vue'
-  import CheckboxCheckedIcon from './assets/CheckboxChecked.svg.vue'
+  import CheckboxIcon from '@Assets/svg/checkbox.svg.vue'
+  import CheckboxCheckedIcon from '@Assets/svg/checkbox-checked.svg.vue'
 
   const props = defineProps({
     id: {
