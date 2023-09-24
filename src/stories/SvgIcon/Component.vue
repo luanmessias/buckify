@@ -29,8 +29,8 @@
       default: 'md'
     },
     strokeWidth: {
-      type: Number,
-      default: 0
+      type: String,
+      default: '0'
     },
     strokeColor: {
       type: String,
@@ -49,7 +49,7 @@
   const iconSize = computed(() => {
     const sizeMapping: Record<string, string> = fullConfig.theme.icon.size
 
-    return sizeMapping[props.size] || sizeMapping['md']
+    return sizeMapping[props.size]
   })
 
   const icon = defineAsyncComponent(() => import(`../../assets/svg/${props.name}.svg.vue`))

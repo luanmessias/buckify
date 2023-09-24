@@ -5,6 +5,15 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [Vue()],
+  resolve: {
+    alias: {
+      '@': '/src',
+      '@Assets': '/src/assets',
+      '@Stories': '/src/stories',
+      '@Components': '/src/components',
+      '@TailwindConfig': '/tailwind.config.js'
+    }
+  },
   test: {
     globals: true,
     environment: 'happy-dom',
