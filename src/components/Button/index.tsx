@@ -1,33 +1,34 @@
 import React from 'react';
+import { tv } from 'tailwind-variants';
 
-import './button.css';
+const button = tv({
+  base: [
+    ''
+  ],
+})
 
 export interface ButtonProps {
-  /** Is this the principal call to action on the page? */
+  type: 'button' | 'link';
   primary?: boolean;
-  /** What background color to use */
   backgroundColor?: string;
-  /** How large should the button be? */
   size?: 'small' | 'medium' | 'large';
-  /** Button contents */
   label: string;
-  /** Optional click handler */
+  icon: string;
   onClick?: () => void;
 }
 
-/** Primary UI component for user interaction */
 export const Button = ({
+  type = 'button',
   primary = false,
   size = 'medium',
   backgroundColor,
   label,
+  icon,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+      className={button()}
       {...props}
     >
       {label}

@@ -13,10 +13,12 @@
   "dependencies": {
     "next": "15.0.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-variants": "^0.3.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
+    "@rocketseat/eslint-config": "^2.2.2",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
     "@storybook/addon-onboarding": "^8.4.7",
@@ -31,6 +33,7 @@
     "eslint-config-next": "15.0.4",
     "eslint-plugin-storybook": "^0.11.1",
     "postcss": "^8",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "storybook": "^8.4.7",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
