@@ -10,6 +10,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontSize: {
+        zero: '0'
+      },
     },
   },
   plugins: [],
