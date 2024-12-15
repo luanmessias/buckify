@@ -7,7 +7,7 @@ import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import { motion } from "framer-motion";
 
 const button = tv({
-  base: 'flex items-center gap-4 w-full py-4 px-6 rounded text-base transition duration-300 ease-in-out',
+  base: 'flex items-center gap-4 w-full py-4 px-6 rounded text-base transition duration-default ease-in-out',
   variants: {
     variant: {
       primary: 'bg-teal-500 text-white hover:bg-teal-600',

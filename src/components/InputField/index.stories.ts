@@ -1,26 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
-import { Icon } from './';
+import { InputField } from './';
 
 const meta = {
-  title: 'Base/Icon',
-  component: Icon,
+  title: 'Base/InputField',
+  component: InputField,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {},
   args: { onClick: fn() },
-} satisfies Meta<typeof Icon>;
+} satisfies Meta<typeof InputField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    name: 'activity',
-    size: 24,
-    color: 'black',
+    name: 'input-example',
+    type: 'text',
+    label: 'Label Example',
+    placeholder: 'Placeholder Example',
   },
 };

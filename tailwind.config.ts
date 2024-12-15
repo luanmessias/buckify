@@ -13,6 +13,9 @@ export default {
       fontSize: {
         zero: '0'
       },
+      transitionDuration: {
+        default: '300ms'
+      },
     },
   },
   plugins: [],
