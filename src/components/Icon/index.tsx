@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
@@ -9,11 +9,20 @@ interface IconProps extends Omit<LucideProps, 'ref'> {
 }
 
 export const Icon = ({ name, ...props }: IconProps) => {
-  const LucideIcon = lazy(dynamicIconImports[name]);
+  const [IconComponent, setIconComponent] = useState<React.ComponentType<LucideProps> | null>(null);
 
-  return (
-    <Suspense fallback={fallback}>
-      <LucideIcon {...props} />
-    </Suspense>
-  );
-}
+  useEffect(() => {
+    const loadIcon = async () => {
+      const { default: LoadedIcon } = await dynamicIconImports[name]();
+      setIconComponent(() => LoadedIcon);
+    };
+
+    loadIcon();
+  }, [name]);
+
+  if (!IconComponent) {
+    return fallback;
+  }
+
+  return <IconComponent {...props} />;
+};

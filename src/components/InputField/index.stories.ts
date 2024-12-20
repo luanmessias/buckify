@@ -25,3 +25,27 @@ export const Primary: Story = {
     placeholder: 'Placeholder Example',
   },
 };
+
+export const Password: Story = {
+  args: {
+    name: 'input-example-password',
+    type: 'password',
+    label: 'Password',
+    placeholder: 'Placeholder Example',
+    isPassword: true,
+  },
+};
+
+
+export const ErrorStatus: Story = {
+  args: {
+    name: 'input-example-error',
+    type: 'password',
+    label: 'Password',
+    placeholder: 'Password',
+    isPassword: true,
+    error: true,
+    feedback: ['Password is required', 'Password must be at least 8 characters', 'Password must contain at least one number'],
+  },
+};
+

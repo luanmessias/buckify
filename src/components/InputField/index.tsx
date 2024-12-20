@@ -47,6 +47,10 @@ const inpuitIcon = tv({
 });
 
 const inputFeedback = tv({
+  base: 'flex flex-col gap-1 mt-1 pl-2',
+});
+
+const inputFeedbackItem = tv({
   base: 'block text-xs font-light text-gray-500 mt-1',
   variants: {
     error: {
@@ -61,9 +65,10 @@ export type InputFieldProps = ComponentProps<'input'> & VariantProps<typeof inpu
   label?: string;
   error?: boolean;
   placeholder?: string;
-  feedback?: string;
+  feedback?: Array<string>;
   required?: boolean;
   disabled?: boolean;
+  isPassword?: boolean;
 }
 
 const MemoizedIcon = memo(Icon);
@@ -71,47 +76,63 @@ const MemoizedIcon = memo(Icon);
 export const InputField = ({ ...props }: InputFieldProps) => {
   const [inputValue, setInputValue] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [inputType, setInputType] = useState(props.type);
 
   const handleClearInput = useCallback(() => setInputValue(''), []);
   const handleSetInputType = useCallback((value: string) => setInputValue(value), []);
 
-  const handleTogglePassword = useCallback(() => setShowPassword(!showPassword), [showPassword]);
+  const handleTogglePassword = useCallback(() => {
+    setShowPassword(!showPassword);
+    setInputType(showPassword ? 'password' : 'text');
+  }, [showPassword]);
 
   return (
     <div className={fieldContainer()}>
       <label
-        className={inputLabel({ error:  props.error })}
+        className={inputLabel({ error: props.error })}
         htmlFor={props.name}
       >
         {props.label}
       </label>
-      <div className={inputArea({ error:  props.error })}>
-        <input 
-          className={input({ error:  props.error })} {...props} value={inputValue}
+      <div className={inputArea({ error: props.error })}>
+        <input
+          className={input({ error: props.error })}
+          {...props}
+          type={inputType}
+          value={inputValue}
           onChange={(e) => handleSetInputType(e.target.value)}
         />
-          <div className='w-6 h-6'>
-            {props.type === 'text' && inputValue &&
-              <MemoizedIcon
-                className={inpuitIcon({ hidden: !inputValue, error: props.error })}
-                name='x' 
-                size={24}
-                onClick={handleClearInput}
-              />
-            }
+        <div className='w-6 h-6'>
+          {!props.isPassword && inputValue &&
+            <MemoizedIcon
+              className={inpuitIcon({ hidden: !inputValue, error: props.error })}
+              name='x'
+              size={24}
+              onClick={handleClearInput}
+            />
+          }
 
-            {props.type === 'password' && inputValue &&
-              <MemoizedIcon
-                className={inpuitIcon({ hidden: !inputValue })}
-                name={showPassword ? 'eye-closed' : 'eye'}
-                size={24}
-                onClick={handleTogglePassword}
-              />
-            }
-          </div>
+          {props.isPassword && inputValue &&
+            <MemoizedIcon
+              className={inpuitIcon({ hidden: !inputValue })}
+              name={showPassword ? 'eye-closed' : 'eye'}
+              size={24}
+              onClick={handleTogglePassword}
+            />
+          }
+        </div>
       </div>
-      {props.feedback && 
-        <span className={inputFeedback({ error:  props.error })}>{props.feedback}</span>
+      {props.feedback &&
+        <ul className={inputFeedback()}>
+          {props.feedback && props.feedback.map((feedback, index) => (
+            <li
+              key={index}
+              className={inputFeedbackItem({ error: props.error })}
+            >
+              {feedback}
+            </li>
+          ))}
+        </ul>
       }
     </div>
   );
