@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { Icon } from '../Icon'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import { motion } from 'framer-motion'
+import { Button as ButtonUi } from "@/components/ui/button"
+
 
 const button = tv({
   base: 'flex items-center gap-4 w-full py-4 px-6 rounded text-base transition duration-default ease-in-out',
@@ -47,30 +49,33 @@ export const Button = ({
   const Component: React.ElementType = as === 'link' ? Link : 'button'
   const iconColorStyle = iconColor ? iconColor : 'currentColor'
   return (
-    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-      <Component
-        className={button({ variant })}
-        {...(as === 'link' ? { href } : { as })}
-        {...(as === 'link'
-          ? { target: props.targetBlank ? '_blank' : undefined }
-          : {})}
-        {...props}
-      >
-        {props.brand && (
-          <Image
-            aria-hidden
-            src={`./brands/${props.brand}.svg`}
-            alt="File icon"
-            width={28}
-            height={28}
-            unoptimized
-          />
-        )}
+    <>
+      <ButtonUi>Xablau</ButtonUi>
+      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+        <Component
+          className={button({ variant })}
+          {...(as === 'link' ? { href } : { as })}
+          {...(as === 'link'
+            ? { target: props.targetBlank ? '_blank' : undefined }
+            : {})}
+          {...props}
+        >
+          {props.brand && (
+            <Image
+              aria-hidden
+              src={`./brands/${props.brand}.svg`}
+              alt="File icon"
+              width={28}
+              height={28}
+              unoptimized
+            />
+          )}
 
-        {icon && <Icon name={icon} size={24} color={iconColorStyle} />}
+          {icon && <Icon name={icon} size={24} color={iconColorStyle} />}
 
-        {label}
-      </Component>
-    </motion.div>
+          {label}
+        </Component>
+      </motion.div>
+    </>
   )
 }
