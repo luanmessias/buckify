@@ -1,3 +1,0 @@
-[test]
-preload = ["@testing-library/jest-dom", "./test/setup.ts"]
-environment = "jsdom"
