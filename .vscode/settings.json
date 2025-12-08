@@ -1,0 +1,13 @@
+{
+	"css.customData": [".vscode/custom-data.json"],
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit"
+	},
+	"eslint.format.enable": false,
+	"eslint.codeActionsOnSave.mode": "all",
+	"files.associations": {
+		"*.css": "tailwindcss"
+	}
+}
