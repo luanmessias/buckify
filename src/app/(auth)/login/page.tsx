@@ -5,6 +5,7 @@ import { Chrome } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import { createSession } from "@/app/actions/auth"
 import { Button } from "@/components/ui/button"
 import {
 	Card,
@@ -14,6 +15,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card"
 import { auth, googleProvider } from "@/lib/firebase"
+
 export default function LoginPage() {
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +24,9 @@ export default function LoginPage() {
 		setIsLoading(true)
 
 		try {
-			await signInWithPopup(auth, googleProvider)
+			const userCredential = await signInWithPopup(auth, googleProvider)
+
+			createSession(userCredential.user.uid)
 
 			toast.success("Login realizado!", {
 				description: "Redirecionando para o dashboard...",

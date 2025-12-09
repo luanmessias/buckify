@@ -8,10 +8,12 @@
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},
+	"cSpell.language": "en,pt",
 	"[typescript]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"
-	}
+	},
+	"cSpell.words": ["turbopack"]
 }
