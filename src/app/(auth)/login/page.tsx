@@ -3,6 +3,8 @@
 import { signInWithPopup } from "firebase/auth"
 import { Chrome } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
+import type { JSX } from "react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { createSession } from "@/app/actions/auth"
@@ -16,9 +18,11 @@ import {
 } from "@/components/ui/card"
 import { auth, googleProvider } from "@/lib/firebase"
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
+
+	const t = useTranslations("Auth")
 
 	const handleGoogleLogin = async () => {
 		setIsLoading(true)
@@ -50,8 +54,8 @@ export default function LoginPage() {
 	return (
 		<Card className="border-none shadow-xl w-full max-w-sm mx-auto">
 			<CardHeader className="space-y-1 text-center">
-				<CardTitle>Buckify</CardTitle>
-				<CardDescription>Controle financeiro inteligente</CardDescription>
+				<CardTitle>{t("login_title")}</CardTitle>
+				<CardDescription>{t("login_subtitle")}</CardDescription>
 			</CardHeader>
 
 			<CardContent className="grid gap-4">
@@ -62,11 +66,11 @@ export default function LoginPage() {
 					disabled={isLoading}
 				>
 					{isLoading ? (
-						"Loading..."
+						t("connecting")
 					) : (
 						<div className="flex items-center gap-2">
 							<Chrome className="w-5 h-5 text-blue-600" />
-							Entrar com Google
+							{t("google_button")}
 						</div>
 					)}
 				</Button>
@@ -74,11 +78,6 @@ export default function LoginPage() {
 				<div className="relative">
 					<div className="absolute inset-0 flex items-center">
 						<span className="w-full border-t" />
-					</div>
-					<div className="relative flex justify-center text-xs uppercase">
-						<span className="bg-background px-2 text-muted-foreground">
-							Ou continue com e-mail (Em breve)
-						</span>
 					</div>
 				</div>
 			</CardContent>

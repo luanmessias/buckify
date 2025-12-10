@@ -1,0 +1,10 @@
+{
+  "Auth": {
+    "login_title": "Buckify",
+    "login_subtitle": "Smart financial control",
+    "google_button": "Sign in with Google",
+    "connecting": "Connecting...",
+    "success_toast": "Login successful!",
+    "redirecting": "Redirecting..."
+  }
+}
