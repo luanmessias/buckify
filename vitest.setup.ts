@@ -1,13 +1,25 @@
+import { server } from "@/mocks/server"
 import "@testing-library/jest-dom"
-import { vi } from "vitest"
+import { afterAll, afterEach, beforeAll, vi } from "vitest"
 
-vi.mock("next-intl", () => ({
-	useTranslations: () => (key: string) => {
-		const messages = require("./src/messages/en.json")
-		return messages.Auth[key] || key
-	},
-	useLocale: () => "en",
-}))
+beforeAll(() => server.listen())
+
+afterEach(() => server.resetHandlers())
+
+afterAll(() => server.close())
+
+vi.mock("next-intl", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("next-intl")>()
+
+	return {
+		...actual,
+
+		useTranslations: () => (key: string) => {
+			const messages = require("./src/messages/en.json")
+			return messages.Auth?.[key] || key
+		},
+	}
+})
 
 global.ResizeObserver = class ResizeObserver {
 	observe() {}

@@ -1,10 +1,10 @@
 {
-	"Auth": {
-		"login_title": "Buckify",
-		"login_subtitle": "Controle financeiro inteligente",
-		"google_button": "Entrar com Google",
-		"connecting": "Conectando...",
-		"success_toast": "Login realizado!",
-		"redirecting": "Redirecionando..."
-	}
+  "Auth": {
+    "login_title": "Buckify",
+    "login_subtitle": "Controle financeiro inteligente",
+    "google_button": "Entrar com Google",
+    "connecting": "Conectando...",
+    "success_toast": "Login realizado!",
+    "redirecting": "Redirecionando..."
+  }
 }

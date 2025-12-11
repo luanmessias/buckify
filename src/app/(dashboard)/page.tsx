@@ -2,6 +2,7 @@
 
 import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
+import { CreateTransactionDialog } from "@/components/transactions/create-transaction-dialog/create-transaction-dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface Transaction {
@@ -28,7 +29,7 @@ const GET_TRANSACTIONS = gql`
 	}
 `
 
-export default function Home() {
+export default function DashboardPage() {
 	const { data } = useSuspenseQuery<GetTransactionsData>(GET_TRANSACTIONS)
 
 	return (
@@ -59,6 +60,8 @@ export default function Home() {
 					</Card>
 				))}
 			</div>
+
+			<CreateTransactionDialog />
 		</div>
 	)
 }
