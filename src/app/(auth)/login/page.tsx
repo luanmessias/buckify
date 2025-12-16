@@ -7,6 +7,7 @@ import type { JSX } from "react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { createSession } from "@/app/actions/auth"
+import { RadiantButton } from "@/components/layout/radiant-button/radiant-button"
 import { Button } from "@/components/ui/button"
 import {
 	Card,
@@ -61,20 +62,13 @@ export default function LoginPage(): JSX.Element {
 			</CardHeader>
 
 			<CardContent className="grid gap-4">
-				<Button
-					variant="outline"
-					className="cursor-pointer w-full py-6 group flex h-14 items-center justify-center rounded-xl bg-[linear-gradient(to_right,#5D6F6E,#636E70,#A7B6A3,#81B8B3,#A0D199)] p-0.5 text-white transition duration-300 hover:bg-[linear-gradient(to_left,#5D6F6E,#636E70,#A7B6A3,#81B8B3,#A0D199)] hover:shadow-2xl hover:shadow-[#81B8B3]/30"
+				<RadiantButton
 					onClick={handleGoogleLogin}
-					disabled={isLoading}
+					isLoading={isLoading}
+					className="w-full"
 				>
-					{isLoading ? (
-						t("connecting")
-					) : (
-						<div className="flex gap-2 h-full w-full uppercase items-center justify-center rounded-xl bg-[#0f1115] transition duration-300 ease-in-out group-hover:bg-white/5 group-hover:text-black">
-							{t("google_button")}
-						</div>
-					)}
-				</Button>
+					Entrar com Google
+				</RadiantButton>
 			</CardContent>
 		</Card>
 	)
