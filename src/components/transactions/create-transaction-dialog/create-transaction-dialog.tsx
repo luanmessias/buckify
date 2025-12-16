@@ -8,7 +8,6 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
 	Dialog,
@@ -98,10 +97,10 @@ export function CreateTransactionDialog() {
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button
-					className="fixed bottom-8 right-8 h-14 w-14 rounded-full shadow-xl bg-primary hover:bg-primary/90 transition-all hover:scale-105"
+					className="fixed bottom-8 right-8 h-14 w-14 rounded-full shadow-xl bg-primary hover:bg-primary/90 transition-all hover:scale-105 cursor-pointer"
 					size="icon"
 				>
-					<Plus className="h-6 w-6 text-white" />
+					<Plus className="h-6 w-6 text-zinc-800" />
 				</Button>
 			</DialogTrigger>
 
@@ -123,7 +122,7 @@ export function CreateTransactionDialog() {
 									<FormLabel>Valor (€)</FormLabel>
 									<FormControl>
 										<div className="relative">
-											<span className="absolute left-3 top-2.5 text-muted-foreground font-bold">
+											<span className="absolute left-3 top-4 text-muted-foreground font-bold">
 												€
 											</span>
 											<Input
@@ -199,7 +198,11 @@ export function CreateTransactionDialog() {
 										<FormLabel>Data</FormLabel>
 										<FormControl>
 											<div className="relative">
-												<Input type="date" {...field} />
+												<Input
+													className="block w-full [&::-webkit-calendar-picker-indicator]:opacity-0"
+													type="date"
+													{...field}
+												/>
 												<CalendarIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50 pointer-events-none" />
 											</div>
 										</FormControl>

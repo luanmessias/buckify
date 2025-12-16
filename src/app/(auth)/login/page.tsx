@@ -1,7 +1,6 @@
 "use client"
 
 import { signInWithPopup } from "firebase/auth"
-import { Chrome } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import type { JSX } from "react"
@@ -14,8 +13,8 @@ import {
 	CardContent,
 	CardDescription,
 	CardHeader,
-	CardTitle,
 } from "@/components/ui/card"
+import { Logo } from "@/components/ui/logo"
 import { auth, googleProvider } from "@/lib/firebase"
 
 export default function LoginPage(): JSX.Element {
@@ -52,34 +51,30 @@ export default function LoginPage(): JSX.Element {
 	}
 
 	return (
-		<Card className="border-none shadow-xl w-full max-w-sm mx-auto">
+		<Card className="relative w-full max-w-sm mx-auto border">
+			<div className="absolute right-0 top-0 w-32 h-32 bg-linear-to-br from-primary/10 to-transparent opacity-50 rounded-bl-full pointer-events-none"></div>
+
 			<CardHeader className="space-y-1 text-center">
-				<CardTitle>{t("login_title")}</CardTitle>
+				<Logo variant="icon" className="h-20 w-auto text-primary" />
+				<Logo variant="text" className="h-12 text-primary" />
 				<CardDescription>{t("login_subtitle")}</CardDescription>
 			</CardHeader>
 
 			<CardContent className="grid gap-4">
 				<Button
 					variant="outline"
-					className="w-full py-6"
+					className="cursor-pointer w-full py-6 group flex h-14 items-center justify-center rounded-xl bg-[linear-gradient(to_right,#5D6F6E,#636E70,#A7B6A3,#81B8B3,#A0D199)] p-0.5 text-white transition duration-300 hover:bg-[linear-gradient(to_left,#5D6F6E,#636E70,#A7B6A3,#81B8B3,#A0D199)] hover:shadow-2xl hover:shadow-[#81B8B3]/30"
 					onClick={handleGoogleLogin}
 					disabled={isLoading}
 				>
 					{isLoading ? (
 						t("connecting")
 					) : (
-						<div className="flex items-center gap-2">
-							<Chrome className="w-5 h-5 text-blue-600" />
+						<div className="flex gap-2 h-full w-full uppercase items-center justify-center rounded-xl bg-[#0f1115] transition duration-300 ease-in-out group-hover:bg-white/5 group-hover:text-black">
 							{t("google_button")}
 						</div>
 					)}
 				</Button>
-
-				<div className="relative">
-					<div className="absolute inset-0 flex items-center">
-						<span className="w-full border-t" />
-					</div>
-				</div>
 			</CardContent>
 		</Card>
 	)

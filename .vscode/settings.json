@@ -15,5 +15,8 @@
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},
-	"cSpell.words": ["turbopack"]
+	"cSpell.words": ["turbopack"],
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	}
 }

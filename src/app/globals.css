@@ -14,34 +14,47 @@ body {
 	font-family: var(--font-sans);
 }
 
+/* Configuração dos Raios de Borda (Border Radius) */
 @theme inline {
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
+
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
+
 	--color-card: var(--card);
 	--color-card-foreground: var(--card-foreground);
+
 	--color-popover: var(--popover);
 	--color-popover-foreground: var(--popover-foreground);
+
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
+
 	--color-secondary: var(--secondary);
 	--color-secondary-foreground: var(--secondary-foreground);
+
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
+
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
+
 	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
+
 	--color-chart-1: var(--chart-1);
 	--color-chart-2: var(--chart-2);
 	--color-chart-3: var(--chart-3);
 	--color-chart-4: var(--chart-4);
 	--color-chart-5: var(--chart-5);
+
 	--color-sidebar: var(--sidebar);
 	--color-sidebar-foreground: var(--sidebar-foreground);
 	--color-sidebar-primary: var(--sidebar-primary);
@@ -52,73 +65,129 @@ body {
 	--color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Força inputs de data a seguirem o tema escuro nativamente */
+input[type="date"] {
+	color-scheme: dark;
+}
+
 :root {
-	--radius: 0.625rem;
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.141 0.005 285.823);
+	/* Arredondamento um pouco mais "afiado" como no design do Stitch */
+	--radius: 0.25rem;
+
+	/* --- LIGHT MODE (Clean Professional) --- */
+	/* Stitch: #f3f4f6 (Background) */
+	--background: oklch(0.96 0.01 260);
+	/* Stitch: #111827 (Text Main) */
+	--foreground: oklch(0.14 0.02 260);
+
+	/* Stitch: #ffffff (Surface) */
 	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.141 0.005 285.823);
+	--card-foreground: oklch(0.14 0.02 260);
+
 	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.141 0.005 285.823);
-	--primary: oklch(0.21 0.006 285.885);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.967 0.001 286.375);
-	--secondary-foreground: oklch(0.21 0.006 285.885);
-	--muted: oklch(0.967 0.001 286.375);
-	--muted-foreground: oklch(0.552 0.016 285.938);
-	--accent: oklch(0.967 0.001 286.375);
-	--accent-foreground: oklch(0.21 0.006 285.885);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.92 0.004 286.32);
-	--input: oklch(0.92 0.004 286.32);
-	--ring: oklch(0.705 0.015 286.067);
-	--chart-1: oklch(0.646 0.222 41.116);
-	--chart-2: oklch(0.6 0.118 184.704);
-	--chart-3: oklch(0.398 0.07 227.392);
-	--chart-4: oklch(0.828 0.189 84.429);
-	--chart-5: oklch(0.769 0.188 70.08);
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.141 0.005 285.823);
-	--sidebar-primary: oklch(0.21 0.006 285.885);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.967 0.001 286.375);
-	--sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-	--sidebar-border: oklch(0.92 0.004 286.32);
-	--sidebar-ring: oklch(0.705 0.015 286.067);
+	--popover-foreground: oklch(0.14 0.02 260);
+
+	/* Stitch: #69f0ae (Spectral Mint) */
+	/* Mantemos o verde, mas com texto escuro para contraste no light mode */
+	--primary: oklch(0.85 0.17 155);
+	--primary-foreground: oklch(0.14 0.02 260);
+
+	/* Secondary: Um cinza muito leve */
+	--secondary: oklch(0.96 0.01 260);
+	--secondary-foreground: oklch(0.14 0.02 260);
+
+	/* Stitch: #6b7280 (Text Sub) */
+	--muted: oklch(0.96 0.01 260);
+	--muted-foreground: oklch(0.55 0.02 260);
+
+	--accent: oklch(0.96 0.01 260);
+	--accent-foreground: oklch(0.14 0.02 260);
+
+	--destructive: oklch(0.6 0.18 25);
+	--destructive-foreground: oklch(0.98 0 0);
+
+	/* Stitch: #e5e7eb (Border Light) */
+	--border: oklch(0.92 0.01 260);
+	--input: oklch(0.92 0.01 260);
+	--ring: oklch(0.85 0.17 155);
+
+	--chart-1: oklch(0.85 0.17 155);
+	--chart-2: oklch(0.6 0.18 25);
+	--chart-3: oklch(0.5 0.1 240);
+	--chart-4: oklch(0.75 0.15 80);
+	--chart-5: oklch(0.6 0.15 300);
+
+	--sidebar: oklch(0.96 0.01 260);
+	--sidebar-foreground: oklch(0.14 0.02 260);
+	--sidebar-primary: oklch(0.85 0.17 155);
+	--sidebar-primary-foreground: oklch(0.14 0.02 260);
+	--sidebar-accent: oklch(0.96 0.01 260);
+	--sidebar-accent-foreground: oklch(0.14 0.02 260);
+	--sidebar-border: oklch(0.92 0.01 260);
+	--sidebar-ring: oklch(0.85 0.17 155);
 }
 
 .dark {
-	--background: oklch(0.141 0.005 285.823);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.21 0.006 285.885);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.21 0.006 285.885);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.92 0.004 286.32);
-	--primary-foreground: oklch(0.21 0.006 285.885);
-	--secondary: oklch(0.274 0.006 286.033);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.274 0.006 286.033);
-	--muted-foreground: oklch(0.705 0.015 286.067);
-	--accent: oklch(0.274 0.006 286.033);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.552 0.016 285.938);
-	--chart-1: oklch(0.488 0.243 264.376);
-	--chart-2: oklch(0.696 0.17 162.48);
-	--chart-3: oklch(0.769 0.188 70.08);
-	--chart-4: oklch(0.627 0.265 303.9);
-	--chart-5: oklch(0.645 0.246 16.439);
-	--sidebar: oklch(0.21 0.006 285.885);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.274 0.006 286.033);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.552 0.016 285.938);
+	/* --- DARK MODE: STONE & SHADOW (Hades II) --- */
+
+	/* Background: #0f1115 (Deepest Charcoal/Black) */
+	/* Convertido: Um preto quase puro com um toque imperceptível de azul frio */
+	--background: oklch(0.13 0.005 260);
+
+	/* Foreground: #e5e5e5 (Bone White) */
+	--foreground: oklch(0.92 0.005 260);
+
+	/* Card/Surface: #1a1d21 (Dark Grey Stone Panel) */
+	/* Um pouco mais claro que o fundo para criar a "placa de pedra" */
+	--card: oklch(0.17 0.005 260);
+	--card-foreground: oklch(0.92 0.005 260);
+
+	--popover: oklch(0.17 0.005 260);
+	--popover-foreground: oklch(0.92 0.005 260);
+
+	/* Primary: #69f0ae (Spectral Mint) */
+	/* O verde neon exato sugerido pela IA. Brilhante e mágico. */
+	--primary: oklch(0.85 0.17 155);
+	/* Texto no botão Primary: Preto do fundo para contraste máximo */
+	--primary-foreground: oklch(0.13 0.005 260);
+
+	/* Secondary: Botões desativados ou menos importantes */
+	--secondary: oklch(0.22 0.01 260);
+	--secondary-foreground: oklch(0.92 0.005 260);
+
+	/* Text Sub: #9ca3af (Muted Grey) */
+	--muted: oklch(0.22 0.01 260);
+	--muted-foreground: oklch(0.65 0.01 260);
+
+	--accent: oklch(0.2 0.01 260);
+	--accent-foreground: oklch(0.92 0.005 260);
+
+	/* Destructive: Mantive o Laranja Queimado do Hades */
+	--destructive: oklch(0.62 0.2 30);
+	--destructive-foreground: oklch(0.13 0.005 260);
+
+	/* Border: #2e3238 (Subtle Silver/Grey) */
+	--border: oklch(0.25 0.01 260);
+	--input: oklch(0.22 0.01 260);
+
+	/* Ring: Glow Verde Menta */
+	--ring: oklch(0.85 0.17 155);
+
+	/* Gráficos Neon */
+	--chart-1: oklch(0.85 0.17 155); /* Verde Menta */
+	--chart-2: oklch(0.62 0.2 30); /* Laranja Fogo */
+	--chart-3: oklch(0.6 0.15 240); /* Azul Frio */
+	--chart-4: oklch(0.85 0.15 90); /* Dourado */
+	--chart-5: oklch(0.7 0.18 320); /* Magenta Espectral */
+
+	--sidebar: oklch(0.13 0.005 260);
+	--sidebar-foreground: oklch(0.92 0.005 260);
+	--sidebar-primary: oklch(0.85 0.17 155);
+	--sidebar-primary-foreground: oklch(0.13 0.005 260);
+	--sidebar-accent: oklch(0.17 0.005 260);
+	--sidebar-accent-foreground: oklch(0.92 0.005 260);
+	--sidebar-border: oklch(0.25 0.01 260);
+	--sidebar-ring: oklch(0.85 0.17 155);
 }
 
 @layer base {
