@@ -1,22 +1,18 @@
 export const typeDefs = `#graphql
-  # -- TIPOS AUXILIARES --
   
-  # O item individual dentro da lista de compras passada
   type ShoppingItem {
     name: String!
     price: Float
     quantity: Int
   }
 
-  # -- ENTIDADES PRINCIPAIS --
-
   type Transaction {
     id: ID!
-    description: String!   # No banco é 'description'
+    description: String!
     amount: Float!
-    categoryId: String!    # No banco é 'categoryId'
-    date: String!          # Ex: "2025-12-07"
-    createdAt: Float       # Timestamp numérico
+    categoryId: String!
+    date: String!
+    createdAt: Float
     createdBy: String
   }
 
@@ -25,14 +21,14 @@ export const typeDefs = `#graphql
     date: String!
     total: Float!
     timestamp: Float
-    items: [ShoppingItem]! # Array de objetos (Isso é muito legal de mostrar!)
+    items: [ShoppingItem]! 
   }
 
   type WishlistItem {
     id: ID!
     name: String!
     estimatedPrice: Float
-    priority: String       # Ex: "want"
+    priority: String
     url: String
     beneficiary: String
     createdAt: Float
@@ -49,16 +45,15 @@ export const typeDefs = `#graphql
     id: ID!
     name: String!
     estimatedPrice: Float
-    originalPrice: Float   # Pode ser null
+    originalPrice: Float 
     quantity: Int
     isChecked: Boolean
     createdAt: Float
   }
 
-  # -- A QUERY (O CARDÁPIO) --
 
   type Query {
-    getTransactions: [Transaction]
+    getTransactions(startDate: String, endDate: String): [Transaction]
     getShoppingHistory: [ShoppingHistory]
     getWishlist: [WishlistItem]
     getProductCatalog: [Product]

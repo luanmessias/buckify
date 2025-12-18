@@ -45,6 +45,9 @@ body {
 	--color-destructive: var(--destructive);
 	--color-destructive-foreground: var(--destructive-foreground);
 
+	--color-surface: var(--surface);
+	--color-surface-foreground: var(--surface-foreground);
+
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
@@ -106,6 +109,9 @@ input[type="date"] {
 	--destructive: oklch(0.6 0.18 25);
 	--destructive-foreground: oklch(0.98 0 0);
 
+	--surface: #1a1d21;
+	--surface-foreground: #1c1e21;
+
 	/* Stitch: #e5e7eb (Border Light) */
 	--border: oklch(0.92 0.01 260);
 	--input: oklch(0.92 0.01 260);
@@ -165,6 +171,9 @@ input[type="date"] {
 	/* Destructive: Mantive o Laranja Queimado do Hades */
 	--destructive: oklch(0.62 0.2 30);
 	--destructive-foreground: oklch(0.13 0.005 260);
+
+	--surface: #1a1d21;
+	--surface-foreground: #1c1e21;
 
 	/* Border: #2e3238 (Subtle Silver/Grey) */
 	--border: oklch(0.25 0.01 260);

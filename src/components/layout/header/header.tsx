@@ -11,7 +11,7 @@ export const Header = () => {
 		<header
 			className="
 				flex items-center justify-between
-				px-4 py-4 h-16 bg-primary-background border-b"
+				px-4 py-4 h-16 border-b bg-background"
 		>
 			<div>
 				<Logo className="text-primary h-7" />

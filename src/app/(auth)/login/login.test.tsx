@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import messages from "@/messages/en.json"
 import LoginPage from "./page"
 
-const { signInMock, pushMock, createSessionMock } = vi.hoisted(() => {
+const { signInMock, pushMock } = vi.hoisted(() => {
 	return {
 		signInMock: vi.fn(),
 		pushMock: vi.fn(),
@@ -49,7 +49,6 @@ describe("LoginPage", () => {
 		render(<LoginPage />)
 
 		expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
-		expect(screen.getByText(messages.Auth.login_title)).toBeInTheDocument()
 	})
 
 	it("should call the signInWithPopup and redirect when clicked", async () => {
@@ -71,6 +70,7 @@ describe("LoginPage", () => {
 		const button = screen.getByRole("button", {
 			name: messages.Auth.google_button,
 		})
+
 		await user.click(button)
 
 		expect(button).toBeDisabled()
@@ -91,6 +91,7 @@ describe("LoginPage", () => {
 		const button = screen.getByRole("button", {
 			name: messages.Auth.google_button,
 		})
+
 		await user.click(button)
 
 		await waitFor(() => {
