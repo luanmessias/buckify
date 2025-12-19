@@ -13,7 +13,7 @@ const privateKey = process.env.NEXT_PRIVATE_FIREBASE_PRIVATE_KEY
 
 if (!projectId || !clientEmail || !privateKey) {
 	throw new Error(
-		"Erro Crítico: Variáveis de ambiente do Firebase Admin não foram encontradas. Verifique seu .env.local",
+		"Critical Error: Firebase Admin environment variables not found. Check your .env.local",
 	)
 }
 

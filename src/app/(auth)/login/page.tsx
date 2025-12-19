@@ -31,17 +31,16 @@ export default function LoginPage(): JSX.Element {
 
 			createSession(userCredential.user.uid)
 
-			toast.success("Login realizado!", {
-				description: "Redirecionando para o dashboard...",
+			toast.success(t("success_toast"), {
+				description: t("redirecting"),
 			})
 
 			router.push("/")
 		} catch (_err) {
-			toast.error("Erro ao conectar", {
-				description:
-					"Não foi possível autenticar com o Google. Tente novamente.",
+			toast.error(t("error_title"), {
+				description: t("error_description"),
 				action: {
-					label: "Tentar",
+					label: t("retry"),
 					onClick: () => handleGoogleLogin(),
 				},
 			})

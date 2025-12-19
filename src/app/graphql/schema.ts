@@ -16,6 +16,15 @@ export const typeDefs = `#graphql
     createdBy: String
   }
 
+  type Category {
+    id: String!
+    budget: Float!
+    color: String
+    description: String!
+    icon: String
+    name: String !
+  }
+
   type ShoppingHistory {
     id: ID!
     date: String!
@@ -54,6 +63,7 @@ export const typeDefs = `#graphql
 
   type Query {
     getTransactions(startDate: String, endDate: String): [Transaction]
+    getCategories(houseHoldId: String): [Category]
     getShoppingHistory: [ShoppingHistory]
     getWishlist: [WishlistItem]
     getProductCatalog: [Product]

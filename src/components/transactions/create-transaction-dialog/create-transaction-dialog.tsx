@@ -4,6 +4,7 @@ import { gql } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon, Loader2, Plus } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -33,14 +34,13 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 
-const formSchema = z.object({
-	description: z
-		.string()
-		.min(2, "A descrição deve ter pelo menos 2 caracteres."),
-	amount: z.coerce.number().min(0.01, "O valor deve ser maior que 0."),
-	categoryId: z.string().min(1, "Selecione uma categoria."),
-	date: z.string().min(1, "A date é obrigatória."),
-})
+const createFormSchema = (t: (key: string) => string) =>
+	z.object({
+		description: z.string().min(2, t("description_min_length")),
+		amount: z.coerce.number().min(0.01, t("amount_min")),
+		categoryId: z.string().min(1, t("select_category")),
+		date: z.string().min(1, t("date_required")),
+	})
 
 const CREATE_TRANSACTION = gql`
   mutation CreateTransaction($data: CreateTransactionInput!) {
@@ -61,16 +61,20 @@ const CATEGORIES = [
 ]
 
 export function CreateTransactionDialog() {
+	const t = useTranslations("Transactions")
+
 	const [open, setOpen] = useState(false)
 
 	const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
 		refetchQueries: ["GetDashboardTransactions"],
 		onCompleted: () => {
-			toast.success("Despesa adicionada com sucesso!")
+			toast.success(t("expense_added_success"))
 			setOpen(false)
 			form.reset()
 		},
 	})
+
+	const formSchema = createFormSchema(t)
 
 	const form = useForm({
 		resolver: zodResolver(formSchema),
@@ -106,7 +110,7 @@ export function CreateTransactionDialog() {
 
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Nova Despesa</DialogTitle>
+					<DialogTitle>{t("new_expense")}</DialogTitle>
 				</DialogHeader>
 
 				<Form {...form}>
@@ -119,7 +123,7 @@ export function CreateTransactionDialog() {
 							name="amount"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Valor (€)</FormLabel>
+									<FormLabel>{t("amount")}</FormLabel>
 									<FormControl>
 										<div className="relative">
 											<span className="absolute left-3 top-4 text-muted-foreground font-bold">
@@ -152,9 +156,9 @@ export function CreateTransactionDialog() {
 							name="description"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Descrição</FormLabel>
+									<FormLabel>{t("description")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Ex: Jantar fora" {...field} />
+										<Input placeholder={t("example_dinner")} {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -167,14 +171,14 @@ export function CreateTransactionDialog() {
 								name="categoryId"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Categoria</FormLabel>
+										<FormLabel>{t("category")}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											defaultValue={field.value}
 										>
 											<FormControl>
 												<SelectTrigger>
-													<SelectValue placeholder="Selecione" />
+													<SelectValue placeholder={t("select")} />
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
@@ -195,7 +199,7 @@ export function CreateTransactionDialog() {
 								name="date"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Data</FormLabel>
+										<FormLabel>{t("date")}</FormLabel>
 										<FormControl>
 											<div className="relative">
 												<Input
@@ -219,10 +223,11 @@ export function CreateTransactionDialog() {
 						>
 							{loading ? (
 								<>
-									<Loader2 className="mr-2 h-4 w-4 animate-spin" /> Salvando...
+									<Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+									{t("saving")}
 								</>
 							) : (
-								"Adicionar Despesa"
+								t("add_expense")
 							)}
 						</Button>
 					</form>

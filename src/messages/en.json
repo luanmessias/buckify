@@ -1,10 +1,39 @@
 {
-	"Auth": {
-		"login_title": "Buckify",
-		"login_subtitle": "Smart financial control",
-		"google_button": "Sign in with Google",
-		"connecting": "Connecting...",
-		"success_toast": "Login successful!",
-		"redirecting": "Redirecting..."
-	}
+  "Auth": {
+    "login_title": "Buckify",
+    "login_subtitle": "Smart financial control",
+    "google_button": "Sign in with Google",
+    "connecting": "Connecting...",
+    "success_toast": "Login successful!",
+    "redirecting": "Redirecting...",
+    "error_title": "Connection Error",
+    "error_description": "Unable to authenticate with Google. Please try again.",
+    "retry": "Try"
+  },
+  "Transactions": {
+    "month_summary": "Month Summary",
+    "total_spent": "Total Spent",
+    "budget": "Budget",
+    "remaining": "Remaining",
+    "hidden_categories": "+ {count} other categories hidden in the shadows...",
+    "new_expense": "New Expense",
+    "amount": "Amount (€)",
+    "description": "Description",
+    "category": "Category",
+    "date": "Date",
+    "select": "Select",
+    "example_dinner": "Ex: Dinner out",
+    "saving": "Saving...",
+    "add_expense": "Add Expense",
+    "expense_added_success": "Expense added successfully!",
+    "description_min_length": "The description must have at least 2 characters.",
+    "amount_min": "The amount must be greater than 0.",
+    "select_category": "Select a category.",
+    "date_required": "The date is required.",
+    "spent": "spent",
+    "available": "avail.",
+    "remaining_label": "Remaining:",
+    "logout": "Logout",
+    "firebase_admin_env_error": "Critical Error: Firebase Admin environment variables not found. Check your .env.local"
+  }
 }

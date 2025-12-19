@@ -38,7 +38,7 @@ export const RadiantButton = ({
 				<div className="flex items-center gap-2 text-muted-foreground">
 					<Loader2 className="h-5 w-5 animate-spin text-primary" />
 					<span className="text-sm font-medium uppercase tracking-widest text-black">
-						Carregando...
+						{t("connecting")}
 					</span>
 				</div>
 			) : (

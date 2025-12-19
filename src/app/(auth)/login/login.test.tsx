@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { toast } from "sonner"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { createSession } from "@/app/actions/auth"
 import messages from "@/messages/en.json"
 import LoginPage from "./page"
 
@@ -78,6 +80,10 @@ describe("LoginPage", () => {
 
 		await waitFor(() => {
 			expect(signInMock).toHaveBeenCalled()
+			expect(createSession).toHaveBeenCalledWith("123")
+			expect(toast.success).toHaveBeenCalledWith(messages.Auth.success_toast, {
+				description: messages.Auth.redirecting,
+			})
 			expect(pushMock).toHaveBeenCalledWith("/")
 		})
 	})
@@ -96,6 +102,34 @@ describe("LoginPage", () => {
 
 		await waitFor(() => {
 			expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
+			expect(button).not.toBeDisabled()
+			expect(toast.error).toHaveBeenCalledWith(messages.Auth.error_title, {
+				description: messages.Auth.error_description,
+				action: expect.objectContaining({ label: messages.Auth.retry }),
+			})
+			expect(pushMock).not.toHaveBeenCalled()
+		})
+	})
+
+	it("should display the toast error for network failure", async () => {
+		const user = userEvent.setup()
+		render(<LoginPage />)
+
+		signInMock.mockRejectedValueOnce(new Error("Network error"))
+
+		const button = screen.getByRole("button", {
+			name: messages.Auth.google_button,
+		})
+
+		await user.click(button)
+
+		await waitFor(() => {
+			expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
+			expect(button).not.toBeDisabled()
+			expect(toast.error).toHaveBeenCalledWith(messages.Auth.error_title, {
+				description: messages.Auth.error_description,
+				action: expect.objectContaining({ label: messages.Auth.retry }),
+			})
 			expect(pushMock).not.toHaveBeenCalled()
 		})
 	})

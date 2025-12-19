@@ -29,4 +29,17 @@ describe("DashboardPage", () => {
 		expect(salaryItem).toBeInTheDocument()
 		expect(netflixItem).toBeInTheDocument()
 	})
+
+	it("should render the summary with correct total spent", async () => {
+		render(
+			<TestWrapper>
+				<DashboardPage />
+			</TestWrapper>,
+		)
+
+		await screen.findByText("Carregando...")
+
+		const totalSpent = await screen.findByText("€ 5.039,90")
+		expect(totalSpent).toBeInTheDocument()
+	})
 })

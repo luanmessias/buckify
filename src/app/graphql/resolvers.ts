@@ -6,6 +6,10 @@ interface GetTransactionsArgs {
 	endDate?: string
 }
 
+interface GetCategoriesArgs {
+	houseHoldId: string
+}
+
 export const resolvers = {
 	Query: {
 		getTransactions: async (
@@ -18,6 +22,25 @@ export const resolvers = {
 				query = query
 					.where("date", ">=", startDate)
 					.where("date", "<=", endDate)
+			}
+
+			const snapshot = await query.get()
+
+			return snapshot.docs.map((doc) => {
+				const data = doc.data()
+				return {
+					id: doc.id,
+					...data,
+					createdAt: data.createdAt,
+				}
+			})
+		},
+
+		getCategories: async (_: unknown, { houseHoldId }: GetCategoriesArgs) => {
+			let query: Query = dbAdmin.collection("category")
+
+			if (houseHoldId) {
+				query = query.where("householdId", "==", houseHoldId)
 			}
 
 			const snapshot = await query.get()

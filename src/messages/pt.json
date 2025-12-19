@@ -1,10 +1,39 @@
 {
-	"Auth": {
-		"login_title": "Buckify",
-		"login_subtitle": "Controle financeiro inteligente",
-		"google_button": "Entrar com Google",
-		"connecting": "Conectando...",
-		"success_toast": "Login realizado!",
-		"redirecting": "Redirecionando..."
-	}
+  "Auth": {
+    "login_title": "Buckify",
+    "login_subtitle": "Controle financeiro inteligente",
+    "google_button": "Entrar com Google",
+    "connecting": "Conectando...",
+    "success_toast": "Login realizado!",
+    "redirecting": "Redirecionando...",
+    "error_title": "Erro ao conectar",
+    "error_description": "Não foi possível autenticar com o Google. Tente novamente.",
+    "retry": "Tentar"
+  },
+  "Transactions": {
+    "month_summary": "Resumo do Mês",
+    "total_spent": "Gasto Total",
+    "budget": "Orçamento",
+    "remaining": "Restante",
+    "hidden_categories": "+ {count} outras categorias ocultas nas sombras...",
+    "new_expense": "Nova Despesa",
+    "amount": "Valor (€)",
+    "description": "Descrição",
+    "category": "Categoria",
+    "date": "Data",
+    "select": "Selecione",
+    "example_dinner": "Ex: Jantar fora",
+    "saving": "Salvando...",
+    "add_expense": "Adicionar Despesa",
+    "expense_added_success": "Despesa adicionada com sucesso!",
+    "description_min_length": "A descrição deve ter pelo menos 2 caracteres.",
+    "amount_min": "O valor deve ser maior que 0.",
+    "select_category": "Selecione uma categoria.",
+    "date_required": "A data é obrigatória.",
+    "spent": "gastos",
+    "available": "disp.",
+    "remaining_label": "Restante:",
+    "logout": "Sair",
+    "firebase_admin_env_error": "Erro Crítico: Variáveis de ambiente do Firebase Admin não foram encontradas. Verifique seu .env.local"
+  }
 }
