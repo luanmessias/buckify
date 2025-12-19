@@ -4,9 +4,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import messages from "@/messages/pt.json"
 import { Summary } from "./summary"
 
-// --- MOCKS ---
-
-// 1. Mock do Recharts (Crucial para não quebrar o teste)
 vi.mock("recharts", async () => {
 	const OriginalModule = await vi.importActual("recharts")
 	return {
@@ -40,14 +37,11 @@ vi.mock("recharts", async () => {
 		}) => (
 			<div data-testid="tooltip">
 				{formatter(100)} {formatter(undefined)}{" "}
-				{/* Call formatter to cover it */}
 			</div>
 		),
 	}
 })
 
-// 2. Mock do CategoryCard para simplificar (teste de integração leve)
-// Se preferir testar a integração real, pode remover este mock e mockar só o Icon
 vi.mock("../category-summary/category-card", () => ({
 	CategoryCard: ({ name, amountSpent, icon }: any) => (
 		<div data-testid={`card-${name}`}>
@@ -55,8 +49,6 @@ vi.mock("../category-summary/category-card", () => ({
 		</div>
 	),
 }))
-
-// --- DADOS DE TESTE ---
 
 const mockCategories = [
 	{
@@ -107,7 +99,6 @@ const mockTransactions = [
 ]
 
 describe("Summary Component", () => {
-	// Mock do ResizeObserver que o Recharts usa internamente
 	beforeEach(() => {
 		global.ResizeObserver = vi.fn().mockImplementation(() => ({
 			observe: vi.fn(),
@@ -123,15 +114,11 @@ describe("Summary Component", () => {
 			</NextIntlClientProvider>,
 		)
 
-		// Total Budget: 1000 + 500 = 1500
 		expect(screen.getByText(/€\s*1\.500,00/)).toBeInTheDocument()
 
-		// Total Spent: 200 + 50 + 100 = 350
-		// Nota: O valor aparece duas vezes (no centro do gráfico e na lista), usamos getAllByText
 		const spentElements = screen.getAllByText(/€\s*350,00/)
 		expect(spentElements.length).toBeGreaterThan(0)
 
-		// Remaining: 1500 - 350 = 1150
 		expect(screen.getByText(/€\s*1\.150,00/)).toBeInTheDocument()
 	})
 
@@ -140,10 +127,7 @@ describe("Summary Component", () => {
 			<Summary transactions={mockTransactions} categories={mockCategories} />,
 		)
 
-		// Verifica se o mock do Pie renderizou as fatias corretas
-		// Casa gastou 250 (200+50)
 		expect(screen.getByTestId("pie-slice-Casa")).toHaveTextContent("Casa: 250")
-		// Lazer gastou 100
 		expect(screen.getByTestId("pie-slice-Lazer")).toHaveTextContent(
 			"Lazer: 100",
 		)
@@ -161,11 +145,9 @@ describe("Summary Component", () => {
 	it("should handle empty state (no transactions) gracefully", () => {
 		render(<Summary transactions={[]} categories={mockCategories} />)
 
-		// Gasto total 0
 		const zeroElements = screen.getAllByText(/€\s*0,00/)
 		expect(zeroElements.length).toBeGreaterThan(0)
 
-		// Restante deve ser igual ao budget total (1500)
 		const remainingElements = screen.getAllByText(/€\s*1\.500,00/)
 		expect(remainingElements.length).toBeGreaterThan(0)
 	})
@@ -174,7 +156,7 @@ describe("Summary Component", () => {
 		const overspentTransactions = [
 			{
 				id: "t1",
-				amount: 1600, // Overspent total
+				amount: 1600,
 				categoryId: "cat1",
 				description: "Aluguel",
 				date: "2024-05-01",
@@ -189,11 +171,9 @@ describe("Summary Component", () => {
 			/>,
 		)
 
-		// Total Spent: 1600
 		const spentElements = screen.getAllByText(/€\s*1\.600,00/)
 		expect(spentElements.length).toBeGreaterThan(0)
 
-		// Remaining: 1500 - 1600 = -100 (negative)
 		expect(screen.getByText(/-€\s*100,00/)).toBeInTheDocument()
 	})
 
@@ -222,8 +202,8 @@ describe("Summary Component", () => {
 				id: "cat5",
 				name: "Saude",
 				budget: 200,
-				color: "", // To cover the || in Cell fill
-				icon: "", // To cover the || in icon
+				color: "",
+				icon: "",
 				description: "",
 				houseHoldId: "",
 			},
@@ -247,7 +227,6 @@ describe("Summary Component", () => {
 				date: "2024-05-05",
 				category: "Alimentacao",
 			},
-			// cat5 has no transactions, value=0, filtered out
 		]
 
 		render(
@@ -256,12 +235,10 @@ describe("Summary Component", () => {
 			</NextIntlClientProvider>,
 		)
 
-		// Should display top 3 categories in the list
 		expect(screen.getByText("Casa")).toBeInTheDocument()
 		expect(screen.getByText("Alimentacao")).toBeInTheDocument()
 		expect(screen.getByText("Transporte")).toBeInTheDocument()
 
-		// Should show the hidden message since there are 4 categories (cat5 filtered out)
 		expect(screen.getByText(/hidden_categories/)).toBeInTheDocument()
 	})
 })

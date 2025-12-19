@@ -23,7 +23,6 @@ export const CategoryCard = ({
 	const remaining = budget - amountSpent
 	const isOverBudget = remaining < 0
 
-	// Formatação
 	const formatCurrency = (val: number) =>
 		new Intl.NumberFormat("pt-PT", {
 			style: "currency",
