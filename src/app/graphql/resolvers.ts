@@ -2,26 +2,29 @@ import type { Query } from "firebase-admin/firestore"
 import { dbAdmin } from "@/lib/firebase-admin"
 
 interface GetTransactionsArgs {
-	startDate?: string
-	endDate?: string
+	startDate: string
+	endDate: string
+	householdId: string
 }
 
 interface GetCategoriesArgs {
-	houseHoldId: string
+	householdId: string
 }
 
 export const resolvers = {
 	Query: {
 		getTransactions: async (
 			_: unknown,
-			{ startDate, endDate }: GetTransactionsArgs,
+			{ startDate, endDate, householdId }: GetTransactionsArgs,
 		) => {
 			let query: Query = dbAdmin.collection("transactions")
 
-			if (startDate && endDate) {
+			if (startDate && endDate && householdId) {
 				query = query
+					.where("householdId", "==", householdId)
 					.where("date", ">=", startDate)
 					.where("date", "<=", endDate)
+					.orderBy("date", "desc")
 			}
 
 			const snapshot = await query.get()
@@ -36,11 +39,11 @@ export const resolvers = {
 			})
 		},
 
-		getCategories: async (_: unknown, { houseHoldId }: GetCategoriesArgs) => {
+		getCategories: async (_: unknown, { householdId }: GetCategoriesArgs) => {
 			let query: Query = dbAdmin.collection("category")
 
-			if (houseHoldId) {
-				query = query.where("householdId", "==", houseHoldId)
+			if (householdId) {
+				query = query.where("householdId", "==", householdId)
 			}
 
 			const snapshot = await query.get()

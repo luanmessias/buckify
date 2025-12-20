@@ -51,13 +51,14 @@ const CREATE_TRANSACTION = gql`
     }
   }
 `
-const CATEGORIES = [
-	{ id: "casa", label: "Casa" },
-	{ id: "mercado", label: "Mercado" },
-	{ id: "transporte", label: "Transporte" },
-	{ id: "restaurantes", label: "Restaurantes & Lazer" },
-	{ id: "saude", label: "Saúde & Cuidados" },
-	{ id: "outros", label: "Outros" },
+
+const CATEGORIES = (t: (key: string) => string) => [
+	{ id: "casa", label: t("categories.casa") },
+	{ id: "mercado", label: t("categories.mercado") },
+	{ id: "transporte", label: t("categories.transporte") },
+	{ id: "restaurantes", label: t("categories.restaurantes") },
+	{ id: "saude", label: t("categories.saude") },
+	{ id: "outros", label: t("categories.outros") },
 ]
 
 export function CreateTransactionDialog() {
@@ -81,7 +82,7 @@ export function CreateTransactionDialog() {
 		defaultValues: {
 			description: "",
 			amount: 0,
-			categoryId: "",
+			categoryId: "casa",
 			date: new Date().toISOString().split("T")[0],
 		},
 	})
@@ -127,12 +128,12 @@ export function CreateTransactionDialog() {
 									<FormControl>
 										<div className="relative">
 											<span className="absolute left-3 top-4 text-muted-foreground font-bold">
-												€
+												{t("currency_symbol")}
 											</span>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder="0.00"
+												placeholder={t("amount_placeholder")}
 												className="pl-8 text-2xl font-bold h-14"
 												{...field}
 												value={(field.value as number) || ""}
@@ -172,17 +173,14 @@ export function CreateTransactionDialog() {
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>{t("category")}</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-										>
+										<Select onValueChange={field.onChange} value={field.value}>
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue placeholder={t("select")} />
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
-												{CATEGORIES.map((cat) => (
+												{CATEGORIES(t).map((cat) => (
 													<SelectItem key={cat.id} value={cat.id}>
 														{cat.label}
 													</SelectItem>

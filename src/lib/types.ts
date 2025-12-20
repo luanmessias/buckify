@@ -8,7 +8,7 @@ export type Transaction = {
 
 export type Category = {
 	id: string
-	houseHoldId: string
+	householdId: string
 	name: string
 	description: string
 	budget: number

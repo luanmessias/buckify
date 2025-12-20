@@ -1,0 +1,52 @@
+{
+  "Auth": {
+    "login_title": "Buckify",
+    "login_subtitle": "Contrôle financier intelligent",
+    "google_button": "Se connecter avec Google",
+    "connecting": "Connexion...",
+    "connecting_description": "Création de votre session sécurisée.",
+    "success_toast": "Connexion réussie !",
+    "redirecting": "Redirection...",
+    "error_title": "Erreur de connexion",
+    "error_description": "Impossible de s'authentifier avec Google. Veuillez réessayer.",
+    "retry": "Réessayer"
+  },
+  "Transactions": {
+    "month_summary": "Résumé du mois",
+    "total_spent": "Total dépensé",
+    "budget": "Budget",
+    "remaining": "Restant",
+    "hidden_categories": "+ {count} autres catégories cachées dans les ombres...",
+    "new_expense": "Nouvelle dépense",
+    "amount": "Montant (€)",
+    "description": "Description",
+    "category": "Catégorie",
+    "date": "Date",
+    "select": "Sélectionner",
+    "example_dinner": "Ex: Dîner dehors",
+    "saving": "Sauvegarde...",
+    "add_expense": "Ajouter une dépense",
+    "expense_added_success": "Dépense ajoutée avec succès !",
+    "description_min_length": "La description doit avoir au moins 2 caractères.",
+    "amount_min": "Le montant doit être supérieur à 0.",
+    "select_category": "Sélectionnez une catégorie.",
+    "date_required": "La date est requise.",
+    "spent": "dépensé",
+    "available": "disponible",
+    "remaining_label": "Restant :",
+    "logout": "Déconnexion",
+    "categories": {
+      "casa": "Maison",
+      "mercado": "Marché",
+      "transporte": "Transport",
+      "restaurantes": "Restaurants & Loisirs",
+      "saude": "Santé & Soins",
+      "outros": "Autres"
+    },
+    "amount_placeholder": "0.00",
+    "currency_symbol": "€"
+  },
+  "Common": {
+    "firebase_admin_env_error": "Erreur Critique : Variables d'environnement Firebase Admin introuvables. Vérifiez votre .env.local"
+  }
+}

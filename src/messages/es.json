@@ -1,0 +1,52 @@
+{
+  "Auth": {
+    "login_title": "Buckify",
+    "login_subtitle": "Control financiero inteligente",
+    "google_button": "Iniciar sesión con Google",
+    "connecting": "Conectando...",
+    "connecting_description": "Creando tu sesión segura.",
+    "success_toast": "¡Inicio de sesión exitoso!",
+    "redirecting": "Redirigiendo...",
+    "error_title": "Error de conexión",
+    "error_description": "No se pudo autenticar con Google. Inténtalo de nuevo.",
+    "retry": "Intentar"
+  },
+  "Transactions": {
+    "month_summary": "Resumen del Mes",
+    "total_spent": "Total Gastado",
+    "budget": "Presupuesto",
+    "remaining": "Restante",
+    "hidden_categories": "+ {count} otras categorías ocultas en las sombras...",
+    "new_expense": "Nuevo Gasto",
+    "amount": "Monto (€)",
+    "description": "Descripción",
+    "category": "Categoría",
+    "date": "Fecha",
+    "select": "Seleccionar",
+    "example_dinner": "Ej: Cena fuera",
+    "saving": "Guardando...",
+    "add_expense": "Agregar Gasto",
+    "expense_added_success": "¡Gasto agregado exitosamente!",
+    "description_min_length": "La descripción debe tener al menos 2 caracteres.",
+    "amount_min": "El monto debe ser mayor que 0.",
+    "select_category": "Selecciona una categoría.",
+    "date_required": "La fecha es obligatoria.",
+    "spent": "gastado",
+    "available": "disp.",
+    "remaining_label": "Restante:",
+    "logout": "Cerrar sesión",
+    "categories": {
+      "casa": "Casa",
+      "mercado": "Mercado",
+      "transporte": "Transporte",
+      "restaurantes": "Restaurantes y Ocio",
+      "saude": "Salud y Cuidado",
+      "outros": "Otros"
+    },
+    "amount_placeholder": "0.00",
+    "currency_symbol": "€"
+  },
+  "Common": {
+    "firebase_admin_env_error": "Error Crítico: Variables de entorno de Firebase Admin no encontradas. Verifique su .env.local"
+  }
+}

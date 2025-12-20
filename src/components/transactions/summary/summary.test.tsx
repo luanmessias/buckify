@@ -58,7 +58,7 @@ const mockCategories = [
 		color: "#000",
 		icon: "Home",
 		description: "",
-		houseHoldId: "",
+		householdId: "",
 	},
 	{
 		id: "cat2",
@@ -67,7 +67,7 @@ const mockCategories = [
 		color: "#fff",
 		icon: "Party",
 		description: "",
-		houseHoldId: "",
+		householdId: "",
 	},
 ]
 
@@ -187,7 +187,7 @@ describe("Summary Component", () => {
 				color: "#blue",
 				icon: "Car",
 				description: "",
-				houseHoldId: "",
+				householdId: "",
 			},
 			{
 				id: "cat4",
@@ -196,7 +196,7 @@ describe("Summary Component", () => {
 				color: "#green",
 				icon: "Food",
 				description: "",
-				houseHoldId: "",
+				householdId: "",
 			},
 			{
 				id: "cat5",
@@ -205,7 +205,7 @@ describe("Summary Component", () => {
 				color: "",
 				icon: "",
 				description: "",
-				houseHoldId: "",
+				householdId: "",
 			},
 		]
 
@@ -226,6 +226,14 @@ describe("Summary Component", () => {
 				description: "Mercado",
 				date: "2024-05-05",
 				category: "Alimentacao",
+			},
+			{
+				id: "t6",
+				amount: 50,
+				categoryId: "cat5",
+				description: "Consulta",
+				date: "2024-05-06",
+				category: "Saude",
 			},
 		]
 

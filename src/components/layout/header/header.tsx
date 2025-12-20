@@ -2,7 +2,7 @@
 
 import { LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { removeSession } from "@/app/actions/auth"
+import { logout } from "@/app/actions/auth"
 import { ThemeToggle } from "@/components/layout/theme-toggle/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/ui/logo"
@@ -25,7 +25,7 @@ export const Header = () => {
 				<Button
 					variant="ghost"
 					size="icon"
-					onClick={async () => removeSession()}
+					onClick={() => logout()}
 					title={t("logout")}
 				>
 					<LogOut className="h-5 w-5" />

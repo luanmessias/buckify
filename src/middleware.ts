@@ -2,8 +2,10 @@ import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 export const middleware = (request: NextRequest) => {
-	const session = request.cookies.get("buckify_session")?.value
+	const session = request.cookies.get("__session")?.value
+
 	const isAuthPage = request.nextUrl.pathname.startsWith("/login")
+
 	const isDashboardPage =
 		request.nextUrl.pathname === "/" ||
 		request.nextUrl.pathname.startsWith("/transactions")

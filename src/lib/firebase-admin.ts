@@ -42,3 +42,4 @@ const adminApp = createFirebaseAdminApp({
 })
 
 export const dbAdmin = adminApp.firestore()
+export const authAdmin = adminApp.auth()

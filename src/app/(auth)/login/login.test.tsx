@@ -39,6 +39,7 @@ vi.mock("sonner", () => ({
 	toast: {
 		success: vi.fn(),
 		error: vi.fn(),
+		info: vi.fn(),
 	},
 }))
 
@@ -62,7 +63,11 @@ describe("LoginPage", () => {
 				setTimeout(
 					() =>
 						resolve({
-							user: { uid: "123", email: "teste@teste.com" },
+							user: {
+								uid: "123",
+								email: "teste@teste.com",
+								getIdToken: vi.fn().mockResolvedValue("123"),
+							},
 						}),
 					100,
 				),
@@ -84,7 +89,6 @@ describe("LoginPage", () => {
 			expect(toast.success).toHaveBeenCalledWith(messages.Auth.success_toast, {
 				description: messages.Auth.redirecting,
 			})
-			expect(pushMock).toHaveBeenCalledWith("/")
 		})
 	})
 

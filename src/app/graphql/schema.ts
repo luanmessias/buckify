@@ -62,8 +62,8 @@ export const typeDefs = `#graphql
 
 
   type Query {
-    getTransactions(startDate: String, endDate: String): [Transaction]
-    getCategories(houseHoldId: String): [Category]
+    getTransactions(startDate: String!, endDate: String!, householdId: String!): [Transaction]
+    getCategories(householdId: String!): [Category]
     getShoppingHistory: [ShoppingHistory]
     getWishlist: [WishlistItem]
     getProductCatalog: [Product]

@@ -1,9 +1,15 @@
 import { render, screen } from "@testing-library/react"
 import { NextIntlClientProvider } from "next-intl"
 import { Suspense } from "react"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
 import DashboardPage from "./page"
+
+vi.mock("next/headers", () => ({
+	cookies: vi.fn(() => ({
+		get: vi.fn(() => ({ value: "some-household-id" })),
+	})),
+}))
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 	<NextIntlClientProvider locale="pt" messages={{}}>
