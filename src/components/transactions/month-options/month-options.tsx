@@ -41,8 +41,8 @@ export const MonthOptions = ({ month, onSelectDate }: MonthOptionsProps) => {
 	}
 
 	return (
-		<div className="w-full p-4 bg-surface border-b">
-			<nav className="flex gap-5 w-full items-center justify-around">
+		<div className="w-full p-4">
+			<nav className="flex w-full items-center justify-around">
 				<button
 					type="button"
 					className="cursor-pointer hover:opacity-75 transition-opacity uppercase"
@@ -51,10 +51,10 @@ export const MonthOptions = ({ month, onSelectDate }: MonthOptionsProps) => {
 					{labels.prevMonth}
 				</button>
 
-				<div className="flex relative py-3 px-6 border-2 bg-background rounded-lg text-xl font-bold pointer uppercase">
-					<div className="absolute -left-1 top-5.5 w-2 h-2 opacity-50 bg-foreground rotate-45" />
+				<div className="flex relative py-2 px-6 border-2 bg-primary rounded-lg text-xl text-tea text-gray-950 font-bold pointer uppercase">
+					<div className="absolute -left-1 top-4.5 w-2 h-2 bg-background rotate-45" />
 					{labels.selectedMonth}
-					<div className="absolute -right-1 top-5.5 w-2 h-2 opacity-50 bg-foreground rotate-45" />
+					<div className="absolute -right-1 top-4.5 w-2 h-2 bg-background rotate-45" />
 				</div>
 
 				<button

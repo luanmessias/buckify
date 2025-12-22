@@ -22,6 +22,10 @@ export const CategoryCard = ({
 	const percentage = Math.min((amountSpent / budget) * 100, 100)
 	const remaining = budget - amountSpent
 	const isOverBudget = remaining < 0
+	const radiantGradient =
+		"linear-gradient(to left, #5D6F6E, #636E70, #A7B6A3, #81B8B3, #A0D199)"
+	const errorGradient =
+		"linear-gradient(to left, #450a0a, #7f1d1d, #b91c1c, #ef4444)"
 
 	const formatCurrency = (val: number) =>
 		new Intl.NumberFormat("pt-PT", {
@@ -51,7 +55,7 @@ export const CategoryCard = ({
 				<span
 					className={cn(
 						"text-sm font-bold",
-						isOverBudget ? "text-red-500" : "text-emerald-500",
+						isOverBudget ? "text-red-400" : "text-hades-300",
 					)}
 				>
 					{percentage.toFixed(0)}%
@@ -63,7 +67,7 @@ export const CategoryCard = ({
 					className="h-full rounded-full transition-all duration-500 ease-out"
 					style={{
 						width: `${percentage}%`,
-						backgroundColor: isOverBudget ? "#ef4444" : color,
+						background: isOverBudget ? errorGradient : radiantGradient,
 					}}
 				/>
 			</div>
@@ -73,7 +77,7 @@ export const CategoryCard = ({
 				<span
 					className={cn(
 						"font-medium",
-						isOverBudget ? "text-red-400" : "text-emerald-400",
+						isOverBudget ? "text-red-400" : "text-hades-300",
 					)}
 				>
 					{formatCurrency(remaining)}

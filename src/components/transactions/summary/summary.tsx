@@ -12,6 +12,12 @@ interface SummaryProps {
 	categories: Category[]
 }
 
+const RADIANT_PALETTE = ["#A0D199", "#81B8B3", "#A7B6A3", "#636E70", "#5D6F6E"]
+
+const getRadiantColor = (index: number) => {
+	return RADIANT_PALETTE[index % RADIANT_PALETTE.length]
+}
+
 export const Summary = ({ transactions, categories }: SummaryProps) => {
 	const t = useTranslations("Transactions")
 
@@ -39,6 +45,10 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 			})
 			.filter((item) => item.value > 0)
 			.sort((a, b) => b.value - a.value)
+			.map((item, index) => ({
+				...item,
+				color: getRadiantColor(index),
+			}))
 
 		return {
 			totalSpent: totalSpentCalc,
@@ -186,7 +196,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 						key={category.id}
 						name={category.name}
 						icon={category.icon || "MoreHorizontal"}
-						color={category.color || "#ccc"}
+						color="var(--color-hades-300)"
 						amountSpent={category.value}
 						budget={category.budget}
 					/>
