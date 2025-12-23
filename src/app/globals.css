@@ -85,6 +85,7 @@ input[type="date"] {
 
 :root {
 	--radius: 0.25rem;
+	--navbar-height: 5rem;
 
 	--background: oklch(0.96 0.01 260);
 	--foreground: oklch(0.14 0.02 260);

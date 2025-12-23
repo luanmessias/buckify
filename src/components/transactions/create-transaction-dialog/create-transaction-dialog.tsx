@@ -33,6 +33,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
+import { cn } from "@/lib/utils"
 
 const createFormSchema = (t: (key: string) => string) =>
 	z.object({
@@ -102,10 +103,24 @@ export function CreateTransactionDialog() {
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button
-					className="fixed bottom-8 right-8 h-14 w-14 rounded-full shadow-xl bg-primary hover:bg-primary/90 transition-all hover:scale-105 cursor-pointer"
-					size="icon"
+					className={cn(
+						"fixed -top-4 left-1/2 -translate-x-1/2",
+						"rounded-full shadow-xl bg-primary border-3 border-hades-950",
+						"cursor-pointer w-14 h-14",
+						"group relative flex items-center justify-center",
+						"rounded-full bg-primary border-[3px] border-hades-950",
+						"shadow-xl transition-transform hover:scale-110 active:scale-95",
+					)}
 				>
-					<Plus className="h-6 w-6 text-zinc-800" />
+					<div
+						className={cn(
+							"absolute inset-0 -z-10 rounded-full",
+							"bg-linear-to-tr from-(--color-hades-500) to-cyan-400",
+							"opacity-0 blur-none transition-all duration-500",
+							"group-hover:opacity-50 group-hover:blur-sm group-hover:scale-125",
+						)}
+					/>
+					<Plus className="h-full w-full text-hades-950 scale-200" />
 				</Button>
 			</DialogTrigger>
 

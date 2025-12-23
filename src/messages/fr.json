@@ -46,6 +46,15 @@
 		"amount_placeholder": "0.00",
 		"currency_symbol": "€"
 	},
+	"Navigation": {
+		"home": "Accueil",
+		"stats": "Statistiques",
+		"cards": "Cartes",
+		"profile": "Profil",
+		"add_expense": "Nouvelle dépense",
+		"add_category": "Nouvelle catégorie",
+		"read_with_ai": "Lire avec IA"
+	},
 	"Common": {
 		"firebase_admin_env_error": "Erreur Critique : Variables d'environnement Firebase Admin introuvables. Vérifiez votre .env.local"
 	}

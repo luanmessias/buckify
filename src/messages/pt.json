@@ -46,6 +46,15 @@
 		"amount_placeholder": "0.00",
 		"currency_symbol": "€"
 	},
+	"Navigation": {
+		"home": "Início",
+		"stats": "Estatísticas",
+		"cards": "Cartões",
+		"profile": "Perfil",
+		"add_expense": "Novo Gasto",
+		"add_category": "Nova Categoria",
+		"read_with_ai": "Ler com IA"
+	},
 	"Common": {
 		"firebase_admin_env_error": "Erro Crítico: Variáveis de ambiente do Firebase Admin não foram encontradas. Verifique seu .env.local"
 	}

@@ -4,7 +4,6 @@ import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
 import { useState } from "react"
-import { CreateTransactionDialog } from "@/components/transactions/create-transaction-dialog/create-transaction-dialog"
 import { MonthOptions } from "@/components/transactions/month-options/month-options"
 import { Summary } from "@/components/transactions/summary/summary"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -91,8 +90,6 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 					</Card>
 				))}
 			</div>
-
-			<CreateTransactionDialog />
 		</div>
 	)
 }
