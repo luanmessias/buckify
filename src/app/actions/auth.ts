@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
+import { isProduction, SESSION_DURATION } from "@/lib/auth-constants"
 import { authAdmin, dbAdmin } from "@/lib/firebase-admin"
 
 const generateHouseholdId = (userName: string, userId: string) => {
@@ -14,71 +14,69 @@ const generateHouseholdId = (userName: string, userId: string) => {
 }
 
 export const createSession = async (idToken: string) => {
-	const decodedToken = await authAdmin.verifyIdToken(idToken)
-	const { uid, email, name, picture } = decodedToken
+	try {
+		const decodedToken = await authAdmin.verifyIdToken(idToken, true)
+		const { uid, email, name, picture } = decodedToken
 
-	if (!email) throw new Error("Email não fornecido pelo Google")
+		if (!email) throw new Error("Email não fornecido pelo Google")
 
-	const userRef = dbAdmin.collection("users").doc(uid)
-	const userSnap = await userRef.get()
+		const userRef = dbAdmin.collection("users").doc(uid)
+		const userSnap = await userRef.get()
+		let householdId = ""
 
-	let householdId = ""
+		if (!userSnap.exists) {
+			const customId = generateHouseholdId(name || "usuario", uid)
+			await dbAdmin
+				.collection("households")
+				.doc(customId)
+				.set({
+					name: `Família de ${name?.split(" ")[0]}`,
+					createdAt: new Date().toISOString(),
+					ownerId: uid,
+					members: [uid],
+				})
+			householdId = customId
 
-	if (!userSnap.exists) {
-		console.log(`Novo usuário detectado: ${email}. Criando infraestrutura...`)
-
-		const customId = generateHouseholdId(name || "usuario", uid)
-		const newHouseholdRef = dbAdmin.collection("households").doc(customId)
-		householdId = customId
-
-		await newHouseholdRef.set({
-			name: `Família de ${name?.split(" ")[0]}`,
-			createdAt: new Date().toISOString(),
-			ownerId: uid,
-			members: [uid],
-		})
-
-		await userRef.set({
-			uid,
-			email,
-			name,
-			photoURL: picture,
-			createdAt: new Date().toISOString(),
-			currentHouseholdId: householdId,
-		})
-	} else {
-		const userData = userSnap.data()
-		householdId = userData?.currentHouseholdId
-
-		if (!householdId) {
-			throw new Error("Usuário sem vínculo familiar (Household ID missing).")
+			await userRef.set({
+				uid,
+				email,
+				name,
+				photoURL: picture,
+				createdAt: new Date().toISOString(),
+				currentHouseholdId: householdId,
+			})
+		} else {
+			householdId = userSnap.data()?.currentHouseholdId
 		}
+
+		const sessionCookie = await authAdmin.createSessionCookie(idToken, {
+			expiresIn: SESSION_DURATION,
+		})
+
+		cookies().set("__session", sessionCookie, {
+			maxAge: SESSION_DURATION,
+			httpOnly: true,
+			secure: isProduction(),
+			path: "/",
+			sameSite: "lax",
+		})
+
+		cookies().set("householdId", householdId, {
+			maxAge: SESSION_DURATION,
+			httpOnly: true,
+			secure: isProduction(),
+			path: "/",
+			sameSite: "lax",
+		})
+
+		return { success: true }
+	} catch (error: any) {
+		console.error("Auth Action Error:", error)
+		throw error
 	}
-
-	const expiresIn = 60 * 60 * 24 * 5 * 1000
-	const sessionCookie = await authAdmin.createSessionCookie(idToken, {
-		expiresIn,
-	})
-
-	cookies().set("__session", sessionCookie, {
-		maxAge: expiresIn,
-		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
-		path: "/",
-	})
-
-	cookies().set("householdId", householdId, {
-		maxAge: expiresIn,
-		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
-		path: "/",
-	})
-
-	redirect("/")
 }
 
 export async function logout() {
 	cookies().delete("__session")
 	cookies().delete("householdId")
-	redirect("/login")
 }

@@ -38,10 +38,10 @@ describe("CategoryCard Component", () => {
 		)
 
 		expect(screen.getByText("20%")).toBeInTheDocument()
-		expect(screen.getByText("20%")).toHaveClass("text-emerald-500")
+		expect(screen.getByText("20%")).toHaveClass("text-hades-300")
 
 		expect(screen.getByText(/800,00.*€/)).toBeInTheDocument()
-		expect(screen.getByText(/800,00.*€/)).toHaveClass("text-emerald-400")
+		expect(screen.getByText(/800,00.*€/)).toHaveClass("text-hades-300")
 	})
 
 	it("should handle over budget state correctly", () => {
@@ -58,7 +58,7 @@ describe("CategoryCard Component", () => {
 		)
 
 		expect(screen.getByText("100%")).toBeInTheDocument()
-		expect(screen.getByText("100%")).toHaveClass("text-red-500")
+		expect(screen.getByText("100%")).toHaveClass("text-red-400")
 
 		expect(screen.getByText(/-200,00.*€/)).toBeInTheDocument()
 		expect(screen.getByText(/-200,00.*€/)).toHaveClass("text-red-400")

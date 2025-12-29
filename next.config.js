@@ -5,9 +5,20 @@ import createNextIntlPlugin from "next-intl/plugin"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const withNextIntl = createNextIntlPlugin()
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-	turbopack: {
-		root: path.resolve(__dirname),
+	logging: {
+		fetches: {
+			fullUrl: true,
+		},
+	},
+	async rewrites() {
+		return [
+			{
+				source: "/__/auth/:path*",
+				destination: `https://${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.firebaseapp.com/__/auth/:path*`,
+			},
+		]
 	},
 }
 

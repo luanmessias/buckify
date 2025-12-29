@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
@@ -127,6 +128,9 @@ export function CreateTransactionDialog() {
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>{t("new_expense")}</DialogTitle>
+					<DialogDescription className="sr-only">
+						{t("new_expense")}
+					</DialogDescription>
 				</DialogHeader>
 
 				<Form {...form}>

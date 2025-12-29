@@ -1,11 +1,9 @@
 "use client"
 
-import { signInWithPopup } from "firebase/auth"
+import { signInWithPopup, signInWithRedirect } from "firebase/auth"
 import { useTranslations } from "next-intl"
-import type { JSX } from "react"
 import { useState } from "react"
 import { toast } from "sonner"
-import { createSession } from "@/app/actions/auth"
 import { RadiantButton } from "@/components/layout/radiant-button/radiant-button"
 import {
 	Card,
@@ -14,40 +12,24 @@ import {
 	CardHeader,
 } from "@/components/ui/card"
 import { Logo } from "@/components/ui/logo"
+import { isLocalhost } from "@/lib/auth-constants"
 import { auth, googleProvider } from "@/lib/firebase"
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage() {
 	const [isLoading, setIsLoading] = useState(false)
-
 	const t = useTranslations("Auth")
 
-	const handleGoogleLogin = async () => {
+	const handleGoogleLogin = () => {
 		setIsLoading(true)
+		const authFn = isLocalhost() ? signInWithPopup : signInWithRedirect
 
-		try {
-			const userCredential = await signInWithPopup(auth, googleProvider)
-			const idToken = await userCredential.user.getIdToken()
-
-			toast.info(t("connecting"), {
-				description: t("connecting_description"),
-			})
-
-			await createSession(idToken)
-
-			toast.success(t("success_toast"), {
-				description: t("redirecting"),
-			})
-		} catch (error) {
-			console.error(error)
-			toast.error(t("error_title"), {
-				description: t("error_description"),
-				action: {
-					label: t("retry"),
-					onClick: () => handleGoogleLogin(),
-				},
-			})
+		authFn(auth, googleProvider).catch((error: any) => {
+			console.error("Erro no Login:", error)
+			if (error.code !== "auth/popup-closed-by-user") {
+				toast.error("Não foi possível iniciar o login.")
+			}
 			setIsLoading(false)
-		}
+		})
 	}
 
 	return (

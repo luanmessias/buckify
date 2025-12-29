@@ -1,15 +1,10 @@
 "use client"
 
-import { LogOut } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { logout } from "@/app/actions/auth"
+import { LogoutButton } from "@/components/auth/logout-button/logout-button"
 import { ThemeToggle } from "@/components/layout/theme-toggle/theme-toggle"
-import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/ui/logo"
 
 export const Header = () => {
-	const t = useTranslations("Transactions")
-
 	return (
 		<header
 			className="
@@ -19,17 +14,11 @@ export const Header = () => {
 			<div>
 				<Logo className="text-primary h-7" />
 			</div>
+
 			<div>
 				<ThemeToggle />
 
-				<Button
-					variant="ghost"
-					size="icon"
-					onClick={() => logout()}
-					title={t("logout")}
-				>
-					<LogOut className="h-5 w-5" />
-				</Button>
+				<LogoutButton />
 			</div>
 		</header>
 	)

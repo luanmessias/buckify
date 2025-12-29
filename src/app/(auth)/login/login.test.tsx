@@ -1,29 +1,36 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { NextIntlClientProvider } from "next-intl"
 import { toast } from "sonner"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { createSession } from "@/app/actions/auth"
 import messages from "@/messages/en.json"
+import { AuthProvider } from "@/providers/auth-provider"
 import LoginPage from "./page"
 
-const { signInMock, pushMock } = vi.hoisted(() => {
-	return {
-		signInMock: vi.fn(),
-		pushMock: vi.fn(),
-		createSessionMock: vi.fn(),
-	}
-})
+const { signInWithPopupMock, refreshMock, onAuthStateChangedMock } = vi.hoisted(
+	() => {
+		return {
+			signInWithPopupMock: vi.fn(),
+			refreshMock: vi.fn(),
+			onAuthStateChangedMock: vi.fn(() => vi.fn()),
+		}
+	},
+)
 
 vi.mock("next/navigation", () => ({
 	useRouter: () => ({
-		push: pushMock,
+		refresh: refreshMock,
 	}),
 }))
 
 vi.mock("firebase/auth", () => ({
 	getAuth: vi.fn(),
 	GoogleAuthProvider: vi.fn(),
-	signInWithPopup: signInMock,
+	signInWithPopup: signInWithPopupMock,
+	signInWithRedirect: vi.fn(),
+	getRedirectResult: vi.fn().mockResolvedValue(null),
+	onAuthStateChanged: onAuthStateChangedMock,
 }))
 
 vi.mock("@/lib/firebase", () => ({
@@ -32,7 +39,7 @@ vi.mock("@/lib/firebase", () => ({
 }))
 
 vi.mock("@/app/actions/auth", () => ({
-	createSession: vi.fn().mockResolvedValue(true),
+	createSession: vi.fn(),
 }))
 
 vi.mock("sonner", () => ({
@@ -43,60 +50,62 @@ vi.mock("sonner", () => ({
 	},
 }))
 
+const renderWithProviders = (ui: React.ReactElement) => {
+	return render(
+		<NextIntlClientProvider locale="en" messages={messages}>
+			<AuthProvider>{ui}</AuthProvider>
+		</NextIntlClientProvider>,
+	)
+}
+
 describe("LoginPage", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
+		sessionStorage.clear()
 	})
 
 	it("should render the login button with google", () => {
-		render(<LoginPage />)
-
+		renderWithProviders(<LoginPage />)
 		expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
 	})
 
-	it("should call the signInWithPopup and redirect when clicked", async () => {
+	it("should call createSession and refresh router on successful login", async () => {
 		const user = userEvent.setup()
-		render(<LoginPage />)
+		const mockUser = {
+			uid: "123",
+			email: "teste@teste.com",
+			getIdToken: vi.fn().mockResolvedValue("mock-id-token"),
+		}
 
-		signInMock.mockImplementationOnce(() => {
-			return new Promise((resolve) =>
-				setTimeout(
-					() =>
-						resolve({
-							user: {
-								uid: "123",
-								email: "teste@teste.com",
-								getIdToken: vi.fn().mockResolvedValue("123"),
-							},
-						}),
-					100,
-				),
-			)
+		onAuthStateChangedMock.mockImplementation((auth, callback) => {
+			callback(mockUser)
+			return vi.fn()
 		})
 
-		const button = screen.getByRole("button", {
-			name: messages.Auth.google_button,
-		})
+		;(createSession as vi.Mock).mockResolvedValue(true)
 
-		await user.click(button)
-
-		expect(button).toBeDisabled()
-		expect(screen.getByText(messages.Auth.connecting)).toBeInTheDocument()
+		renderWithProviders(<LoginPage />)
 
 		await waitFor(() => {
-			expect(signInMock).toHaveBeenCalled()
-			expect(createSession).toHaveBeenCalledWith("123")
-			expect(toast.success).toHaveBeenCalledWith(messages.Auth.success_toast, {
-				description: messages.Auth.redirecting,
-			})
+			expect(createSession).toHaveBeenCalledWith("mock-id-token")
+		})
+
+		await waitFor(() => {
+			expect(toast.success).toHaveBeenCalledWith("Login realizado!")
+		})
+
+		await waitFor(() => {
+			expect(refreshMock).toHaveBeenCalled()
 		})
 	})
 
 	it("should display the toast error if login fails", async () => {
 		const user = userEvent.setup()
-		render(<LoginPage />)
+		renderWithProviders(<LoginPage />)
 
-		signInMock.mockRejectedValueOnce(new Error("Popup closed"))
+		signInWithPopupMock.mockRejectedValueOnce({
+			code: "auth/popup-closed-by-user",
+		})
 
 		const button = screen.getByRole("button", {
 			name: messages.Auth.google_button,
@@ -105,21 +114,16 @@ describe("LoginPage", () => {
 		await user.click(button)
 
 		await waitFor(() => {
-			expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
 			expect(button).not.toBeDisabled()
-			expect(toast.error).toHaveBeenCalledWith(messages.Auth.error_title, {
-				description: messages.Auth.error_description,
-				action: expect.objectContaining({ label: messages.Auth.retry }),
-			})
-			expect(pushMock).not.toHaveBeenCalled()
+			expect(toast.error).not.toHaveBeenCalled()
 		})
 	})
 
 	it("should display the toast error for network failure", async () => {
 		const user = userEvent.setup()
-		render(<LoginPage />)
+		renderWithProviders(<LoginPage />)
 
-		signInMock.mockRejectedValueOnce(new Error("Network error"))
+		signInWithPopupMock.mockRejectedValueOnce(new Error("Network error"))
 
 		const button = screen.getByRole("button", {
 			name: messages.Auth.google_button,
@@ -128,13 +132,10 @@ describe("LoginPage", () => {
 		await user.click(button)
 
 		await waitFor(() => {
-			expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
 			expect(button).not.toBeDisabled()
-			expect(toast.error).toHaveBeenCalledWith(messages.Auth.error_title, {
-				description: messages.Auth.error_description,
-				action: expect.objectContaining({ label: messages.Auth.retry }),
-			})
-			expect(pushMock).not.toHaveBeenCalled()
+			expect(toast.error).toHaveBeenCalledWith(
+				"Não foi possível iniciar o login.",
+			)
 		})
 	})
 })

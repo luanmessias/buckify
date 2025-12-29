@@ -38,7 +38,9 @@ describe("CreateTransactionDialog", () => {
 		const button = screen.getByRole("button")
 		await user.click(button)
 
-		expect(screen.getByText("new_expense")).toBeInTheDocument()
+		expect(
+			screen.getByRole("heading", { name: "new_expense" }),
+		).toBeInTheDocument()
 		expect(
 			screen.getByPlaceholderText("amount_placeholder"),
 		).toBeInTheDocument()
