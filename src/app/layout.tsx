@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
 import { Roboto, Roboto_Mono } from "next/font/google"
 import "./globals.css"
+import { cookies } from "next/headers"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
 import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
 import { ThemeProvider } from "@/components/providers/theme-provider/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/providers/auth-provider"
+import StoreProvider from "@/providers/store-provider"
 
 const geistSans = Roboto({
 	variable: "--roboto",
@@ -32,26 +34,31 @@ export default async function RootLayout({
 	const locale = await getLocale()
 	const messages = await getMessages()
 
+	const cookieStore = cookies()
+	const householdId = cookieStore.get("householdId")?.value || ""
+
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<AuthProvider>
-					<ApolloWrapper>
-						<NextIntlClientProvider messages={messages}>
-							<ThemeProvider
-								attribute="class"
-								defaultTheme="system"
-								enableSystem
-								disableTransitionOnChange
-							>
-								{children}
-								<Toaster />
-							</ThemeProvider>
-						</NextIntlClientProvider>
-					</ApolloWrapper>
-				</AuthProvider>
+				<NextIntlClientProvider messages={messages}>
+					<StoreProvider initialHouseholdId={householdId}>
+						<AuthProvider>
+							<ApolloWrapper>
+								<ThemeProvider
+									attribute="class"
+									defaultTheme="system"
+									enableSystem
+									disableTransitionOnChange
+								>
+									{children}
+									<Toaster />
+								</ThemeProvider>
+							</ApolloWrapper>
+						</AuthProvider>
+					</StoreProvider>
+				</NextIntlClientProvider>
 			</body>
 		</html>
 	)
