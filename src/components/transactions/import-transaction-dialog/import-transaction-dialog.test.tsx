@@ -1,0 +1,219 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+import { scanBankStatement } from "@/actions/scan-statement"
+import { ImportTransactionDialog } from "./import-transaction-dialog"
+
+// Mock dependencies
+vi.mock("@/actions/scan-statement", () => ({
+	scanBankStatement: vi.fn(),
+}))
+
+vi.mock("sonner", () => ({
+	toast: {
+		success: vi.fn(),
+		error: vi.fn(),
+	},
+}))
+
+// Mock ScrollArea
+vi.mock("@/components/ui/scroll-area", () => ({
+	ScrollArea: ({ children }: any) => (
+		<div data-testid="scroll-area">{children}</div>
+	),
+}))
+
+describe("ImportTransactionDialog", () => {
+	const mockOnClose = vi.fn()
+	const mockOnConfirm = vi.fn()
+
+	beforeEach(() => {
+		vi.clearAllMocks()
+	})
+
+	it("should render nothing when not open", () => {
+		render(
+			<ImportTransactionDialog
+				isOpen={false}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+			/>,
+		)
+		expect(
+			screen.queryByText("Importar Extrato com IA"),
+		).not.toBeInTheDocument()
+	})
+
+	it("should render upload step when open", () => {
+		render(
+			<ImportTransactionDialog
+				isOpen={true}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+			/>,
+		)
+		expect(screen.getByText("Importar Extrato com IA")).toBeInTheDocument()
+		expect(screen.getByText("Clique para enviar")).toBeInTheDocument()
+	})
+
+	it("should handle file upload and display transactions", async () => {
+		const mockTransactions = [
+			{
+				id: "1",
+				date: "2024-01-01",
+				description: "Test Transaction",
+				amount: 100,
+				categoryId: "cat1",
+				isPossibleDuplicate: false,
+			},
+		]
+		const mockCategories = [{ id: "cat1", name: "Food" }]
+
+		;(scanBankStatement as any).mockResolvedValue({
+			success: true,
+			data: mockTransactions,
+			categories: mockCategories,
+		})
+
+		render(
+			<ImportTransactionDialog
+				isOpen={true}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+			/>,
+		)
+
+		const file = new File(["dummy content"], "statement.pdf", {
+			type: "application/pdf",
+		})
+		// Use document.querySelector because Dialog renders in a Portal (outside container)
+		const input = document.querySelector('input[type="file"]')
+
+		expect(input).toBeInTheDocument()
+		fireEvent.change(input!, { target: { files: [file] } })
+
+		await waitFor(() => {
+			expect(screen.getByText("Test Transaction")).toBeInTheDocument()
+		})
+
+		expect(screen.getByText("Food")).toBeInTheDocument()
+	})
+
+	it("should show duplicate warning", async () => {
+		const mockTransactions = [
+			{
+				id: "2",
+				date: "2024-01-01",
+				description: "Dup Transaction",
+				amount: 100,
+				categoryId: "cat1",
+				isPossibleDuplicate: true,
+			},
+		]
+		;(scanBankStatement as any).mockResolvedValue({
+			success: true,
+			data: mockTransactions,
+			categories: [],
+		})
+
+		render(
+			<ImportTransactionDialog
+				isOpen={true}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+			/>,
+		)
+
+		const input = document.querySelector('input[type="file"]')
+		fireEvent.change(input!, { target: { files: [new File([], "t.pdf")] } })
+
+		await waitFor(() => {
+			expect(screen.getByText("Dup Transaction")).toBeInTheDocument()
+		})
+
+		const rowText = screen.getByText("Dup Transaction")
+		const row = rowText.closest(".border") // seeking the container with border class
+		expect(row).toHaveClass("bg-amber-500/10")
+	})
+
+	it("should call onConfirm with transactions", async () => {
+		const mockTransactions = [
+			{
+				id: "3",
+				date: "2024-01-01",
+				description: "Test Transaction",
+				amount: 100,
+				categoryId: "cat1",
+				isPossibleDuplicate: false,
+			},
+		]
+		;(scanBankStatement as any).mockResolvedValue({
+			success: true,
+			data: mockTransactions,
+			categories: [{ id: "cat1", name: "Food" }],
+		})
+
+		render(
+			<ImportTransactionDialog
+				isOpen={true}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+			/>,
+		)
+
+		const input = document.querySelector('input[type="file"]')
+		fireEvent.change(input!, { target: { files: [new File([], "t.pdf")] } })
+
+		await waitFor(() => {
+			expect(screen.getByText("Confirmar Importação")).toBeInTheDocument()
+		})
+
+		fireEvent.click(screen.getByText("Confirmar Importação"))
+
+		expect(mockOnConfirm).toHaveBeenCalled()
+		expect(mockOnConfirm.mock.calls[0][0][0]).toMatchObject({
+			description: "Test Transaction",
+		})
+	})
+
+	it("should remove an item", async () => {
+		const mockTransactions = [
+			{
+				id: "4",
+				date: "2024-01-01",
+				description: "To Remove",
+				amount: 100,
+				categoryId: "cat1",
+				isPossibleDuplicate: false,
+			},
+		]
+		;(scanBankStatement as any).mockResolvedValue({
+			success: true,
+			data: mockTransactions,
+			categories: [],
+		})
+
+		render(
+			<ImportTransactionDialog
+				isOpen={true}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+			/>,
+		)
+
+		const input = document.querySelector('input[type="file"]')
+		fireEvent.change(input!, { target: { files: [new File([], "t.pdf")] } })
+
+		await waitFor(() => {
+			expect(screen.getByText("To Remove")).toBeInTheDocument()
+		})
+
+		const row = screen.getByText("To Remove").closest(".border")
+		const removeBtn = row?.querySelector("button")
+
+		fireEvent.click(removeBtn!)
+
+		await waitFor(() => {
+			expect(screen.queryByText("To Remove")).not.toBeInTheDocument()
+		})
+	})
+})

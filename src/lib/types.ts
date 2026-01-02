@@ -15,3 +15,7 @@ export type Category = {
 	color: string
 	icon: string
 }
+
+export type ScannedTransaction = Omit<Transaction, "id"> & {
+	isPossibleDuplicate?: boolean
+}

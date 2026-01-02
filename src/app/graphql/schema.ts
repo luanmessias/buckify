@@ -60,6 +60,21 @@ export const typeDefs = `#graphql
     createdAt: Float
   }
 
+  input CreateTransactionInput {
+    date: String!
+    description: String!
+    amount: Float!
+    categoryId: String!
+  }
+
+  type MutationResponse {
+    success: Boolean!
+    message: String
+  }
+
+  type Mutation {
+    createManyTransactions(householdId: String!, transactions: [CreateTransactionInput!]!): MutationResponse
+  }
 
   type Query {
     getTransactions(startDate: String!, endDate: String!, householdId: String!): [Transaction]
