@@ -1,81 +1,165 @@
 "use client"
 
+import { gql } from "@apollo/client"
+import { useMutation } from "@apollo/client/react"
 import { type LucideIcon, Plus, ScanText, Tag, Wallet } from "lucide-react"
 import { useState } from "react"
+import { toast } from "sonner"
+import { ImportTransactionDialog } from "@/components/transactions/import-transaction-dialog/import-transaction-dialog"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
+import { useAppSelector } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
+
+const CREATE_MANY_TRANSACTIONS = gql`
+  mutation CreateManyTransactions($householdId: String!, $transactions: [CreateTransactionInput!]!) {
+    createManyTransactions(householdId: $householdId, transactions: $transactions) {
+      success
+      message
+    }
+  }
+ `
+
+interface CreateManyTransactionsResult {
+	createManyTransactions: {
+		success: boolean
+		message: string
+	}
+}
+
+interface TransactionDraft {
+	date: string
+	description: string
+	amount: number
+	categoryId: string
+}
 
 export const AddNavigation = () => {
 	const [isOpen, setIsOpen] = useState(false)
+	const [showImportModal, setShowImportModal] = useState(false)
+
+	const householdId = useAppSelector((state) => state.household.id)
+
+	const [createManyTransactions, { loading }] =
+		useMutation<CreateManyTransactionsResult>(CREATE_MANY_TRANSACTIONS, {
+			refetchQueries: ["GetDashboardData"],
+			awaitRefetchQueries: true,
+		})
 
 	const toggleMenu = () => setIsOpen(!isOpen)
 
+	const handleOpenImportModal = () => {
+		setShowImportModal(true)
+		setIsOpen(false)
+	}
+
+	const handleImportConfirm = async (transactions: TransactionDraft[]) => {
+		try {
+			if (!householdId) {
+				toast.error("Erro de sessão. Recarregue a página.")
+				return
+			}
+
+			const cleanTransactions = transactions.map((t) => ({
+				date: t.date,
+				description: t.description,
+				amount: Number(t.amount),
+				categoryId: t.categoryId,
+			}))
+
+			const { data } = await createManyTransactions({
+				variables: {
+					householdId,
+					transactions: cleanTransactions,
+				},
+			})
+
+			if (data?.createManyTransactions?.success) {
+				toast.success(data.createManyTransactions.message)
+				setIsOpen(false)
+				setShowImportModal(false)
+			} else {
+				toast.error(`Erro ao salvar: ${data?.createManyTransactions?.message}`)
+			}
+		} catch (error) {
+			console.error(error)
+			toast.error("Erro ao salvar transações")
+		}
+	}
+
 	return (
-		<div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-center justify-center visible">
-			<div
-				className={cn(
-					"absolute bottom-24 flex flex-col-reverse items-center gap-3",
-					isOpen ? "pointer-events-auto" : "pointer-events-none",
-				)}
-			>
-				<ActionPill
-					isOpen={isOpen}
-					icon={Wallet}
-					label="Novo Gasto"
-					onClick={() => console.log("Gasto")}
-					delay="delay-[50ms]"
-				/>
-
-				<ActionPill
-					isOpen={isOpen}
-					icon={Tag}
-					label="Nova Categoria"
-					onClick={() => console.log("Categoria")}
-					delay="delay-[100ms]"
-				/>
-
-				<ActionPill
-					isOpen={isOpen}
-					icon={ScanText}
-					label="Ler com IA"
-					isPremium
-					onClick={() => console.log("IA")}
-					delay="delay-[150ms]"
-				/>
-			</div>
-
-			<Button
-				className={cn(
-					"group relative z-50 cursor-pointer",
-					"w-16 h-16 p-0 rounded-full",
-					"bg-primary text-hades-950 border-[3px] border-hades-950",
-					"shadow-[0_0_20px_rgba(var(--color-hades-500-rgb),0.3)]",
-					"hover:scale-105 active:scale-95 transition-all duration-300",
-					"flex items-center justify-center overflow-visible",
-					"[&_svg]:size-6",
-				)}
-				onClick={toggleMenu}
-			>
+		<>
+			<div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-center justify-center visible">
 				<div
 					className={cn(
-						"absolute left-1 right-1 top-4 h-full -z-10 rounded-full",
-						"bg-linear-to-tr from-(--color-hades-500) to-cyan-400",
-						"opacity-0 blur-lg transition-all duration-500",
-						isOpen && "opacity-60 translate-y-2 scale-110",
+						"absolute bottom-24 flex flex-col-reverse items-center gap-3",
+						isOpen ? "pointer-events-auto" : "pointer-events-none",
 					)}
-				/>
+				>
+					<ActionPill
+						isOpen={isOpen}
+						icon={Wallet}
+						label="Novo Gasto"
+						onClick={() => console.log("Gasto")}
+						delay="delay-[50ms]"
+					/>
 
-				<Plus
-					strokeWidth={3}
+					<ActionPill
+						isOpen={isOpen}
+						icon={Tag}
+						label="Nova Categoria"
+						onClick={() => console.log("Categoria")}
+						delay="delay-[100ms]"
+					/>
+
+					<ActionPill
+						isOpen={isOpen}
+						icon={ScanText}
+						label="Ler com IA"
+						onClick={handleOpenImportModal}
+						delay="delay-[150ms]"
+					/>
+				</div>
+
+				<Button
 					className={cn(
-						"text-hades-950",
-						"transition-transform duration-300 ease-in-out",
-						isOpen && "rotate-135",
+						"group relative z-50 cursor-pointer",
+						"w-16 h-16 p-0 rounded-full",
+						"bg-primary text-hades-950 border-[3px] border-hades-950",
+						"shadow-[0_0_20px_rgba(var(--color-hades-500-rgb),0.3)]",
+						"hover:scale-105 active:scale-95 transition-all duration-300",
+						"flex items-center justify-center overflow-visible",
+						"[&_svg]:size-6",
 					)}
-				/>
-			</Button>
-		</div>
+					onClick={toggleMenu}
+				>
+					<div
+						className={cn(
+							"absolute left-1 right-1 top-4 h-full -z-10 rounded-full",
+							"bg-linear-to-tr from-(--color-hades-500) to-cyan-400",
+							"opacity-0 blur-lg transition-all duration-500",
+							isOpen && "opacity-60 translate-y-2 scale-110",
+						)}
+					/>
+
+					<Plus
+						strokeWidth={3}
+						className={cn(
+							"text-hades-950",
+							"transition-transform duration-300 ease-in-out",
+							isOpen && "rotate-135",
+						)}
+					/>
+				</Button>
+			</div>
+
+			<ImportTransactionDialog
+				isOpen={showImportModal}
+				onClose={() => setShowImportModal(false)}
+				onConfirm={handleImportConfirm}
+				isSubmitting={loading}
+			/>
+		</>
 	)
 }
 
@@ -101,9 +185,8 @@ const ActionPill = ({
 			type="button"
 			onClick={onClick}
 			className={cn(
-				"group flex items-center justify-start gap-3 pl-2 pr-4 py-2 rounded-full w-48",
+				"group flex items-center cursor-pointer justify-start gap-3 pl-2 pr-4 py-2 rounded-full w-48",
 				"border backdrop-blur-md shadow-lg transition-all duration-300 ease-out",
-
 				"bg-[#1a1d21]/90 border-white/10 text-muted-foreground",
 				"hover:bg-[#1a1d21] hover:border-(--color-hades-500) hover:text-white hover:scale-105",
 

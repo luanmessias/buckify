@@ -64,6 +64,8 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 			currency: "EUR",
 		}).format(value)
 
+	const hasData = totalSpent > 0
+
 	return (
 		<section className="p-4">
 			<div className="relative rounded-2xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
@@ -76,45 +78,49 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 
 					<div className="flex flex-col md:flex-row items-center justify-between gap-8">
 						<div className="relative h-60 w-60 shrink-0">
-							<ResponsiveContainer width="100%" height="100%">
-								<PieChart>
-									<Pie
-										data={chartData}
-										dataKey="value"
-										nameKey="name"
-										cx="50%"
-										cy="50%"
-										innerRadius={65}
-										outerRadius={80}
-										paddingAngle={5}
-										cornerRadius={4}
-										stroke="none"
-									>
-										{chartData.map((entry) => (
-											<Cell
-												key={entry.id}
-												fill={entry.color || "#333"}
-												className="stroke-card stroke-2"
-											/>
-										))}
-									</Pie>
-									<Tooltip
-										cursor={false}
-										formatter={(value: number | undefined) =>
-											formatCurrency(value ?? 0)
-										}
-										contentStyle={{
-											backgroundColor: "#1a1d21",
-											borderColor: "#2e3238",
-											color: "#e5e5e5",
-											borderRadius: "8px",
-											boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
-											fontSize: "0.875rem",
-										}}
-										itemStyle={{ color: "#e5e5e5" }}
-									/>
-								</PieChart>
-							</ResponsiveContainer>
+							{hasData ? (
+								<ResponsiveContainer width="100%" height="100%">
+									<PieChart>
+										<Pie
+											data={chartData}
+											dataKey="value"
+											nameKey="name"
+											cx="50%"
+											cy="50%"
+											innerRadius={65}
+											outerRadius={80}
+											paddingAngle={5}
+											cornerRadius={4}
+											stroke="none"
+										>
+											{chartData.map((entry) => (
+												<Cell
+													key={entry.id}
+													fill={entry.color || "#333"}
+													className="stroke-card stroke-2"
+												/>
+											))}
+										</Pie>
+										<Tooltip
+											cursor={false}
+											formatter={(value: number | undefined) =>
+												formatCurrency(value ?? 0)
+											}
+											contentStyle={{
+												backgroundColor: "#1a1d21",
+												borderColor: "#2e3238",
+												color: "#e5e5e5",
+												borderRadius: "8px",
+												boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
+												fontSize: "0.875rem",
+											}}
+											itemStyle={{ color: "#e5e5e5" }}
+										/>
+									</PieChart>
+								</ResponsiveContainer>
+							) : (
+								<div className="w-full h-full rounded-full border-15 border-muted/10 flex items-center justify-center animate-in fade-in duration-500" />
+							)}
 
 							<div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
 								<span className="text-muted-foreground text-[10px] font-medium uppercase tracking-widest mb-1">
