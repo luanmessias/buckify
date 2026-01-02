@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@apollo/protobufjs'
+  - '@firebase/util'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - esbuild
+  - msw
+  - protobufjs
