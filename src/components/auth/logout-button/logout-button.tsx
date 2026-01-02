@@ -14,6 +14,7 @@ export function LogoutButton() {
 	const router = useRouter()
 
 	const handleLogout = async () => {
+		sessionStorage.removeItem("login_toast_shown")
 		await signOut(auth)
 		await logout()
 

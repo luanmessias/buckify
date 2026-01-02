@@ -21,7 +21,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			try {
 				const idToken = await user.getIdToken()
 				await createSession(idToken)
-				toast.success("Login realizado!")
+
+				if (!sessionStorage.getItem("login_toast_shown")) {
+					toast.success("Login realizado!")
+					sessionStorage.setItem("login_toast_shown", "true")
+				}
 
 				router.refresh()
 			} catch (error) {
