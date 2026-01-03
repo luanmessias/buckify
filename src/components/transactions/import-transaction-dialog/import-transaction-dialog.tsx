@@ -27,12 +27,8 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
-import type { ScannedTransaction } from "@/lib/types"
-
-interface Category {
-	id: string
-	name: string
-}
+import { useAppSelector } from "@/lib/hooks"
+import type { Category, ScannedTransaction } from "@/lib/types"
 
 interface TransactionDraft {
 	id: string
@@ -63,17 +59,16 @@ export function ImportTransactionDialog({
 	onConfirm,
 	isSubmitting = false,
 }: ImportTransactionDialogProps) {
+	const categories = useAppSelector((state) => state.categories.items)
 	const [step, setStep] = useState<"upload" | "review">("upload")
 	const [isAnalyzing, setIsAnalyzing] = useState(false)
 	const [transactions, setTransactions] = useState<TransactionDraft[]>([])
-	const [categories, setCategories] = useState<Category[]>([])
 
 	useEffect(() => {
 		if (!isOpen) {
 			const timer = setTimeout(() => {
 				setStep("upload")
 				setTransactions([])
-				setCategories([])
 				setIsAnalyzing(false)
 			}, 300)
 
@@ -104,7 +99,6 @@ export function ImportTransactionDialog({
 				id: Math.random().toString(36).substr(2, 9),
 			}))
 			setTransactions(transactionsWithIds)
-			setCategories(result.categories || [])
 			setStep("review")
 			toast.success(`${result.data.length} transações encontradas!`)
 		} else {
@@ -130,7 +124,6 @@ export function ImportTransactionDialog({
 	const handleClose = () => {
 		setStep("upload")
 		setTransactions([])
-		setCategories([])
 		onClose()
 	}
 

@@ -3,10 +3,12 @@
 import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MonthOptions } from "@/components/transactions/month-options/month-options"
 import { Summary } from "@/components/transactions/summary/summary"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { setCategories } from "@/lib/features/categories/categories-slice"
+import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
 
 interface GetTransactionsData {
@@ -39,6 +41,7 @@ interface DashboardViewProps {
 }
 
 export function DashboardView({ householdId }: DashboardViewProps) {
+	const dispatch = useAppDispatch()
 	const [currentMonth, setCurrentMonth] = useState(
 		format(new Date(), "yyyy-MM"),
 	)
@@ -54,6 +57,12 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 			householdId: householdId,
 		},
 	})
+
+	useEffect(() => {
+		if (data.getCategories) {
+			dispatch(setCategories(data.getCategories))
+		}
+	}, [data.getCategories, dispatch])
 
 	const handleMonthChange = (month: string) => {
 		setCurrentMonth(month)

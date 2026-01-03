@@ -1,6 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { Provider } from "react-redux"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { scanBankStatement } from "@/actions/scan-statement"
+import { setCategories } from "@/lib/features/categories/categories-slice"
+import { makeStore } from "@/lib/store"
 import { ImportTransactionDialog } from "./import-transaction-dialog"
 
 // Mock dependencies
@@ -22,6 +25,10 @@ vi.mock("@/components/ui/scroll-area", () => ({
 	),
 }))
 
+const renderWithProvider = (ui: React.ReactElement, store = makeStore()) => {
+	return render(<Provider store={store}>{ui}</Provider>)
+}
+
 describe("ImportTransactionDialog", () => {
 	const mockOnClose = vi.fn()
 	const mockOnConfirm = vi.fn()
@@ -31,7 +38,7 @@ describe("ImportTransactionDialog", () => {
 	})
 
 	it("should render nothing when not open", () => {
-		render(
+		renderWithProvider(
 			<ImportTransactionDialog
 				isOpen={false}
 				onClose={mockOnClose}
@@ -44,7 +51,7 @@ describe("ImportTransactionDialog", () => {
 	})
 
 	it("should render upload step when open", () => {
-		render(
+		renderWithProvider(
 			<ImportTransactionDialog
 				isOpen={true}
 				onClose={mockOnClose}
@@ -74,12 +81,16 @@ describe("ImportTransactionDialog", () => {
 			categories: mockCategories,
 		})
 
-		render(
+		const store = makeStore()
+		store.dispatch(setCategories(mockCategories))
+
+		renderWithProvider(
 			<ImportTransactionDialog
 				isOpen={true}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}
 			/>,
+			store,
 		)
 
 		const file = new File(["dummy content"], "statement.pdf", {
@@ -115,7 +126,7 @@ describe("ImportTransactionDialog", () => {
 			categories: [],
 		})
 
-		render(
+		renderWithProvider(
 			<ImportTransactionDialog
 				isOpen={true}
 				onClose={mockOnClose}
@@ -152,7 +163,7 @@ describe("ImportTransactionDialog", () => {
 			categories: [{ id: "cat1", name: "Food" }],
 		})
 
-		render(
+		renderWithProvider(
 			<ImportTransactionDialog
 				isOpen={true}
 				onClose={mockOnClose}
@@ -192,7 +203,7 @@ describe("ImportTransactionDialog", () => {
 			categories: [],
 		})
 
-		render(
+		renderWithProvider(
 			<ImportTransactionDialog
 				isOpen={true}
 				onClose={mockOnClose}

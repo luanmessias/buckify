@@ -1,7 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { NextIntlClientProvider } from "next-intl"
+import { Provider } from "react-redux"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { makeStore } from "@/lib/store"
 import messages from "@/messages/pt.json"
 import { CreateTransactionDialog } from "./create-transaction-dialog"
 
@@ -11,17 +13,24 @@ vi.mock("@apollo/client/react", () => ({
 	useMutation: vi.fn(() => [createTransactionMock, { loading: false }]),
 }))
 
+const renderWithProviders = (ui: React.ReactElement) => {
+	const store = makeStore()
+	return render(
+		<Provider store={store}>
+			<NextIntlClientProvider locale="pt" messages={messages}>
+				{ui}
+			</NextIntlClientProvider>
+		</Provider>,
+	)
+}
+
 describe("CreateTransactionDialog", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 	})
 
 	it("should render the dialog trigger button", () => {
-		render(
-			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CreateTransactionDialog />
-			</NextIntlClientProvider>,
-		)
+		renderWithProviders(<CreateTransactionDialog />)
 
 		expect(screen.getByRole("button")).toBeInTheDocument()
 	})
@@ -29,11 +38,7 @@ describe("CreateTransactionDialog", () => {
 	it("should open the dialog and render the form", async () => {
 		const user = userEvent.setup()
 
-		render(
-			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CreateTransactionDialog />
-			</NextIntlClientProvider>,
-		)
+		renderWithProviders(<CreateTransactionDialog />)
 
 		const button = screen.getByRole("button")
 		await user.click(button)
@@ -64,11 +69,7 @@ describe("CreateTransactionDialog", () => {
 			},
 		})
 
-		render(
-			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CreateTransactionDialog />
-			</NextIntlClientProvider>,
-		)
+		renderWithProviders(<CreateTransactionDialog />)
 
 		const button = screen.getByRole("button")
 		await user.click(button)
@@ -105,11 +106,7 @@ describe("CreateTransactionDialog", () => {
 	it("should show validation errors for invalid input", async () => {
 		const user = userEvent.setup()
 
-		render(
-			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CreateTransactionDialog />
-			</NextIntlClientProvider>,
-		)
+		renderWithProviders(<CreateTransactionDialog />)
 
 		const button = screen.getByRole("button")
 		await user.click(button)

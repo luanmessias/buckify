@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react"
 import { NextIntlClientProvider } from "next-intl"
 import { Suspense } from "react"
+import { Provider } from "react-redux"
 import { describe, expect, it, vi } from "vitest"
 import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
+import { makeStore } from "@/lib/store"
 import DashboardPage from "./page"
 
 vi.mock("next/headers", () => ({
@@ -11,13 +13,18 @@ vi.mock("next/headers", () => ({
 	})),
 }))
 
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-	<NextIntlClientProvider locale="pt" messages={{}}>
-		<ApolloWrapper>
-			<Suspense fallback={<div>Carregando...</div>}>{children}</Suspense>
-		</ApolloWrapper>
-	</NextIntlClientProvider>
-)
+const TestWrapper = ({ children }: { children: React.ReactNode }) => {
+	const store = makeStore()
+	return (
+		<Provider store={store}>
+			<NextIntlClientProvider locale="pt" messages={{}}>
+				<ApolloWrapper>
+					<Suspense fallback={<div>Carregando...</div>}>{children}</Suspense>
+				</ApolloWrapper>
+			</NextIntlClientProvider>
+		</Provider>
+	)
+}
 
 describe("DashboardPage", () => {
 	it("should render the transaction list from the mocked API", async () => {

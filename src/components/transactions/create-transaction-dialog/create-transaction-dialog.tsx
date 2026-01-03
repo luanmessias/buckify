@@ -34,6 +34,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
+import { useAppSelector } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 
 const createFormSchema = (t: (key: string) => string) =>
@@ -45,26 +46,18 @@ const createFormSchema = (t: (key: string) => string) =>
 	})
 
 const CREATE_TRANSACTION = gql`
-  mutation CreateTransaction($data: CreateTransactionInput!) {
-    CreateTransaction(data: $data) {
-      id
-      description
-      amount
-    }
-  }
-`
-
-const CATEGORIES = (t: (key: string) => string) => [
-	{ id: "casa", label: t("categories.casa") },
-	{ id: "mercado", label: t("categories.mercado") },
-	{ id: "transporte", label: t("categories.transporte") },
-	{ id: "restaurantes", label: t("categories.restaurantes") },
-	{ id: "saude", label: t("categories.saude") },
-	{ id: "outros", label: t("categories.outros") },
-]
+   mutation CreateTransaction($data: CreateTransactionInput!) {
+     CreateTransaction(data: $data) {
+       id
+       description
+       amount
+     }
+   }
+ `
 
 export function CreateTransactionDialog() {
 	const t = useTranslations("Transactions")
+	const categories = useAppSelector((state) => state.categories.items)
 
 	const [open, setOpen] = useState(false)
 
@@ -199,9 +192,9 @@ export function CreateTransactionDialog() {
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
-												{CATEGORIES(t).map((cat) => (
+												{categories.map((cat) => (
 													<SelectItem key={cat.id} value={cat.id}>
-														{cat.label}
+														{cat.name}
 													</SelectItem>
 												))}
 											</SelectContent>
