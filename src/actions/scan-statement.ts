@@ -34,7 +34,7 @@ export const scanBankStatement = async (formData: FormData) => {
 		}
 
 		const categoriesSnap = await dbAdmin
-			.collection("category")
+			.collection("categories")
 			.where("householdId", "==", householdId)
 			.get()
 

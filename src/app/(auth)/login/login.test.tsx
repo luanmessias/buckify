@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { NextIntlClientProvider } from "next-intl"
 import { toast } from "sonner"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { createSession } from "@/app/actions/auth"
 import messages from "@/messages/en.json"
 import { AuthProvider } from "@/providers/auth-provider"
@@ -77,12 +77,14 @@ describe("LoginPage", () => {
 			getIdToken: vi.fn().mockResolvedValue("mock-id-token"),
 		}
 
-		onAuthStateChangedMock.mockImplementation((auth, callback) => {
-			callback(mockUser)
-			return vi.fn()
-		})
+		;(onAuthStateChangedMock as Mock).mockImplementation(
+			(auth: any, callback: any) => {
+				callback(mockUser)
+				return vi.fn()
+			},
+		)
 
-		;(createSession as vi.Mock).mockResolvedValue(true)
+		;(createSession as Mock).mockResolvedValue(true)
 
 		renderWithProviders(<LoginPage />)
 

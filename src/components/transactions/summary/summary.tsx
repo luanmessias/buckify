@@ -200,7 +200,9 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 				{chartData.map((category) => (
 					<CategoryCard
 						key={category.id}
+						id={category.id}
 						name={category.name}
+						slug={category.slug}
 						icon={category.icon || "MoreHorizontal"}
 						color="var(--color-hades-300)"
 						amountSpent={category.value}

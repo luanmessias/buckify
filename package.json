@@ -15,7 +15,8 @@
 		"test:ui": "vitest --ui --coverage"
 	},
 	"lint-staged": {
-		"*.{js,ts,jsx,tsx,json,css}": "biome check --write"
+		"*.{js,ts,jsx,tsx,json,css}": "biome check --write",
+		"*.{ts,tsx}": "bash -c 'pnpm exec tsc --noEmit'"
 	},
 	"dependencies": {
 		"@apollo/client": "^4.0.10",

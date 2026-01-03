@@ -29,6 +29,7 @@ const GET_DASHBOARD_DATA = gql`
     getCategories(householdId: $householdId) {
       id
       name
+			slug
       budget
       color
       icon

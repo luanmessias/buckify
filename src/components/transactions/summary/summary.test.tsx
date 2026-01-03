@@ -54,6 +54,7 @@ const mockCategories = [
 	{
 		id: "cat1",
 		name: "Casa",
+		slug: "casa",
 		budget: 1000,
 		color: "#000",
 		icon: "Home",
@@ -63,6 +64,7 @@ const mockCategories = [
 	{
 		id: "cat2",
 		name: "Lazer",
+		slug: "lazer",
 		budget: 500,
 		color: "#fff",
 		icon: "Party",
@@ -183,6 +185,7 @@ describe("Summary Component", () => {
 			{
 				id: "cat3",
 				name: "Transporte",
+				slug: "transporte",
 				budget: 300,
 				color: "#blue",
 				icon: "Car",
@@ -192,6 +195,7 @@ describe("Summary Component", () => {
 			{
 				id: "cat4",
 				name: "Alimentacao",
+				slug: "alimentacao",
 				budget: 400,
 				color: "#green",
 				icon: "Food",
@@ -201,6 +205,7 @@ describe("Summary Component", () => {
 			{
 				id: "cat5",
 				name: "Saude",
+				slug: "saude",
 				budget: 200,
 				color: "",
 				icon: "",

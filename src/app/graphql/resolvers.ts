@@ -5,6 +5,7 @@ interface GetTransactionsArgs {
 	startDate: string
 	endDate: string
 	householdId: string
+	categoryId?: string
 }
 
 interface GetCategoriesArgs {
@@ -18,17 +19,39 @@ interface CreateTransactionInput {
 	categoryId: string
 }
 
+interface UpdateCategoryInput {
+	name?: string
+	description?: string
+	budget?: number
+	color?: string
+	icon?: string
+}
+
+interface UpdateTransactionInput {
+	date?: string
+	description?: string
+	amount?: number
+	categoryId?: string
+}
+
 export const resolvers = {
 	Query: {
 		getTransactions: async (
 			_: unknown,
-			{ startDate, endDate, householdId }: GetTransactionsArgs,
+			{ startDate, endDate, householdId, categoryId }: GetTransactionsArgs,
 		) => {
 			let query: Query = dbAdmin.collection("transactions")
 
-			if (startDate && endDate && householdId) {
+			if (householdId) {
+				query = query.where("householdId", "==", householdId)
+			}
+
+			if (categoryId) {
+				query = query.where("categoryId", "==", categoryId)
+			}
+
+			if (startDate && endDate) {
 				query = query
-					.where("householdId", "==", householdId)
 					.where("date", ">=", startDate)
 					.where("date", "<=", endDate)
 					.orderBy("date", "desc")
@@ -47,7 +70,7 @@ export const resolvers = {
 		},
 
 		getCategories: async (_: unknown, { householdId }: GetCategoriesArgs) => {
-			let query: Query = dbAdmin.collection("category")
+			let query: Query = dbAdmin.collection("categories")
 
 			if (householdId) {
 				query = query.where("householdId", "==", householdId)
@@ -63,6 +86,28 @@ export const resolvers = {
 					createdAt: data.createdAt,
 				}
 			})
+		},
+
+		getCategory: async (
+			_: unknown,
+			{ id, householdId }: { id: string; householdId: string },
+		) => {
+			const doc = await dbAdmin.collection("categories").doc(id).get()
+
+			if (!doc.exists) {
+				throw new Error("Category not found")
+			}
+
+			const data = doc.data()
+
+			if (data?.householdId !== householdId) {
+				throw new Error("Unauthorized")
+			}
+
+			return {
+				id: doc.id,
+				...data,
+			}
 		},
 
 		getShoppingHistory: async () => {
@@ -128,6 +173,80 @@ export const resolvers = {
 			} catch (error) {
 				console.error("Erro ao salvar lote:", error)
 				return { success: false, message: "Erro interno ao salvar." }
+			}
+		},
+
+		updateCategory: async (
+			_: unknown,
+			{
+				id,
+				householdId,
+				input,
+			}: { id: string; householdId: string; input: UpdateCategoryInput },
+		) => {
+			try {
+				const docRef = dbAdmin.collection("categories").doc(id)
+				const doc = await docRef.get()
+
+				if (!doc.exists) {
+					return { success: false, message: "Category not found" }
+				}
+
+				const data = doc.data()
+				if (data?.householdId !== householdId) {
+					return { success: false, message: "Unauthorized" }
+				}
+
+				const updateData: Record<string, any> = {}
+				Object.entries(input).forEach(([key, value]) => {
+					if (value !== undefined) {
+						updateData[key] = value
+					}
+				})
+
+				await docRef.update(updateData)
+
+				return { success: true, message: "Category updated successfully" }
+			} catch (error) {
+				console.error("Update category error:", error)
+				return { success: false, message: "Error updating category" }
+			}
+		},
+
+		updateTransaction: async (
+			_: unknown,
+			{
+				id,
+				householdId,
+				input,
+			}: { id: string; householdId: string; input: UpdateTransactionInput },
+		) => {
+			try {
+				const docRef = dbAdmin.collection("transactions").doc(id)
+				const doc = await docRef.get()
+
+				if (!doc.exists) {
+					return { success: false, message: "Transaction not found" }
+				}
+
+				const data = doc.data()
+				if (data?.householdId !== householdId) {
+					return { success: false, message: "Unauthorized" }
+				}
+
+				const updateData: Record<string, any> = {}
+				Object.entries(input).forEach(([key, value]) => {
+					if (value !== undefined) {
+						updateData[key] = value
+					}
+				})
+
+				await docRef.update(updateData)
+
+				return { success: true, message: "Transaction updated successfully" }
+			} catch (error) {
+				console.error("Update transaction error:", error)
+				return { success: false, message: "Error updating transaction" }
 			}
 		},
 	},

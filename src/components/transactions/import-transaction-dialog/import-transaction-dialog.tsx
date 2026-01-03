@@ -28,7 +28,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useAppSelector } from "@/lib/hooks"
-import type { Category, ScannedTransaction } from "@/lib/types"
+import type { ScannedTransaction } from "@/lib/types"
 
 interface TransactionDraft {
 	id: string
@@ -42,7 +42,7 @@ interface TransactionDraft {
 interface ScanBankStatementResult {
 	success: boolean
 	data?: ScannedTransaction[]
-	categories?: Category[]
+	categories?: { id: string; name: string }[]
 	error?: string
 }
 

@@ -10,6 +10,7 @@ export type Category = {
 	id: string
 	householdId: string
 	name: string
+	slug: string
 	description: string
 	budget: number
 	color: string

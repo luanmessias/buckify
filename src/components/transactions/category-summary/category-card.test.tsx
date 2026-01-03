@@ -10,7 +10,9 @@ vi.mock("@/components/ui/icon", () => ({
 
 describe("CategoryCard Component", () => {
 	const defaultProps = {
+		id: "mercado-category",
 		name: "Mercado",
+		slug: "mercado",
 		icon: "ShoppingCart",
 		color: "#10b981",
 		amountSpent: 200,

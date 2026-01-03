@@ -74,7 +74,7 @@ vi.mock("@/lib/hooks", () => ({
 describe("AddNavigation Component", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
-		;(useAppSelector as Mock).mockReturnValue("test-household-id")
+		;(useAppSelector as unknown as Mock).mockReturnValue("test-household-id")
 	})
 
 	it("should render the floating action button", () => {

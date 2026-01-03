@@ -22,7 +22,8 @@ export const typeDefs = `#graphql
     color: String
     description: String!
     icon: String
-    name: String !
+    name: String!
+    slug: String
   }
 
   type ShoppingHistory {
@@ -67,6 +68,21 @@ export const typeDefs = `#graphql
     categoryId: String!
   }
 
+  input UpdateCategoryInput {
+    name: String
+    description: String
+    budget: Float
+    color: String
+    icon: String
+  }
+
+  input UpdateTransactionInput {
+    date: String
+    description: String
+    amount: Float
+    categoryId: String
+  }
+
   type MutationResponse {
     success: Boolean!
     message: String
@@ -74,11 +90,14 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createManyTransactions(householdId: String!, transactions: [CreateTransactionInput!]!): MutationResponse
+    updateCategory(id: String!, householdId: String!, input: UpdateCategoryInput!): MutationResponse
+    updateTransaction(id: String!, householdId: String!, input: UpdateTransactionInput!): MutationResponse
   }
 
   type Query {
-    getTransactions(startDate: String!, endDate: String!, householdId: String!): [Transaction]
+    getTransactions(startDate: String!, endDate: String!, householdId: String!, categoryId: String): [Transaction]
     getCategories(householdId: String!): [Category]
+    getCategory(id: String!, householdId: String!): Category
     getShoppingHistory: [ShoppingHistory]
     getWishlist: [WishlistItem]
     getProductCatalog: [Product]
