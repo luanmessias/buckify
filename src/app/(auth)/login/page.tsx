@@ -1,5 +1,7 @@
 "use client"
 
+// Test commit
+
 import { signInWithPopup, signInWithRedirect } from "firebase/auth"
 import { useTranslations } from "next-intl"
 import { useState } from "react"

@@ -137,11 +137,11 @@ export function ImportTransactionDialog({
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
 						<UploadCloud className="w-5 h-5 text-primary" />
-						Importar Extrato com IA
+						{t("import_title")}
 					</DialogTitle>
 					<DialogDescription className="text-left flex flex-col gap-1">
-						<span>Envie uma imagem ou PDF.</span>
-						<span>Suas despesas serão categorizadas automaticamente.</span>
+						<span>{t("send_image_pdf")}</span>
+						<span>{t("expenses_categorized")}</span>
 					</DialogDescription>
 				</DialogHeader>
 
@@ -188,14 +188,16 @@ export function ImportTransactionDialog({
 						<ScrollArea className="h-100">
 							<div className="space-y-3">
 								<div className="flex justify-between items-center text-sm text-muted-foreground mb-4">
-									<span>{transactions.length} despesas encontradas</span>
+									<span>
+										{t("expenses_found", { count: transactions.length })}
+									</span>
 									<Button
 										variant="ghost"
 										size="sm"
 										disabled={isSubmitting}
 										onClick={() => setStep("upload")}
 									>
-										Voltar
+										{t("back")}
 									</Button>
 								</div>
 
@@ -222,9 +224,9 @@ export function ImportTransactionDialog({
 																</div>
 															</TooltipTrigger>
 															<TooltipContent className="bg-amber-950 border-amber-800 text-amber-100 font-medium text-xs">
-																<p>Possível duplicata encontrada!</p>
+																<p>{t("possible_duplicate")}</p>
 																<p className="opacity-80 font-normal">
-																	Já existe um gasto com esta data e valor.
+																	{t("duplicate_description")}
 																</p>
 															</TooltipContent>
 														</Tooltip>
@@ -249,7 +251,7 @@ export function ImportTransactionDialog({
 														handleCategoryChange(idx, e.target.value)
 													}
 												>
-													<option value="others">Outros</option>
+													<option value="others">{t("others")}</option>
 													{categories.map((c) => (
 														<option key={c.id} value={c.id}>
 															{c.name}
@@ -290,7 +292,7 @@ export function ImportTransactionDialog({
 							disabled={isSubmitting}
 							onClick={handleClose}
 						>
-							Cancelar
+							{t("cancel")}
 						</Button>
 						<Button
 							disabled={isSubmitting}
@@ -301,12 +303,12 @@ export function ImportTransactionDialog({
 							{isSubmitting ? (
 								<>
 									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
-									Salvando...
+									{t("saving")}
 								</>
 							) : (
 								<>
 									<Check className="w-4 h-4 mr-2" />
-									Confirmar Importação
+									{t("confirm_import")}
 								</>
 							)}
 						</Button>

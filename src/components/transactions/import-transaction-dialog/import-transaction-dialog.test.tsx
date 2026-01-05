@@ -1,5 +1,4 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { NextIntlClientProvider } from "next-intl"
 import { Provider } from "react-redux"
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { scanBankStatement } from "@/actions/scan-statement"
@@ -7,6 +6,15 @@ import { setCategories } from "@/lib/features/categories/categories-slice"
 import { makeStore } from "@/lib/store"
 import messages from "@/messages/en.json"
 import { ImportTransactionDialog } from "./import-transaction-dialog"
+
+vi.mock("next-intl", () => ({
+	useTranslations: vi.fn((namespace: string) => (key: string) => {
+		if (namespace === "Transactions") {
+			return (messages.Transactions as any)[key] || key
+		}
+		return key
+	}),
+}))
 
 vi.mock("@/actions/scan-statement", () => ({
 	scanBankStatement: vi.fn(),
@@ -26,11 +34,7 @@ vi.mock("@/components/ui/scroll-area", () => ({
 }))
 
 const renderWithProvider = (ui: React.ReactElement, store = makeStore()) => {
-	return render(
-		<NextIntlClientProvider locale="en" messages={messages}>
-			<Provider store={store}>{ui}</Provider>
-		</NextIntlClientProvider>,
-	)
+	return render(<Provider store={store}>{ui}</Provider>)
 }
 
 describe("ImportTransactionDialog", () => {
@@ -62,7 +66,9 @@ describe("ImportTransactionDialog", () => {
 				onConfirm={mockOnConfirm}
 			/>,
 		)
-		expect(screen.getByText("Importar Extrato com IA")).toBeInTheDocument()
+		expect(
+			screen.getByText(messages.Transactions.import_title),
+		).toBeInTheDocument()
 		expect(
 			screen.getByText(messages.Transactions.click_to_upload),
 		).toBeInTheDocument()
@@ -187,10 +193,12 @@ describe("ImportTransactionDialog", () => {
 		}
 
 		await waitFor(() => {
-			expect(screen.getByText("Confirmar Importação")).toBeInTheDocument()
+			expect(
+				screen.getByText(messages.Transactions.confirm_import),
+			).toBeInTheDocument()
 		})
 
-		fireEvent.click(screen.getByText("Confirmar Importação"))
+		fireEvent.click(screen.getByText(messages.Transactions.confirm_import))
 
 		expect(mockOnConfirm).toHaveBeenCalled()
 		expect(mockOnConfirm.mock.calls[0][0][0]).toMatchObject({
