@@ -9,7 +9,9 @@
 		"redirecting": "Weiterleitung...",
 		"error_title": "Verbindungsfehler",
 		"error_description": "Authentifizierung mit Google fehlgeschlagen. Bitte versuche es erneut.",
-		"retry": "Versuchen"
+		"retry": "Versuchen",
+		"login_error": "Anmeldung konnte nicht gestartet werden.",
+		"session_error": "Sitzungsfehler"
 	},
 	"Transactions": {
 		"month_summary": "Monatsübersicht",
@@ -44,7 +46,16 @@
 			"outros": "Andere"
 		},
 		"amount_placeholder": "0.00",
-		"currency_symbol": "€"
+		"currency_symbol": "€",
+		"file_too_large": "Datei zu groß (Max 4MB)",
+		"transactions_found": "{count} Transaktionen gefunden!",
+		"error_parsing_statement": "Fehler beim Analysieren der Abrechnung",
+		"reading_transactions": "Transaktionen werden gelesen...",
+		"session_error_reload": "Sitzungsfehler. Seite neu laden.",
+		"error_saving": "Fehler beim Speichern: {message}",
+		"error_saving_transactions": "Fehler beim Speichern der Transaktionen",
+		"click_to_upload": "Zum Hochladen klicken",
+		"supported_formats": "PDF oder Bild (JPG, PNG)"
 	},
 	"Navigation": {
 		"home": "Startseite",

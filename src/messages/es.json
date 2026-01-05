@@ -9,7 +9,9 @@
 		"redirecting": "Redirigiendo...",
 		"error_title": "Error de conexión",
 		"error_description": "No se pudo autenticar con Google. Inténtalo de nuevo.",
-		"retry": "Intentar"
+		"retry": "Intentar",
+		"login_error": "No se pudo iniciar el inicio de sesión.",
+		"session_error": "Falla en la sesión"
 	},
 	"Transactions": {
 		"month_summary": "Resumen del Mes",
@@ -44,7 +46,16 @@
 			"outros": "Otros"
 		},
 		"amount_placeholder": "0.00",
-		"currency_symbol": "€"
+		"currency_symbol": "€",
+		"file_too_large": "Archivo demasiado grande (Máx 4MB)",
+		"transactions_found": "¡{count} transacciones encontradas!",
+		"error_parsing_statement": "Error al analizar el extracto",
+		"reading_transactions": "Leyendo transacciones...",
+		"session_error_reload": "Error de sesión. Recarga la página.",
+		"error_saving": "Error al guardar: {message}",
+		"error_saving_transactions": "Error al guardar transacciones",
+		"click_to_upload": "Haz clic para subir",
+		"supported_formats": "PDF o Imagen (JPG, PNG)"
 	},
 	"Navigation": {
 		"home": "Inicio",

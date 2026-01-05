@@ -9,7 +9,9 @@
 		"redirecting": "Redirection...",
 		"error_title": "Erreur de connexion",
 		"error_description": "Impossible de s'authentifier avec Google. Veuillez réessayer.",
-		"retry": "Réessayer"
+		"retry": "Réessayer",
+		"login_error": "Impossible de démarrer la connexion.",
+		"session_error": "Échec de la session"
 	},
 	"Transactions": {
 		"month_summary": "Résumé du mois",
@@ -44,7 +46,16 @@
 			"outros": "Autres"
 		},
 		"amount_placeholder": "0.00",
-		"currency_symbol": "€"
+		"currency_symbol": "€",
+		"file_too_large": "Fichier trop volumineux (Max 4MB)",
+		"transactions_found": "{count} transactions trouvées !",
+		"error_parsing_statement": "Erreur lors de l'analyse du relevé",
+		"reading_transactions": "Lecture des transactions...",
+		"session_error_reload": "Erreur de session. Rechargez la page.",
+		"error_saving": "Erreur lors de la sauvegarde : {message}",
+		"error_saving_transactions": "Erreur lors de la sauvegarde des transactions",
+		"click_to_upload": "Cliquez pour télécharger",
+		"supported_formats": "PDF ou Image (JPG, PNG)"
 	},
 	"Navigation": {
 		"home": "Accueil",

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
+import { Typography } from "@/components/ui/typography"
 import type { Category, Transaction } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { MonthSelector } from "../month-selector/month-selector"
@@ -75,9 +76,12 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 				<div className="bg-card text-card-foreground rounded-xl p-6 h-full relative z-10">
 					<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
 
-					<h2 className="font-semibold mb-2 text-muted-foreground tracking-wider uppercase text-xs">
+					<Typography
+						variant="h2"
+						className="mb-2 text-muted-foreground tracking-wider uppercase text-xs"
+					>
 						{t("month_summary")}
-					</h2>
+					</Typography>
 
 					<MonthSelector className="mb-4" />
 
@@ -140,25 +144,35 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 						<div className="flex-1 w-full space-y-6">
 							<div className="flex justify-between md:justify-end gap-10 border-b border-border/40 pb-6">
 								<div className="text-left">
-									<p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">
+									<Typography
+										variant="muted"
+										className="text-xs uppercase tracking-wider mb-1"
+									>
 										{t("budget")}
-									</p>
-									<p className="font-bold text-xl text-foreground">
+									</Typography>
+									<Typography
+										variant="p"
+										className="font-bold text-xl text-foreground"
+									>
 										{formatCurrency(totalBudget)}
-									</p>
+									</Typography>
 								</div>
 								<div className="text-right">
-									<p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">
+									<Typography
+										variant="muted"
+										className="text-xs uppercase tracking-wider mb-1"
+									>
 										{t("remaining")}
-									</p>
-									<p
+									</Typography>
+									<Typography
+										variant="p"
 										className={cn(
 											"font-bold text-xl drop-shadow-sm",
 											remaining < 0 ? "text-destructive" : "text-primary",
 										)}
 									>
 										{formatCurrency(remaining)}
-									</p>
+									</Typography>
 								</div>
 							</div>
 
@@ -187,9 +201,12 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 								))}
 
 								{chartData.length > 3 && (
-									<p className="text-xs text-center text-muted-foreground/50 pt-2 italic">
+									<Typography
+										variant="muted"
+										className="text-xs text-center pt-2 italic"
+									>
 										{t("hidden_categories", { count: chartData.length - 3 })}
-									</p>
+									</Typography>
 								)}
 							</div>
 						</div>

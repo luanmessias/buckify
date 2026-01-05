@@ -2,6 +2,7 @@
 
 import { getRedirectResult, onAuthStateChanged, type User } from "firebase/auth"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
 import { createSession } from "@/app/actions/auth"
@@ -9,6 +10,7 @@ import { auth } from "@/lib/firebase"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const router = useRouter()
+	const t = useTranslations("Auth")
 	const sessionCreationInProgress = useRef(false)
 	const redirectChecked = useRef(false)
 
@@ -23,14 +25,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				await createSession(idToken)
 
 				if (!sessionStorage.getItem("login_toast_shown")) {
-					toast.success("Login realizado!")
+					toast.success(t("success_toast"))
 					sessionStorage.setItem("login_toast_shown", "true")
 				}
 
 				router.refresh()
 			} catch (error) {
 				console.error("Auth error:", error)
-				toast.error("Falha na sessão")
+				toast.error(t("session_error"))
 				sessionCreationInProgress.current = false
 			}
 		}
@@ -58,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		})
 
 		return () => unsubscribe()
-	}, [router])
+	}, [router, t])
 
 	return <>{children}</>
 }

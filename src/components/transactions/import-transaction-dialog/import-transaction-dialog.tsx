@@ -9,6 +9,7 @@ import {
 	UploadCloud,
 	X,
 } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { scanBankStatement } from "@/actions/scan-statement"
@@ -27,6 +28,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { useAppSelector } from "@/lib/hooks"
 import type { ScannedTransaction } from "@/lib/types"
 
@@ -59,6 +61,7 @@ export function ImportTransactionDialog({
 	onConfirm,
 	isSubmitting = false,
 }: ImportTransactionDialogProps) {
+	const t = useTranslations("Transactions")
 	const categories = useAppSelector((state) => state.categories.items)
 	const [step, setStep] = useState<"upload" | "review">("upload")
 	const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -83,7 +86,7 @@ export function ImportTransactionDialog({
 		if (!file) return
 
 		if (file.size > 4 * 1024 * 1024) {
-			toast.error("Arquivo muito grande (Máx 4MB)")
+			toast.error(t("file_too_large"))
 			return
 		}
 
@@ -100,9 +103,9 @@ export function ImportTransactionDialog({
 			}))
 			setTransactions(transactionsWithIds)
 			setStep("review")
-			toast.success(`${result.data.length} transações encontradas!`)
+			toast.success(t("transactions_found", { count: result.data.length }))
 		} else {
-			toast.error(result.error || "Erro ao analisar extrato")
+			toast.error(result.error || t("error_parsing_statement"))
 		}
 
 		setIsAnalyzing(false)
@@ -153,9 +156,9 @@ export function ImportTransactionDialog({
 							{isAnalyzing ? (
 								<div className="flex flex-col items-center gap-2 animate-pulse">
 									<Loader2 className="w-10 h-10 text-primary animate-spin" />
-									<p className="text-sm text-muted-foreground">
-										Lendo transações...
-									</p>
+									<Typography variant="muted">
+										{t("reading_transactions")}
+									</Typography>
 								</div>
 							) : (
 								<>
@@ -163,10 +166,12 @@ export function ImportTransactionDialog({
 										<FileText className="w-8 h-8 text-muted-foreground" />
 									</div>
 									<div className="text-center">
-										<p className="font-medium">Clique para enviar</p>
-										<p className="text-xs text-muted-foreground">
-											PDF ou Imagem (JPG, PNG)
-										</p>
+										<Typography variant="p" className="font-medium">
+											{t("click_to_upload")}
+										</Typography>
+										<Typography variant="muted" className="text-xs">
+											{t("supported_formats")}
+										</Typography>
 									</div>
 								</>
 							)}

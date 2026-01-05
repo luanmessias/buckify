@@ -9,7 +9,9 @@
 		"redirecting": "Redirecting...",
 		"error_title": "Connection Error",
 		"error_description": "Unable to authenticate with Google. Please try again.",
-		"retry": "Try"
+		"retry": "Try",
+		"login_error": "Unable to start login.",
+		"session_error": "Session failure"
 	},
 	"Transactions": {
 		"month_summary": "Month Summary",
@@ -44,7 +46,16 @@
 			"outros": "Others"
 		},
 		"amount_placeholder": "0.00",
-		"currency_symbol": "€"
+		"currency_symbol": "€",
+		"file_too_large": "File too large (Max 4MB)",
+		"transactions_found": "{count} transactions found!",
+		"error_parsing_statement": "Error parsing statement",
+		"reading_transactions": "Reading transactions...",
+		"session_error_reload": "Session error. Reload the page.",
+		"error_saving": "Error saving: {message}",
+		"error_saving_transactions": "Error saving transactions",
+		"click_to_upload": "Click to upload",
+		"supported_formats": "PDF or Image (JPG, PNG)"
 	},
 	"Navigation": {
 		"home": "Home",

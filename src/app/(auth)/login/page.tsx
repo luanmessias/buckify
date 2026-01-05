@@ -26,7 +26,7 @@ export default function LoginPage() {
 		authFn(auth, googleProvider).catch((error: unknown) => {
 			console.error("Erro no Login:", error)
 			if ((error as { code?: string })?.code !== "auth/popup-closed-by-user") {
-				toast.error("Não foi possível iniciar o login.")
+				toast.error(t("login_error"))
 			}
 			setIsLoading(false)
 		})
@@ -46,7 +46,7 @@ export default function LoginPage() {
 					isLoading={isLoading}
 					className="w-full"
 				>
-					Entrar com Google
+					{t("google_button")}
 				</RadiantButton>
 			</CardContent>
 		</Card>

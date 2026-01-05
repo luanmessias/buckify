@@ -3,6 +3,7 @@
 import { gql } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
 import { type LucideIcon, Plus, ScanText, Tag, Wallet } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
 import { ImportTransactionDialog } from "@/components/transactions/import-transaction-dialog/import-transaction-dialog"
@@ -35,6 +36,7 @@ interface TransactionDraft {
 }
 
 export const AddNavigation = () => {
+	const t = useTranslations("Transactions")
 	const [isOpen, setIsOpen] = useState(false)
 	const [showImportModal, setShowImportModal] = useState(false)
 
@@ -56,7 +58,7 @@ export const AddNavigation = () => {
 	const handleImportConfirm = async (transactions: TransactionDraft[]) => {
 		try {
 			if (!householdId) {
-				toast.error("Erro de sessão. Recarregue a página.")
+				toast.error(t("session_error_reload"))
 				return
 			}
 
@@ -79,11 +81,15 @@ export const AddNavigation = () => {
 				setIsOpen(false)
 				setShowImportModal(false)
 			} else {
-				toast.error(`Erro ao salvar: ${data?.createManyTransactions?.message}`)
+				toast.error(
+					t("error_saving", {
+						message: data?.createManyTransactions?.message || "",
+					}),
+				)
 			}
 		} catch (error) {
 			console.error(error)
-			toast.error("Erro ao salvar transações")
+			toast.error(t("error_saving_transactions"))
 		}
 	}
 

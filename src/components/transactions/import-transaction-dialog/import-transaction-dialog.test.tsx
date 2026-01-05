@@ -1,9 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { NextIntlClientProvider } from "next-intl"
 import { Provider } from "react-redux"
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { scanBankStatement } from "@/actions/scan-statement"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { makeStore } from "@/lib/store"
+import messages from "@/messages/en.json"
 import { ImportTransactionDialog } from "./import-transaction-dialog"
 
 vi.mock("@/actions/scan-statement", () => ({
@@ -24,7 +26,11 @@ vi.mock("@/components/ui/scroll-area", () => ({
 }))
 
 const renderWithProvider = (ui: React.ReactElement, store = makeStore()) => {
-	return render(<Provider store={store}>{ui}</Provider>)
+	return render(
+		<NextIntlClientProvider locale="en" messages={messages}>
+			<Provider store={store}>{ui}</Provider>
+		</NextIntlClientProvider>,
+	)
 }
 
 describe("ImportTransactionDialog", () => {
@@ -57,7 +63,9 @@ describe("ImportTransactionDialog", () => {
 			/>,
 		)
 		expect(screen.getByText("Importar Extrato com IA")).toBeInTheDocument()
-		expect(screen.getByText("Clique para enviar")).toBeInTheDocument()
+		expect(
+			screen.getByText(messages.Transactions.click_to_upload),
+		).toBeInTheDocument()
 	})
 
 	it("should handle file upload and display transactions", async () => {

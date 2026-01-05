@@ -92,7 +92,7 @@ describe("LoginPage", () => {
 		})
 
 		await waitFor(() => {
-			expect(toast.success).toHaveBeenCalledWith("Login realizado!")
+			expect(toast.success).toHaveBeenCalledWith(messages.Auth.success_toast)
 		})
 
 		await waitFor(() => {
@@ -134,9 +134,7 @@ describe("LoginPage", () => {
 
 		await waitFor(() => {
 			expect(button).not.toBeDisabled()
-			expect(toast.error).toHaveBeenCalledWith(
-				"Não foi possível iniciar o login.",
-			)
+			expect(toast.error).toHaveBeenCalledWith(messages.Auth.login_error)
 		})
 	})
 })
