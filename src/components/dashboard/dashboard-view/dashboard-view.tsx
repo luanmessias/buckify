@@ -4,12 +4,13 @@ import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
 import { useEffect, useState } from "react"
-import { MonthOptions } from "@/components/transactions/month-options/month-options"
-import { Summary } from "@/components/transactions/summary/summary"
+import { MonthOptions } from "@/components/dashboard/month-options/month-options"
+import { Summary } from "@/components/dashboard/summary/summary"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
+import { CategoryList } from "../category-list/category-list"
 
 interface GetTransactionsData {
 	getTransactions: Transaction[]
@@ -70,7 +71,7 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 	}
 
 	return (
-		<div className="space-y-4">
+		<div className="flex flex-col gap-4">
 			<MonthOptions month={currentMonth} onSelectDate={handleMonthChange} />
 
 			<Summary
@@ -78,28 +79,10 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 				categories={data.getCategories}
 			/>
 
-			<div className="grid p-4 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{data.getTransactions.map((t: Transaction) => (
-					<Card key={t.id}>
-						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle className="text-sm font-medium">
-								{t.description}
-							</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<div className="text-2xl font-bold">
-								{new Intl.NumberFormat("pt-PT", {
-									style: "currency",
-									currency: "EUR",
-								}).format(t.amount)}
-							</div>
-							<p className="text-xs text-muted-foreground">
-								{t.categoryId} • {t.date}
-							</p>
-						</CardContent>
-					</Card>
-				))}
-			</div>
+			<CategoryList
+				transactions={data.getTransactions}
+				categories={data.getCategories}
+			/>
 		</div>
 	)
 }

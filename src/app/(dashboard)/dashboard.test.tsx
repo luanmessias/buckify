@@ -27,20 +27,18 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => {
 }
 
 describe("DashboardPage", () => {
-	it("should render the transaction list from the mocked API", async () => {
+	it("should render the category list from the mocked API", async () => {
 		render(
 			<TestWrapper>
 				<DashboardPage />
 			</TestWrapper>,
 		)
 
-		await screen.findByText("Carregando...")
+		const receitaCategories = await screen.findAllByText("Receita")
+		const assinaturaCategories = await screen.findAllByText("Assinatura")
 
-		const salaryItem = await screen.findByText("Salario Mockado")
-		const netflixItem = await screen.findByText("Netflix Mockado")
-
-		expect(salaryItem).toBeInTheDocument()
-		expect(netflixItem).toBeInTheDocument()
+		expect(receitaCategories.length).toBeGreaterThan(0)
+		expect(assinaturaCategories.length).toBeGreaterThan(0)
 	})
 
 	it("should render the summary with correct total spent", async () => {
@@ -49,8 +47,6 @@ describe("DashboardPage", () => {
 				<DashboardPage />
 			</TestWrapper>,
 		)
-
-		await screen.findByText("Carregando...")
 
 		const totalSpent = await screen.findByText("€ 5.039,90")
 		expect(totalSpent).toBeInTheDocument()

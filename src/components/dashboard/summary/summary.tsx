@@ -3,9 +3,9 @@
 import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
+import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
 import type { Category, Transaction } from "@/lib/types"
 import { cn } from "@/lib/utils"
-import { CategoryCard } from "../category-summary/category-card"
 
 interface SummaryProps {
 	transactions: Transaction[]
@@ -26,10 +26,12 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 			(acc, item) => acc + item.amount,
 			0,
 		)
+
 		const totalBudgetCalc = categories.reduce(
 			(acc, item) => acc + item.budget,
 			0,
 		)
+
 		const remainingCalc = totalBudgetCalc - totalSpentCalc
 
 		const data = categories
@@ -68,7 +70,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 
 	return (
 		<section className="p-4">
-			<div className="relative rounded-2xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
+			<AnimatedWrapper className="relative rounded-2xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
 				<div className="bg-card text-card-foreground rounded-2xl p-6 h-full relative z-10">
 					<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
 
@@ -87,8 +89,8 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 											nameKey="name"
 											cx="50%"
 											cy="50%"
-											innerRadius={65}
-											outerRadius={80}
+											innerRadius={85}
+											outerRadius={100}
 											paddingAngle={5}
 											cornerRadius={4}
 											stroke="none"
@@ -134,7 +136,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 
 						<div className="flex-1 w-full space-y-6">
 							<div className="flex justify-between md:justify-end gap-10 border-b border-border/40 pb-6">
-								<div className="text-right">
+								<div className="text-left">
 									<p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">
 										{t("budget")}
 									</p>
@@ -192,24 +194,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 				</div>
 
 				<div className="absolute -inset-1 bg-primary/20 blur-3xl opacity-10 pointer-events-none z-0" />
-			</div>
-
-			<div className="my-8 h-px bg-linear-to-r from-transparent via-border to-transparent" />
-
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-				{chartData.map((category) => (
-					<CategoryCard
-						key={category.id}
-						id={category.id}
-						name={category.name}
-						slug={category.slug}
-						icon={category.icon || "MoreHorizontal"}
-						color="var(--color-hades-300)"
-						amountSpent={category.value}
-						budget={category.budget}
-					/>
-				))}
-			</div>
+			</AnimatedWrapper>
 		</section>
 	)
 }

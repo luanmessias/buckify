@@ -42,14 +42,6 @@ vi.mock("recharts", async () => {
 	}
 })
 
-vi.mock("../category-summary/category-card", () => ({
-	CategoryCard: ({ name, amountSpent, icon }: any) => (
-		<div data-testid={`card-${name}`}>
-			{name} - {amountSpent} - {icon || "MoreHorizontal"}
-		</div>
-	),
-}))
-
 const mockCategories = [
 	{
 		id: "cat1",
@@ -133,15 +125,6 @@ describe("Summary Component", () => {
 		expect(screen.getByTestId("pie-slice-Lazer")).toHaveTextContent(
 			"Lazer: 100",
 		)
-	})
-
-	it("should render the category cards grid", () => {
-		render(
-			<Summary transactions={mockTransactions} categories={mockCategories} />,
-		)
-
-		expect(screen.getByTestId("card-Casa")).toBeInTheDocument()
-		expect(screen.getByTestId("card-Lazer")).toBeInTheDocument()
 	})
 
 	it("should handle empty state (no transactions) gracefully", () => {
