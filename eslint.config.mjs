@@ -6,7 +6,7 @@ export default [
 		files: ["src/**/*.{ts,tsx}"],
 		ignores: ["**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}"],
 		languageOptions: {
-			parser: tsParser, // Ensina o ESLint a ler TypeScript
+			parser: tsParser,
 			parserOptions: {
 				ecmaFeatures: { jsx: true },
 				ecmaVersion: "latest",
