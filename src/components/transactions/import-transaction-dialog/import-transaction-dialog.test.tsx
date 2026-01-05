@@ -10,7 +10,9 @@ import { ImportTransactionDialog } from "./import-transaction-dialog"
 vi.mock("next-intl", () => ({
 	useTranslations: vi.fn((namespace: string) => (key: string) => {
 		if (namespace === "Transactions") {
-			return (messages.Transactions as any)[key] || key
+			return (
+				(messages.Transactions as unknown as Record<string, string>)[key] || key
+			)
 		}
 		return key
 	}),
@@ -70,7 +72,7 @@ describe("ImportTransactionDialog", () => {
 			screen.getByText(messages.Transactions.import_title),
 		).toBeInTheDocument()
 		expect(
-			screen.getByText(messages.Transactions.click_to_upload),
+			screen.getByText(messages.Transactions.send_image_pdf),
 		).toBeInTheDocument()
 	})
 

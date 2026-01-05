@@ -15,7 +15,10 @@ interface Resources {
       "success_toast": "Anmeldung erfolgreich!"
     },
     "Common": {
-      "firebase_admin_env_error": "Kritischer Fehler: Firebase Admin Umgebungsvariablen nicht gefunden. Überprüfen Sie Ihre .env.local"
+      "close": "Schließen",
+      "firebase_admin_env_error": "Kritischer Fehler: Firebase Admin Umgebungsvariablen nicht gefunden. Überprüfen Sie Ihre .env.local",
+      "logo_title": "Buckify Logo",
+      "select_month": "Monat auswählen"
     },
     "Navigation": {
       "add_category": "Neue Kategorie",
@@ -87,7 +90,10 @@ interface Resources {
       "success_toast": "Login successful!"
     },
     "Common": {
-      "firebase_admin_env_error": "Critical Error: Firebase Admin environment variables not found. Check your .env.local"
+      "close": "Close",
+      "firebase_admin_env_error": "Critical Error: Firebase Admin environment variables not found. Check your .env.local",
+      "logo_title": "Buckify Logo",
+      "select_month": "Select Month"
     },
     "Navigation": {
       "add_category": "New Category",
@@ -169,7 +175,10 @@ interface Resources {
       "success_toast": "¡Inicio de sesión exitoso!"
     },
     "Common": {
-      "firebase_admin_env_error": "Error Crítico: Variables de entorno de Firebase Admin no encontradas. Verifique su .env.local"
+      "close": "Cerrar",
+      "firebase_admin_env_error": "Error Crítico: Variables de entorno de Firebase Admin no encontradas. Verifique su .env.local",
+      "logo_title": "Logo Buckify",
+      "select_month": "Seleccionar Mes"
     },
     "Navigation": {
       "add_category": "Nueva Categoría",
@@ -241,7 +250,10 @@ interface Resources {
       "success_toast": "Connexion réussie !"
     },
     "Common": {
-      "firebase_admin_env_error": "Erreur Critique : Variables d'environnement Firebase Admin introuvables. Vérifiez votre .env.local"
+      "close": "Fermer",
+      "firebase_admin_env_error": "Erreur Critique : Variables d'environnement Firebase Admin introuvables. Vérifiez votre .env.local",
+      "logo_title": "Logo Buckify",
+      "select_month": "Sélectionner un mois"
     },
     "Navigation": {
       "add_category": "Nouvelle catégorie",
@@ -313,7 +325,10 @@ interface Resources {
       "success_toast": "Login realizado!"
     },
     "Common": {
-      "firebase_admin_env_error": "Erro Crítico: Variáveis de ambiente do Firebase Admin não foram encontradas. Verifique seu .env.local"
+      "close": "Fechar",
+      "firebase_admin_env_error": "Erro Crítico: Variáveis de ambiente do Firebase Admin não foram encontradas. Verifique seu .env.local",
+      "logo_title": "Logo Buckify",
+      "select_month": "Selecionar Mês"
     },
     "Navigation": {
       "add_category": "Nova Categoria",

@@ -31,7 +31,7 @@
 		".next/types/**/*.ts",
 		".next/dev/types/**/*.ts",
 		"**/*.mts",
-		"src/scripts/check-comments.js"
+		"src/scripts/check-comments.ts"
 	],
 	"exclude": ["node_modules"]
 }
