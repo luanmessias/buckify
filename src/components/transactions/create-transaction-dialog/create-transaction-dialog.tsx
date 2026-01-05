@@ -57,6 +57,7 @@ const CREATE_TRANSACTION = gql`
 
 export function CreateTransactionDialog() {
 	const t = useTranslations("Transactions")
+	const tCommon = useTranslations("Common")
 	const categories = useAppSelector((state) => state.categories.items)
 
 	const [open, setOpen] = useState(false)
@@ -118,7 +119,10 @@ export function CreateTransactionDialog() {
 				</Button>
 			</DialogTrigger>
 
-			<DialogContent className="sm:max-w-106.25">
+			<DialogContent
+				className="sm:max-w-106.25"
+				closeAriaLabel={tCommon("close")}
+			>
 				<DialogHeader>
 					<DialogTitle>{t("new_expense")}</DialogTitle>
 					<DialogDescription className="sr-only">

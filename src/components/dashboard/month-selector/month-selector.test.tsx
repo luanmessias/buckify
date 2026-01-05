@@ -2,7 +2,9 @@ import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { ptBR } from "date-fns/locale"
 import { type ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
+import { NextIntlClientProvider } from "next-intl"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import messages from "@/messages/pt.json"
 import { MonthSelector } from "./month-selector"
 
 const mockReplace = vi.fn()
@@ -24,6 +26,14 @@ global.ResizeObserver = class ResizeObserver {
 	disconnect() {}
 }
 
+const renderWithProviders = (ui: React.ReactElement) => {
+	return render(
+		<NextIntlClientProvider locale="pt" messages={messages}>
+			{ui}
+		</NextIntlClientProvider>,
+	)
+}
+
 describe("MonthSelector Component", () => {
 	beforeEach(() => {
 		vi.useFakeTimers({ toFake: ["Date"] })
@@ -41,7 +51,7 @@ describe("MonthSelector Component", () => {
 	})
 
 	it("should render the current month label from URL", () => {
-		render(<MonthSelector className="" />)
+		renderWithProviders(<MonthSelector className="" />)
 		expect(screen.getByText(/maio 2024/i)).toBeInTheDocument()
 	})
 
@@ -49,13 +59,13 @@ describe("MonthSelector Component", () => {
 		vi.mocked(useSearchParams).mockReturnValue(
 			new URLSearchParams() as unknown as ReadonlyURLSearchParams,
 		)
-		render(<MonthSelector className="" />)
+		renderWithProviders(<MonthSelector className="" />)
 		expect(screen.getByText(/maio 2024/i)).toBeInTheDocument()
 	})
 
 	it("should open drawer/popover and show year and months", async () => {
 		const user = userEvent.setup()
-		render(<MonthSelector className="" />)
+		renderWithProviders(<MonthSelector className="" />)
 
 		const trigger = screen.getByRole("button", { name: /maio 2024/i })
 		await user.click(trigger)
@@ -63,7 +73,7 @@ describe("MonthSelector Component", () => {
 		const dialog = screen.getByRole("dialog")
 		expect(dialog).toBeInTheDocument()
 
-		expect(screen.getByText("Select Month")).toBeInTheDocument()
+		expect(screen.getByText("select_month")).toBeInTheDocument()
 
 		expect(within(dialog).getByText("2024")).toBeInTheDocument()
 
@@ -77,7 +87,7 @@ describe("MonthSelector Component", () => {
 
 	it("should navigate years", async () => {
 		const user = userEvent.setup()
-		render(<MonthSelector className="" />)
+		renderWithProviders(<MonthSelector className="" />)
 
 		await user.click(screen.getByRole("button", { name: /maio 2024/i }))
 		const dialog = screen.getByRole("dialog")
@@ -99,7 +109,7 @@ describe("MonthSelector Component", () => {
 
 	it("should select a month and update URL", async () => {
 		const user = userEvent.setup()
-		render(<MonthSelector className="" />)
+		renderWithProviders(<MonthSelector className="" />)
 
 		await user.click(screen.getByRole("button", { name: /maio 2024/i }))
 		const dialog = screen.getByRole("dialog")
@@ -113,7 +123,7 @@ describe("MonthSelector Component", () => {
 	it("should disable future months", async () => {
 		const user = userEvent.setup()
 
-		render(<MonthSelector className="" />)
+		renderWithProviders(<MonthSelector className="" />)
 
 		await user.click(screen.getByRole("button", { name: /maio 2024/i }))
 		const dialog = screen.getByRole("dialog")

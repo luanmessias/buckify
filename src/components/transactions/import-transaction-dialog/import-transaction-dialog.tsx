@@ -62,6 +62,7 @@ export function ImportTransactionDialog({
 	isSubmitting = false,
 }: ImportTransactionDialogProps) {
 	const t = useTranslations("Transactions")
+	const tCommon = useTranslations("Common")
 	const categories = useAppSelector((state) => state.categories.items)
 	const [step, setStep] = useState<"upload" | "review">("upload")
 	const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -132,7 +133,10 @@ export function ImportTransactionDialog({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={handleClose}>
-			<DialogContent className="w-full rounded-2xl max-w-[calc(100%-2rem)] max-h-[85vh] flex flex-col">
+			<DialogContent
+				className="w-full rounded-2xl max-w-[calc(100%-2rem)] max-h-[85vh] flex flex-col"
+				closeAriaLabel={tCommon("close")}
+			>
 				<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">

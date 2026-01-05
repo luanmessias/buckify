@@ -3,9 +3,15 @@ import { cn } from "@/lib/utils"
 interface LogoProps extends React.ComponentProps<"svg"> {
 	className?: string
 	variant?: "full" | "icon" | "text"
+	title?: string
 }
 
-export function Logo({ className, variant = "full", ...props }: LogoProps) {
+export function Logo({
+	className,
+	variant = "full",
+	title = "Buckify Logo",
+	...props
+}: LogoProps) {
 	let viewBox = "0 0 574 152"
 	if (variant === "icon") viewBox = "0 0 125 152"
 	else if (variant === "text") viewBox = "160 0 414 152"
@@ -26,7 +32,7 @@ export function Logo({ className, variant = "full", ...props }: LogoProps) {
 			)}
 			{...props}
 		>
-			<title>Logo Buckify</title>
+			<title>{title}</title>
 
 			{showText && (
 				<g id="logo-text">

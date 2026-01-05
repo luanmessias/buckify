@@ -18,6 +18,7 @@ import { auth, googleProvider } from "@/lib/firebase"
 export default function LoginPage() {
 	const [isLoading, setIsLoading] = useState(false)
 	const t = useTranslations("Auth")
+	const tCommon = useTranslations("Common")
 
 	const handleGoogleLogin = () => {
 		setIsLoading(true)
@@ -36,8 +37,16 @@ export default function LoginPage() {
 		<Card className="relative w-full max-w-sm mx-auto border bg-card">
 			<div className="absolute right-0 top-0 w-32 h-32 bg-linear-to-br from-primary/10 to-transparent opacity-50 rounded-bl-full pointer-events-none"></div>
 			<CardHeader className="space-y-1 text-center">
-				<Logo variant="icon" className="h-20 w-auto text-primary" />
-				<Logo variant="text" className="h-12 text-primary" />
+				<Logo
+					variant="icon"
+					className="h-20 w-auto text-primary"
+					title={tCommon("logo_title")}
+				/>
+				<Logo
+					variant="text"
+					className="h-12 text-primary"
+					title={tCommon("logo_title")}
+				/>
 				<CardDescription>{t("login_subtitle")}</CardDescription>
 			</CardHeader>
 			<CardContent className="grid gap-4">

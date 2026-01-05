@@ -18,8 +18,8 @@ import {
 	ChevronRight,
 } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { useEffect, useMemo, useState } from "react"
-
 import { Button } from "@/components/ui/button"
 import {
 	Drawer,
@@ -41,6 +41,7 @@ interface MonthSelectorProps {
 }
 
 export const MonthSelector = ({ className }: MonthSelectorProps) => {
+	const t = useTranslations("Common")
 	const [open, setOpen] = useState(false)
 	const isDesktop = useMediaQuery("(min-width: 768px)")
 	const currentLocale = useDateFnsLocale()
@@ -112,7 +113,7 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 		<Drawer open={open} onOpenChange={setIsOpen}>
 			<DrawerTrigger asChild>{TriggerButton}</DrawerTrigger>
 			<DrawerContent className="bg-zinc-950 border-zinc-800 text-zinc-100">
-				<DrawerTitle className="sr-only">Select Month</DrawerTitle>
+				<DrawerTitle className="sr-only">{t("select_month")}</DrawerTitle>
 				<div className="mt-4 border-t border-zinc-800 pt-4 pb-8">
 					<MonthGrid
 						currentDate={currentDate}
