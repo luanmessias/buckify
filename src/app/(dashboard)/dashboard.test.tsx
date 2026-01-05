@@ -4,6 +4,7 @@ import { Suspense } from "react"
 import { Provider } from "react-redux"
 import { describe, expect, it, vi } from "vitest"
 import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
+import { Typography } from "@/components/ui/typography"
 import { makeStore } from "@/lib/store"
 import DashboardPage from "./page"
 
@@ -19,7 +20,9 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => {
 		<Provider store={store}>
 			<NextIntlClientProvider locale="pt" messages={{}}>
 				<ApolloWrapper>
-					<Suspense fallback={<div>Carregando...</div>}>{children}</Suspense>
+					<Suspense fallback={<Typography>Carregando...</Typography>}>
+						{children}
+					</Suspense>
 				</ApolloWrapper>
 			</NextIntlClientProvider>
 		</Provider>

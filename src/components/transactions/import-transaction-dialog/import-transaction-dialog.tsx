@@ -263,9 +263,12 @@ export function ImportTransactionDialog({
 											</div>
 
 											<div className="flex items-center gap-2">
-												<div className="font-mono font-medium w-20 text-right">
+												<Typography
+													as="div"
+													className="font-mono font-medium w-20 text-right"
+												>
 													€{item.amount.toFixed(2)}
-												</div>
+												</Typography>
 
 												<Button
 													variant="ghost"

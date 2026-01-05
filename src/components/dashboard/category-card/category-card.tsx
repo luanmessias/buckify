@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Icon } from "@/components/ui/icon"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 interface CategoryCardProps {
@@ -52,21 +53,22 @@ export const CategoryCard = ({
 						</div>
 						<div>
 							<h3 className="font-semibold text-sm text-foreground">{name}</h3>
-							<p className="text-xs text-muted-foreground">
+							<Typography variant="muted" className="text-xs">
 								{formatCurrency(amountSpent)} {t("spent")} /{" "}
 								{formatCurrency(budget)} {t("available")}
-							</p>
+							</Typography>
 						</div>
 					</div>
 
-					<span
+					<Typography
+						as="span"
 						className={cn(
 							"text-sm font-bold",
 							isOverBudget ? "text-red-400" : "text-hades-300",
 						)}
 					>
 						{percentage.toFixed(0)}%
-					</span>
+					</Typography>
 				</div>
 
 				<div className="h-2 w-full bg-secondary rounded-full overflow-hidden relative">

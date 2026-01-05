@@ -12,7 +12,11 @@
     "prepare": "husky",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "test:ui": "vitest --ui --coverage"
+    "test:ui": "vitest --ui --coverage",
+    "lint:architecture": "eslint 'src/**/*.{ts,tsx}'",
+    "check:comments": "node src/scripts/check-comments.js",
+    "i18n:types": "i18next-resources-for-ts interface -i ./src/messages -o ./src/@types/resources.ts",
+    "check:all": "pnpm i18n:types && pnpm lint:architecture && pnpm check:comments && pnpm test"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx,json,css}": "biome check --write",
@@ -71,10 +75,14 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/parser": "^8.52.0",
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.15",
     "@vitest/ui": "4.0.15",
+    "eslint": "^9.39.2",
+    "eslint-plugin-i18next": "^6.1.3",
     "husky": "^9.1.7",
+    "i18next-resources-for-ts": "^2.0.0",
     "jsdom": "^27.3.0",
     "lint-staged": "^16.2.7",
     "msw": "^2.12.4",
