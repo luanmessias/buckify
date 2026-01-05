@@ -23,9 +23,9 @@ export default function LoginPage() {
 		setIsLoading(true)
 		const authFn = isLocalhost() ? signInWithPopup : signInWithRedirect
 
-		authFn(auth, googleProvider).catch((error: any) => {
+		authFn(auth, googleProvider).catch((error: unknown) => {
 			console.error("Erro no Login:", error)
-			if (error.code !== "auth/popup-closed-by-user") {
+			if ((error as { code?: string })?.code !== "auth/popup-closed-by-user") {
 				toast.error("Não foi possível iniciar o login.")
 			}
 			setIsLoading(false)

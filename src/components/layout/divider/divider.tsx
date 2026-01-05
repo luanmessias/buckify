@@ -1,4 +1,3 @@
-// src/components/ui/Separator.tsx
 import { twMerge } from "tailwind-merge"
 
 type SeparatorProps = {

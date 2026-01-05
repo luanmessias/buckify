@@ -70,7 +70,7 @@ export const createSession = async (idToken: string) => {
 		})
 
 		return { success: true }
-	} catch (error: any) {
+	} catch (error: unknown) {
 		console.error("Auth Action Error:", error)
 		throw error
 	}

@@ -3,14 +3,13 @@
 import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
-import { useEffect, useState } from "react"
-import { MonthOptions } from "@/components/dashboard/month-options/month-options"
+import { useSearchParams } from "next/navigation"
+import { useEffect } from "react"
+import { CategoryList } from "@/components/dashboard/category-list/category-list"
 import { Summary } from "@/components/dashboard/summary/summary"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
-import { CategoryList } from "../category-list/category-list"
 
 interface GetTransactionsData {
 	getTransactions: Transaction[]
@@ -44,9 +43,10 @@ interface DashboardViewProps {
 
 export function DashboardView({ householdId }: DashboardViewProps) {
 	const dispatch = useAppDispatch()
-	const [currentMonth, setCurrentMonth] = useState(
-		format(new Date(), "yyyy-MM"),
-	)
+
+	const searchParams = useSearchParams()
+	const currentMonth =
+		searchParams.get("month") || format(new Date(), "yyyy-MM")
 
 	const parsedDate = parseISO(currentMonth)
 	const startDate = format(startOfMonth(parsedDate), "yyyy-MM-dd")
@@ -56,7 +56,7 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 		variables: {
 			startDate,
 			endDate,
-			householdId: householdId,
+			householdId,
 		},
 	})
 
@@ -66,14 +66,8 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 		}
 	}, [data.getCategories, dispatch])
 
-	const handleMonthChange = (month: string) => {
-		setCurrentMonth(month)
-	}
-
 	return (
-		<div className="flex flex-col gap-4">
-			<MonthOptions month={currentMonth} onSelectDate={handleMonthChange} />
-
+		<div className="flex flex-col gap-4 py-4">
 			<Summary
 				transactions={data.getTransactions}
 				categories={data.getCategories}

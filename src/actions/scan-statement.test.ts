@@ -1,10 +1,8 @@
-import { GoogleGenAI } from "@google/genai"
 import { cookies } from "next/headers"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { dbAdmin } from "@/lib/firebase-admin"
 import { scanBankStatement } from "./scan-statement"
 
-// Mock dependencies
 const mockGenerateContent = vi.fn()
 
 vi.mock("@/lib/firebase-admin", () => ({
@@ -21,8 +19,8 @@ vi.mock("next/headers", () => ({
 vi.mock("@google/genai", () => {
 	return {
 		GoogleGenAI: class MockGoogleGenAI {
-			models: any
-			constructor(options: any) {
+			models: { generateContent: Mock }
+			constructor(_options: unknown) {
 				this.models = {
 					generateContent: mockGenerateContent,
 				}
@@ -35,15 +33,13 @@ vi.mock("@/lib/ai/prompts/get-transactions", () => ({
 	generateBankStatementPrompt: vi.fn().mockReturnValue("mock prompt"),
 }))
 
-// Setup environment variables
 process.env.GEMINI_API_KEY = "test-api-key"
 
 describe("scanBankStatement Server Action", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 
-		// Setup Mock Cookie
-		;(cookies as any).mockReturnValue({
+		;(cookies as unknown as Mock).mockReturnValue({
 			get: vi.fn().mockReturnValue({ value: "test-household-id" }),
 		})
 	})
@@ -55,8 +51,8 @@ describe("scanBankStatement Server Action", () => {
 	})
 
 	it("should return error if householdId is missing", async () => {
-		;(cookies as any).mockReturnValue({
-			get: vi.fn().mockReturnValue(undefined), // No cookie
+		;(cookies as unknown as Mock).mockReturnValue({
+			get: vi.fn().mockReturnValue(undefined),
 		})
 
 		const formData = new FormData()
@@ -76,7 +72,6 @@ describe("scanBankStatement Server Action", () => {
 	})
 
 	it("should scan file and return transactions", async () => {
-		// Mock Firestore categories
 		const mockCategories = {
 			docs: [
 				{ id: "cat1", data: () => ({ name: "Food" }) },
@@ -84,21 +79,19 @@ describe("scanBankStatement Server Action", () => {
 			],
 		}
 
-		// Mock Firestore transactions (for duplicate check)
 		const mockExistingTransactions = {
-			forEach: vi.fn(), // No existing transactions
+			forEach: vi.fn(),
 		}
 
 		const collectionMock = vi.fn().mockReturnValue({
 			where: vi.fn().mockReturnThis(),
 			get: vi
 				.fn()
-				.mockResolvedValueOnce(mockCategories) // First call for categories
-				.mockResolvedValueOnce(mockExistingTransactions), // Second call for duplicate check
+				.mockResolvedValueOnce(mockCategories)
+				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 
-		// Mock AI Response
 		const mockAIResponse = {
 			text: JSON.stringify([
 				{
@@ -125,8 +118,8 @@ describe("scanBankStatement Server Action", () => {
 		expect(result.success).toBe(true)
 		if (result.success) {
 			expect(result.data).toHaveLength(1)
-			expect(result.data![0].description).toBe("Test Transaction")
-			expect(result.data![0].isPossibleDuplicate).toBe(false)
+			expect(result.data?.[0].description).toBe("Test Transaction")
+			expect(result.data?.[0].isPossibleDuplicate).toBe(false)
 			expect(result.categories).toEqual([
 				{ id: "cat1", name: "Food" },
 				{ id: "cat2", name: "Transport" },
@@ -135,14 +128,16 @@ describe("scanBankStatement Server Action", () => {
 	})
 
 	it("should mark duplicates if transaction exists", async () => {
-		// Mock Firestore categories
 		const mockCategories = {
 			docs: [],
 		}
 
-		// Mock Firestore transactions (existing)
 		const mockExistingTransactions = {
-			forEach: (callback: any) => {
+			forEach: (
+				callback: (doc: {
+					data: () => { date: string; amount: number }
+				}) => void,
+			) => {
 				callback({ data: () => ({ date: "2024-01-01", amount: 100 }) })
 			},
 		}
@@ -154,9 +149,8 @@ describe("scanBankStatement Server Action", () => {
 				.mockResolvedValueOnce(mockCategories)
 				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 
-		// Mock AI Response
 		const mockAIResponse = {
 			text: JSON.stringify([
 				{
@@ -181,7 +175,7 @@ describe("scanBankStatement Server Action", () => {
 
 		expect(result.success).toBe(true)
 		if (result.success) {
-			expect(result.data![0].isPossibleDuplicate).toBe(true)
+			expect(result.data?.[0].isPossibleDuplicate).toBe(true)
 			expect(result.categories).toEqual([])
 		}
 	})
@@ -215,7 +209,7 @@ describe("scanBankStatement Server Action", () => {
 				.mockResolvedValueOnce(mockCategories)
 				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 		mockGenerateContent.mockResolvedValue({ text: JSON.stringify([]) })
 		const formData = new FormData()
 		const mockFile = new File(["content"], "test.pdf", {
@@ -241,7 +235,7 @@ describe("scanBankStatement Server Action", () => {
 				.mockResolvedValueOnce(mockCategories)
 				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 		mockGenerateContent.mockResolvedValue({ text: "invalid json" })
 		const formData = new FormData()
 		const mockFile = new File(["content"], "test.pdf", {
@@ -268,7 +262,7 @@ describe("scanBankStatement Server Action", () => {
 				.mockResolvedValueOnce(mockCategories)
 				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 		mockGenerateContent.mockRejectedValue(new Error("AI error"))
 		const formData = new FormData()
 		const mockFile = new File(["content"], "test.pdf", {
@@ -295,7 +289,7 @@ describe("scanBankStatement Server Action", () => {
 				.mockResolvedValueOnce(mockCategories)
 				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 		mockGenerateContent.mockRejectedValue(new Error("404 Not Found"))
 		const formData = new FormData()
 		const mockFile = new File(["content"], "test.pdf", {
@@ -323,7 +317,7 @@ describe("scanBankStatement Server Action", () => {
 				.mockResolvedValueOnce(mockCategories)
 				.mockResolvedValueOnce(mockExistingTransactions),
 		})
-		;(dbAdmin.collection as any).mockImplementation(collectionMock)
+		;(dbAdmin.collection as unknown as Mock).mockImplementation(collectionMock)
 		mockGenerateContent.mockResolvedValue({ text: "" })
 		const formData = new FormData()
 		const mockFile = new File(["content"], "test.pdf", {

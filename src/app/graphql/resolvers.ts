@@ -197,7 +197,7 @@ export const resolvers = {
 					return { success: false, message: "Unauthorized" }
 				}
 
-				const updateData: Record<string, any> = {}
+				const updateData: Record<string, string | number> = {}
 				Object.entries(input).forEach(([key, value]) => {
 					if (value !== undefined) {
 						updateData[key] = value
@@ -234,7 +234,7 @@ export const resolvers = {
 					return { success: false, message: "Unauthorized" }
 				}
 
-				const updateData: Record<string, any> = {}
+				const updateData: Record<string, string | number> = {}
 				Object.entries(input).forEach(([key, value]) => {
 					if (value !== undefined) {
 						updateData[key] = value

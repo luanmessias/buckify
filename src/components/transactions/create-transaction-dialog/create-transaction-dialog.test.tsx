@@ -79,14 +79,15 @@ describe("CreateTransactionDialog", () => {
 		const dateInput = screen.getByDisplayValue(
 			new Date().toISOString().split("T")[0],
 		)
-		const submitButton = screen.getByRole("button", {
-			name: "add_expense",
-		})
 
 		await user.type(amountInput, "100")
 		await user.type(descriptionInput, "Test transaction")
 		fireEvent.change(dateInput, { target: { value: "2024-01-01" } })
-		fireEvent.submit(document.querySelector("form")!)
+
+		const form = document.querySelector("form")
+		if (form) {
+			fireEvent.submit(form)
+		}
 
 		await waitFor(() => {
 			expect(createTransactionMock).toHaveBeenCalledWith({
@@ -111,7 +112,10 @@ describe("CreateTransactionDialog", () => {
 		const button = screen.getByRole("button")
 		await user.click(button)
 
-		fireEvent.submit(document.querySelector("form")!)
+		const form = document.querySelector("form")
+		if (form) {
+			fireEvent.submit(form)
+		}
 
 		await waitFor(() => {
 			expect(screen.getByText("description_min_length")).toBeInTheDocument()

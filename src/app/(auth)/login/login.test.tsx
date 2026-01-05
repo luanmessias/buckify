@@ -70,7 +70,6 @@ describe("LoginPage", () => {
 	})
 
 	it("should call createSession and refresh router on successful login", async () => {
-		const user = userEvent.setup()
 		const mockUser = {
 			uid: "123",
 			email: "teste@teste.com",
@@ -78,7 +77,7 @@ describe("LoginPage", () => {
 		}
 
 		;(onAuthStateChangedMock as Mock).mockImplementation(
-			(auth: any, callback: any) => {
+			(_auth: unknown, callback: (user: unknown) => void) => {
 				callback(mockUser)
 				return vi.fn()
 			},

@@ -5,7 +5,15 @@ import messages from "@/messages/pt.json"
 import { CategoryList } from "./category-list"
 
 vi.mock("../category-card/category-card", () => ({
-	CategoryCard: ({ name, amountSpent, icon }: any) => (
+	CategoryCard: ({
+		name,
+		amountSpent,
+		icon,
+	}: {
+		name: string
+		amountSpent: number
+		icon: string
+	}) => (
 		<div data-testid={`card-${name}`}>
 			{name} - {amountSpent} - {icon || "MoreHorizontal"}
 		</div>
@@ -73,9 +81,8 @@ describe("CategoryList Component", () => {
 			</NextIntlClientProvider>,
 		)
 
-		// Casa: 200 + 50 = 250
 		expect(screen.getByTestId("card-Casa")).toHaveTextContent("Casa - 250")
-		// Lazer: 100
+
 		expect(screen.getByTestId("card-Lazer")).toHaveTextContent("Lazer - 100")
 	})
 
@@ -106,18 +113,11 @@ describe("CategoryList Component", () => {
 	})
 
 	it("should sort categories by spent amount (descending)", () => {
-		// Mock CategoryCard calls to check order?
-		// Or just check order in the DOM if we render them sequentially.
-		// Since we mocked CategoryCard to a simple div, they should appear in order.
-
-		// In mockTransactions: Casa = 250, Lazer = 100. Casa should be first.
-		// Let's modify transactions so Lazer spends more.
-
 		const modifiedTransactions = [
 			{
 				id: "t1",
 				amount: 100,
-				categoryId: "cat1", // Casa
+				categoryId: "cat1",
 				description: "Aluguel",
 				date: "2024-05-01",
 				category: "Casa",
@@ -125,7 +125,7 @@ describe("CategoryList Component", () => {
 			{
 				id: "t3",
 				amount: 500,
-				categoryId: "cat2", // Lazer
+				categoryId: "cat2",
 				description: "Cinema",
 				date: "2024-05-03",
 				category: "Lazer",

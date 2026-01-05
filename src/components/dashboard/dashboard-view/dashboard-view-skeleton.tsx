@@ -1,5 +1,5 @@
 import { CategoryCardSkeleton } from "@/components/dashboard/category-card/category-card-skeleton"
-import { SummarySkeleton } from "@/components/dashboard/summary/summary-skeleton" // Aquele que criamos antes
+import { SummarySkeleton } from "@/components/dashboard/summary/summary-skeleton"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export function DashboardViewSkeleton() {

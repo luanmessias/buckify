@@ -18,14 +18,44 @@ vi.mock("next-intl", async (importOriginal) => {
 			const messages = require("./src/messages/en.json")
 			return messages.Auth?.[key] || key
 		},
+		useLocale: () => "en",
 	}
 })
+
+vi.mock("next/navigation", () => ({
+	useRouter: () => ({
+		push: vi.fn(),
+		replace: vi.fn(),
+		back: vi.fn(),
+		forward: vi.fn(),
+		refresh: vi.fn(),
+		prefetch: vi.fn(),
+	}),
+	usePathname: () => "/",
+	useSearchParams: () => new URLSearchParams(),
+}))
 
 global.ResizeObserver = class ResizeObserver {
 	observe() {}
 	unobserve() {}
 	disconnect() {}
 }
+
+HTMLElement.prototype.setPointerCapture = vi.fn()
+HTMLElement.prototype.releasePointerCapture = vi.fn()
+
+const originalGetComputedStyle = window.getComputedStyle
+window.getComputedStyle = vi.fn((element) => {
+	const style = originalGetComputedStyle(element)
+
+	if (!style.transform) {
+		Object.defineProperty(style, "transform", {
+			value: "translate(0px, 0px)",
+			writable: true,
+		})
+	}
+	return style
+})
 
 Object.defineProperty(window, "matchMedia", {
 	writable: true,

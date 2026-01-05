@@ -3,12 +3,10 @@ import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { authAdmin, dbAdmin } from "@/lib/firebase-admin"
 import { createSession, logout } from "./auth"
 
-// Mock next/headers
 vi.mock("next/headers", () => ({
 	cookies: vi.fn(),
 }))
 
-// Mock firebase-admin
 vi.mock("@/lib/firebase-admin", () => {
 	const collectionMock = {
 		doc: vi.fn(),
@@ -31,7 +29,7 @@ vi.mock("@/lib/auth-constants", () => ({
 }))
 
 describe("Auth Actions", () => {
-	let cookieStoreMock: any
+	let cookieStoreMock: { set: Mock; delete: Mock }
 
 	beforeEach(() => {
 		vi.clearAllMocks()
@@ -44,7 +42,6 @@ describe("Auth Actions", () => {
 
 	describe("createSession", () => {
 		it("should create a session for a new user", async () => {
-			// Mock authAdmin.verifyIdToken
 			const decodedToken = {
 				uid: "user123",
 				email: "test@example.com",
@@ -53,13 +50,11 @@ describe("Auth Actions", () => {
 			}
 			;(authAdmin.verifyIdToken as Mock).mockResolvedValue(decodedToken)
 
-			// Mock user lookup (not found)
 			const userDocMock = {
 				get: vi.fn().mockResolvedValue({ exists: false }),
 				set: vi.fn(),
 			}
 
-			// Mock household creation
 			const householdDocMock = {
 				set: vi.fn(),
 			}
@@ -77,7 +72,6 @@ describe("Auth Actions", () => {
 				return { doc: vi.fn() }
 			})
 
-			// Mock session cookie creation
 			;(authAdmin.createSessionCookie as Mock).mockResolvedValue(
 				"session-cookie",
 			)
@@ -89,7 +83,6 @@ describe("Auth Actions", () => {
 				true,
 			)
 
-			// Should create household
 			expect(householdsCollectionMock.doc).toHaveBeenCalled()
 			expect(householdDocMock.set).toHaveBeenCalledWith(
 				expect.objectContaining({
@@ -98,7 +91,6 @@ describe("Auth Actions", () => {
 				}),
 			)
 
-			// Should create user
 			expect(usersCollectionMock.doc).toHaveBeenCalledWith("user123")
 			expect(userDocMock.set).toHaveBeenCalledWith(
 				expect.objectContaining({
@@ -108,7 +100,6 @@ describe("Auth Actions", () => {
 				}),
 			)
 
-			// Should set cookies
 			expect(cookieStoreMock.set).toHaveBeenCalledWith(
 				"__session",
 				"session-cookie",
@@ -124,7 +115,6 @@ describe("Auth Actions", () => {
 		})
 
 		it("should create a session for an existing user", async () => {
-			// Mock authAdmin.verifyIdToken
 			const decodedToken = {
 				uid: "user123",
 				email: "test@example.com",
@@ -133,7 +123,6 @@ describe("Auth Actions", () => {
 			}
 			;(authAdmin.verifyIdToken as Mock).mockResolvedValue(decodedToken)
 
-			// Mock user lookup (found)
 			const userDocMock = {
 				get: vi.fn().mockResolvedValue({
 					exists: true,
@@ -150,14 +139,12 @@ describe("Auth Actions", () => {
 				return { doc: vi.fn() }
 			})
 
-			// Mock session cookie creation
 			;(authAdmin.createSessionCookie as Mock).mockResolvedValue(
 				"session-cookie",
 			)
 
 			const result = await createSession("valid-id-token")
 
-			// Should set cookies with existing householdId
 			expect(cookieStoreMock.set).toHaveBeenCalledWith(
 				"householdId",
 				"existing_household_id",
@@ -168,7 +155,7 @@ describe("Auth Actions", () => {
 		})
 
 		it("should throw error if email is missing", async () => {
-			;(authAdmin.verifyIdToken as Mock).mockResolvedValue({ uid: "123" }) // No email
+			;(authAdmin.verifyIdToken as Mock).mockResolvedValue({ uid: "123" })
 
 			await expect(createSession("token")).rejects.toThrow(
 				"Email não fornecido pelo Google",
@@ -180,7 +167,6 @@ describe("Auth Actions", () => {
 				new Error("Auth error"),
 			)
 
-			// Mock console.error to avoid noise
 			const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {})
 
 			await expect(createSession("token")).rejects.toThrow("Auth error")

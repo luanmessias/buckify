@@ -1,12 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { Provider } from "react-redux"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { scanBankStatement } from "@/actions/scan-statement"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { makeStore } from "@/lib/store"
 import { ImportTransactionDialog } from "./import-transaction-dialog"
 
-// Mock dependencies
 vi.mock("@/actions/scan-statement", () => ({
 	scanBankStatement: vi.fn(),
 }))
@@ -18,9 +17,8 @@ vi.mock("sonner", () => ({
 	},
 }))
 
-// Mock ScrollArea
 vi.mock("@/components/ui/scroll-area", () => ({
-	ScrollArea: ({ children }: any) => (
+	ScrollArea: ({ children }: { children: React.ReactNode }) => (
 		<div data-testid="scroll-area">{children}</div>
 	),
 }))
@@ -75,7 +73,7 @@ describe("ImportTransactionDialog", () => {
 		]
 		const mockCategories = [{ id: "cat1", name: "Food" }]
 
-		;(scanBankStatement as any).mockResolvedValue({
+		;(scanBankStatement as unknown as Mock).mockResolvedValue({
 			success: true,
 			data: mockTransactions,
 			categories: mockCategories,
@@ -96,11 +94,13 @@ describe("ImportTransactionDialog", () => {
 		const file = new File(["dummy content"], "statement.pdf", {
 			type: "application/pdf",
 		})
-		// Use document.querySelector because Dialog renders in a Portal (outside container)
+
 		const input = document.querySelector('input[type="file"]')
 
 		expect(input).toBeInTheDocument()
-		fireEvent.change(input!, { target: { files: [file] } })
+		if (input) {
+			fireEvent.change(input, { target: { files: [file] } })
+		}
 
 		await waitFor(() => {
 			expect(screen.getByText("Test Transaction")).toBeInTheDocument()
@@ -120,7 +120,7 @@ describe("ImportTransactionDialog", () => {
 				isPossibleDuplicate: true,
 			},
 		]
-		;(scanBankStatement as any).mockResolvedValue({
+		;(scanBankStatement as unknown as Mock).mockResolvedValue({
 			success: true,
 			data: mockTransactions,
 			categories: [],
@@ -135,14 +135,16 @@ describe("ImportTransactionDialog", () => {
 		)
 
 		const input = document.querySelector('input[type="file"]')
-		fireEvent.change(input!, { target: { files: [new File([], "t.pdf")] } })
+		if (input) {
+			fireEvent.change(input, { target: { files: [new File([], "t.pdf")] } })
+		}
 
 		await waitFor(() => {
 			expect(screen.getByText("Dup Transaction")).toBeInTheDocument()
 		})
 
 		const rowText = screen.getByText("Dup Transaction")
-		const row = rowText.closest(".border") // seeking the container with border class
+		const row = rowText.closest(".border")
 		expect(row).toHaveClass("bg-amber-500/10")
 	})
 
@@ -157,7 +159,7 @@ describe("ImportTransactionDialog", () => {
 				isPossibleDuplicate: false,
 			},
 		]
-		;(scanBankStatement as any).mockResolvedValue({
+		;(scanBankStatement as unknown as Mock).mockResolvedValue({
 			success: true,
 			data: mockTransactions,
 			categories: [{ id: "cat1", name: "Food" }],
@@ -172,7 +174,9 @@ describe("ImportTransactionDialog", () => {
 		)
 
 		const input = document.querySelector('input[type="file"]')
-		fireEvent.change(input!, { target: { files: [new File([], "t.pdf")] } })
+		if (input) {
+			fireEvent.change(input, { target: { files: [new File([], "t.pdf")] } })
+		}
 
 		await waitFor(() => {
 			expect(screen.getByText("Confirmar Importação")).toBeInTheDocument()
@@ -197,7 +201,7 @@ describe("ImportTransactionDialog", () => {
 				isPossibleDuplicate: false,
 			},
 		]
-		;(scanBankStatement as any).mockResolvedValue({
+		;(scanBankStatement as unknown as Mock).mockResolvedValue({
 			success: true,
 			data: mockTransactions,
 			categories: [],
@@ -212,7 +216,9 @@ describe("ImportTransactionDialog", () => {
 		)
 
 		const input = document.querySelector('input[type="file"]')
-		fireEvent.change(input!, { target: { files: [new File([], "t.pdf")] } })
+		if (input) {
+			fireEvent.change(input, { target: { files: [new File([], "t.pdf")] } })
+		}
 
 		await waitFor(() => {
 			expect(screen.getByText("To Remove")).toBeInTheDocument()
@@ -221,7 +227,9 @@ describe("ImportTransactionDialog", () => {
 		const row = screen.getByText("To Remove").closest(".border")
 		const removeBtn = row?.querySelector("button")
 
-		fireEvent.click(removeBtn!)
+		if (removeBtn) {
+			fireEvent.click(removeBtn)
+		}
 
 		await waitFor(() => {
 			expect(screen.queryByText("To Remove")).not.toBeInTheDocument()

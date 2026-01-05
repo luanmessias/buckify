@@ -6,6 +6,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
 import type { Category, Transaction } from "@/lib/types"
 import { cn } from "@/lib/utils"
+import { MonthSelector } from "../month-selector/month-selector"
 
 interface SummaryProps {
 	transactions: Transaction[]
@@ -69,14 +70,16 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 	const hasData = totalSpent > 0
 
 	return (
-		<section className="p-4">
-			<AnimatedWrapper className="relative rounded-2xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
-				<div className="bg-card text-card-foreground rounded-2xl p-6 h-full relative z-10">
+		<section className="px-4">
+			<AnimatedWrapper className="relative rounded-xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
+				<div className="bg-card text-card-foreground rounded-xl p-6 h-full relative z-10">
 					<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
 
-					<h2 className="font-semibold mb-6 text-muted-foreground tracking-wider uppercase text-xs">
+					<h2 className="font-semibold mb-2 text-muted-foreground tracking-wider uppercase text-xs">
 						{t("month_summary")}
 					</h2>
+
+					<MonthSelector className="mb-4" />
 
 					<div className="flex flex-col md:flex-row items-center justify-between gap-8">
 						<div className="relative h-60 w-60 shrink-0">

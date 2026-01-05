@@ -51,7 +51,7 @@ export const SummarySkeleton = () => {
 						key={i}
 						className="h-24 rounded-xl border p-4 flex items-center gap-4"
 					>
-						<Skeleton className="h-10 w-10 rounded-lg" /> {/* Ícone */}
+						<Skeleton className="h-10 w-10 rounded-lg" /> {}
 						<div className="space-y-2 flex-1">
 							<div className="flex justify-between">
 								<Skeleton className="h-4 w-24" />

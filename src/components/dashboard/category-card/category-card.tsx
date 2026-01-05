@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Icon } from "@/components/ui/icon"
 import { cn } from "@/lib/utils"
@@ -22,6 +23,10 @@ export const CategoryCard = ({
 	budget,
 }: CategoryCardProps) => {
 	const t = useTranslations("Transactions")
+	const searchParams = useSearchParams()
+
+	const queryString = searchParams.toString()
+	const queryPrefix = queryString ? "?" : ""
 
 	const percentage = Math.min((amountSpent / budget) * 100, 100)
 	const remaining = budget - amountSpent
@@ -38,7 +43,7 @@ export const CategoryCard = ({
 		}).format(val)
 
 	return (
-		<Link href={`/category/${slug}`}>
+		<Link href={`/category/${slug}${queryPrefix}${queryString}`}>
 			<div className="bg-card/50 border border-border/50 rounded-xl p-4 flex flex-col gap-3 hover:bg-card/80 transition-colors group relative overflow-hidden cursor-pointer">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">

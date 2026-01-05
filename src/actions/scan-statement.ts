@@ -19,7 +19,7 @@ export const scanBankStatement = async (formData: FormData) => {
 	const ai = new GoogleGenAI({ apiKey })
 
 	try {
-		const file = formData.get("file") as any
+		const file = formData.get("file") as File
 
 		if (!file) {
 			return { success: false, error: "Nenhum arquivo enviado." }

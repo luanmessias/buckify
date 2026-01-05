@@ -1,8 +1,7 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { dbAdmin } from "@/lib/firebase-admin"
 import { resolvers } from "./resolvers"
 
-// Mock firebase-admin
 vi.mock("@/lib/firebase-admin", () => {
 	const collectionMock = {
 		where: vi.fn().mockReturnThis(),
@@ -44,7 +43,9 @@ describe("GraphQL Resolvers", () => {
 				]
 
 				const collectionMock = dbAdmin.collection("transactions")
-				;(collectionMock.get as any).mockResolvedValue({ docs: mockDocs })
+				;(collectionMock.get as unknown as Mock).mockResolvedValue({
+					docs: mockDocs,
+				})
 
 				const result = await resolvers.Query.getTransactions(null, {
 					startDate: "",
@@ -69,7 +70,7 @@ describe("GraphQL Resolvers", () => {
 
 			it("should filter by categoryId and date range", async () => {
 				const collectionMock = dbAdmin.collection("transactions")
-				;(collectionMock.get as any).mockResolvedValue({ docs: [] })
+				;(collectionMock.get as unknown as Mock).mockResolvedValue({ docs: [] })
 
 				await resolvers.Query.getTransactions(null, {
 					startDate: "2024-01-01",
@@ -109,7 +110,9 @@ describe("GraphQL Resolvers", () => {
 				]
 
 				const collectionMock = dbAdmin.collection("categories")
-				;(collectionMock.get as any).mockResolvedValue({ docs: mockDocs })
+				;(collectionMock.get as unknown as Mock).mockResolvedValue({
+					docs: mockDocs,
+				})
 
 				const result = await resolvers.Query.getCategories(null, {
 					householdId: "h1",
@@ -139,7 +142,7 @@ describe("GraphQL Resolvers", () => {
 				}
 
 				const collectionMock = dbAdmin.collection("categories")
-				;(collectionMock.doc as any).mockReturnValue(docMock)
+				;(collectionMock.doc as unknown as Mock).mockReturnValue(docMock)
 
 				const result = await resolvers.Query.getCategory(null, {
 					id: "c1",
@@ -153,7 +156,9 @@ describe("GraphQL Resolvers", () => {
 			it("should throw error if category not found", async () => {
 				const mockDoc = { exists: false }
 				const docMock = { get: vi.fn().mockResolvedValue(mockDoc) }
-				;(dbAdmin.collection("categories").doc as any).mockReturnValue(docMock)
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docMock)
 
 				await expect(
 					resolvers.Query.getCategory(null, { id: "c1", householdId: "h1" }),
@@ -166,7 +171,9 @@ describe("GraphQL Resolvers", () => {
 					data: () => ({ name: "Food", householdId: "other_household" }),
 				}
 				const docMock = { get: vi.fn().mockResolvedValue(mockDoc) }
-				;(dbAdmin.collection("categories").doc as any).mockReturnValue(docMock)
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docMock)
 
 				await expect(
 					resolvers.Query.getCategory(null, { id: "c1", householdId: "h1" }),
@@ -196,7 +203,7 @@ describe("GraphQL Resolvers", () => {
 				const batchMock = dbAdmin.batch()
 				const collectionMock = dbAdmin.collection("transactions")
 				const docRefMock = { id: "new_id" }
-				;(collectionMock.doc as any).mockReturnValue(docRefMock)
+				;(collectionMock.doc as unknown as Mock).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.createManyTransactions(null, {
 					householdId: "h1",
@@ -223,7 +230,9 @@ describe("GraphQL Resolvers", () => {
 
 			it("should handle errors gracefully", async () => {
 				const batchMock = dbAdmin.batch()
-				;(batchMock.commit as any).mockRejectedValue(new Error("Batch error"))
+				;(batchMock.commit as unknown as Mock).mockRejectedValue(
+					new Error("Batch error"),
+				)
 
 				const result = await resolvers.Mutation.createManyTransactions(null, {
 					householdId: "h1",
@@ -247,9 +256,9 @@ describe("GraphQL Resolvers", () => {
 					get: vi.fn().mockResolvedValue(mockDoc),
 					update: vi.fn().mockResolvedValue(undefined),
 				}
-				;(dbAdmin.collection("categories").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateCategory(null, {
 					id: "c1",
@@ -264,9 +273,9 @@ describe("GraphQL Resolvers", () => {
 			it("should return error if category not found", async () => {
 				const mockDoc = { exists: false }
 				const docRefMock = { get: vi.fn().mockResolvedValue(mockDoc) }
-				;(dbAdmin.collection("categories").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateCategory(null, {
 					id: "c1",
@@ -284,9 +293,9 @@ describe("GraphQL Resolvers", () => {
 					data: () => ({ householdId: "other" }),
 				}
 				const docRefMock = { get: vi.fn().mockResolvedValue(mockDoc) }
-				;(dbAdmin.collection("categories").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateCategory(null, {
 					id: "c1",
@@ -307,9 +316,9 @@ describe("GraphQL Resolvers", () => {
 					get: vi.fn().mockResolvedValue(mockDoc),
 					update: vi.fn().mockRejectedValue(new Error("Update failed")),
 				}
-				;(dbAdmin.collection("categories").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateCategory(null, {
 					id: "c1",
@@ -332,9 +341,9 @@ describe("GraphQL Resolvers", () => {
 					get: vi.fn().mockResolvedValue(mockDoc),
 					update: vi.fn().mockResolvedValue(undefined),
 				}
-				;(dbAdmin.collection("transactions").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("transactions").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateTransaction(null, {
 					id: "t1",
@@ -349,9 +358,9 @@ describe("GraphQL Resolvers", () => {
 			it("should return error if transaction not found", async () => {
 				const mockDoc = { exists: false }
 				const docRefMock = { get: vi.fn().mockResolvedValue(mockDoc) }
-				;(dbAdmin.collection("transactions").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("transactions").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateTransaction(null, {
 					id: "t1",
@@ -369,9 +378,9 @@ describe("GraphQL Resolvers", () => {
 					data: () => ({ householdId: "other" }),
 				}
 				const docRefMock = { get: vi.fn().mockResolvedValue(mockDoc) }
-				;(dbAdmin.collection("transactions").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("transactions").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateTransaction(null, {
 					id: "t1",
@@ -392,9 +401,9 @@ describe("GraphQL Resolvers", () => {
 					get: vi.fn().mockResolvedValue(mockDoc),
 					update: vi.fn().mockRejectedValue(new Error("Update failed")),
 				}
-				;(dbAdmin.collection("transactions").doc as any).mockReturnValue(
-					docRefMock,
-				)
+				;(
+					dbAdmin.collection("transactions").doc as unknown as Mock
+				).mockReturnValue(docRefMock)
 
 				const result = await resolvers.Mutation.updateTransaction(null, {
 					id: "t1",

@@ -30,7 +30,6 @@ const MockedProvider = ({
 	)
 }
 
-// Mock utilities
 vi.mock("@/lib/utils", () => ({
 	cn: (...classes: (string | undefined | null | boolean)[]) =>
 		classes.filter(Boolean).join(" "),
@@ -40,7 +39,6 @@ vi.mock("sonner", () => ({
 	toast: vi.fn(),
 }))
 
-// Mock sub-components
 vi.mock(
 	"@/components/transactions/import-transaction-dialog/import-transaction-dialog",
 	() => ({
@@ -62,11 +60,6 @@ vi.mock(
 	}),
 )
 
-// We use real components for UI elements to ensure integration works,
-// and because mocks were causing issues.
-// We keep ImportTransactionDialog mocked because it's complex.
-
-// Mock Redux hooks
 vi.mock("@/lib/hooks", () => ({
 	useAppSelector: vi.fn(),
 }))
@@ -96,16 +89,13 @@ describe("AddNavigation Component", () => {
 
 		const fab = screen.getByRole("button", { name: "" })
 
-		// Initial state: menu items are hidden (pointer-events-none)
-		// We can check for one of the menu items text
 		const menuItem = screen.getByText("Ler com IA")
-		// The parent div controls visibility
+
 		const menuContainer = menuItem.closest("div.absolute.bottom-24")
 		expect(menuContainer).toHaveClass("pointer-events-none")
 
 		fireEvent.click(fab)
 
-		// Now should be visible
 		expect(menuContainer).toHaveClass("pointer-events-auto")
 
 		fireEvent.click(fab)
@@ -120,7 +110,7 @@ describe("AddNavigation Component", () => {
 		)
 
 		const fab = screen.getByRole("button", { name: "" })
-		fireEvent.click(fab) // Open menu
+		fireEvent.click(fab)
 
 		const importButton = screen.getByText("Ler com IA").closest("button")
 		expect(importButton).toBeInTheDocument()
@@ -138,7 +128,6 @@ describe("AddNavigation Component", () => {
 			</MockedProvider>,
 		)
 
-		// Open dialog
 		fireEvent.click(screen.getByRole("button", { name: "" }))
 		const importButton = screen.getByText("Ler com IA").closest("button")
 		expect(importButton).toBeInTheDocument()
@@ -148,7 +137,6 @@ describe("AddNavigation Component", () => {
 
 		expect(screen.getByTestId("import-dialog")).toBeInTheDocument()
 
-		// Close dialog
 		fireEvent.click(screen.getByText("Close"))
 
 		expect(screen.queryByTestId("import-dialog")).not.toBeInTheDocument()
