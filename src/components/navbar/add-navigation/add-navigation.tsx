@@ -6,8 +6,9 @@ import { type LucideIcon, Plus, ScanText, Tag, Wallet } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
-import { CreateExpenseDrawer } from "@/components/transactions/create-transaction-dialog/create-expense-drawer"
-import { ImportTransactionDrawer } from "@/components/transactions/import-transaction-dialog/import-transaction-drawer"
+import { CreateCategoryDrawer } from "@/components/navbar/drawers/create-category/create-category-drawer"
+import { CreateExpenseDrawer } from "@/components/navbar/drawers/create-transaction/create-expense-drawer"
+import { ImportTransactionDrawer } from "@/components/navbar/drawers/import-transaction/import-transaction-drawer"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
 import { useAppSelector } from "@/lib/hooks"
@@ -21,6 +22,15 @@ const CREATE_TRANSACTION = gql`
     }
   }
   `
+
+const CREATE_CATEGORY = gql`
+  mutation CreateCategory($householdId: String!, $category: CreateCategoryInput!) {
+    createCategory(householdId: $householdId, category: $category) {
+      success
+      message
+    }
+  }
+`
 
 const CREATE_MANY_TRANSACTIONS = gql`
   mutation CreateManyTransactions($householdId: String!, $transactions: [CreateTransactionInput!]!) {
@@ -61,9 +71,22 @@ interface CreateTransactionInput {
 	date: string
 }
 
+interface CreateCategoryInput {
+	name: string
+	description: string
+	budget: number
+	color?: string
+	icon?: string
+}
+
+interface CreateCategoryResult {
+	createCategory: MutationResponse
+}
+
 export const AddNavigation = () => {
 	const t = useTranslations("Transactions")
 	const tNav = useTranslations("Navigation")
+	const tCategories = useTranslations("Categories")
 	const [isOpen, setIsOpen] = useState(false)
 	const [showImportDrawer, setShowImportDrawer] = useState(false)
 
@@ -75,6 +98,12 @@ export const AddNavigation = () => {
 	const [createTransaction, { loading: createLoading }] =
 		useMutation<CreateTransactionResult>(CREATE_TRANSACTION, {
 			refetchQueries: ["GetDashboardData"],
+			awaitRefetchQueries: true,
+		})
+
+	const [createCategory, { loading: createCategoryLoading }] =
+		useMutation<CreateCategoryResult>(CREATE_CATEGORY, {
+			refetchQueries: ["GetCategories"],
 			awaitRefetchQueries: true,
 		})
 
@@ -92,8 +121,6 @@ export const AddNavigation = () => {
 	}
 
 	const handleOpenAddCategoryDrawer = () => {
-		// TODO: Category Form
-		console.log(showAddCategoryDrawer)
 		setShowAddCategoryDrawer(true)
 		setIsOpen(false)
 	}
@@ -101,6 +128,36 @@ export const AddNavigation = () => {
 	const handleOpenAddExpenseDrawer = () => {
 		setShowAddExpenseDrawer(true)
 		setIsOpen(false)
+	}
+
+	const handleCreateCategoryConfirm = async (category: CreateCategoryInput) => {
+		try {
+			if (!householdId) {
+				toast.error(t("session_error_reload"))
+				return
+			}
+
+			const { data } = await createCategory({
+				variables: {
+					householdId,
+					category,
+				},
+			})
+
+			if (data?.createCategory?.success) {
+				toast.success(tCategories("category_created"))
+				setShowAddCategoryDrawer(false)
+			} else {
+				toast.error(
+					t("error_saving", {
+						message: data?.createCategory?.message || "",
+					}),
+				)
+			}
+		} catch (error) {
+			console.error(error)
+			toast.error(t("error_saving"))
+		}
 	}
 
 	const handleCreateExpenseConfirm = async (
@@ -251,6 +308,13 @@ export const AddNavigation = () => {
 				onClose={() => setShowAddExpenseDrawer(false)}
 				onConfirm={handleCreateExpenseConfirm}
 				isSubmitting={createLoading}
+			/>
+
+			<CreateCategoryDrawer
+				isOpen={showAddCategoryDrawer}
+				onClose={() => setShowAddCategoryDrawer(false)}
+				onConfirm={handleCreateCategoryConfirm}
+				isSubmitting={createCategoryLoading}
 			/>
 		</>
 	)

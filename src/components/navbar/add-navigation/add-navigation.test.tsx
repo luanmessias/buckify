@@ -18,7 +18,7 @@ vi.mock("sonner", () => ({
 }))
 
 vi.mock(
-	"@/components/transactions/import-transaction-dialog/import-transaction-drawer",
+	"@/components/navbar/drawers/import-transaction/import-transaction-drawer",
 	() => ({
 		ImportTransactionDrawer: ({
 			isOpen,
@@ -39,7 +39,7 @@ vi.mock(
 )
 
 vi.mock(
-	"@/components/transactions/create-transaction-dialog/create-expense-drawer",
+	"@/components/navbar/drawers/create-transaction/create-expense-drawer",
 	() => ({
 		CreateExpenseDrawer: ({
 			isOpen,
