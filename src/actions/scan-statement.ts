@@ -2,6 +2,7 @@
 
 import { GoogleGenAI } from "@google/genai"
 import { cookies } from "next/headers"
+import { GEMINI_API_MODEL } from "@/lib/ai/config"
 import { generateBankStatementPrompt } from "@/lib/ai/prompts/get-transactions"
 import { dbAdmin } from "@/lib/firebase-admin"
 import type { ScannedTransaction } from "@/lib/types"
@@ -48,7 +49,7 @@ export const scanBankStatement = async (formData: FormData) => {
 		const dynamicPrompt = generateBankStatementPrompt(categories)
 
 		const result = await ai.models.generateContent({
-			model: "gemini-flash-latest",
+			model: GEMINI_API_MODEL,
 			contents: [
 				{
 					role: "user",
