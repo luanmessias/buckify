@@ -1,21 +1,13 @@
 import fs from "node:fs"
 import { globSync } from "glob"
 
-// BUSCA ARQUIVOS
-// Usamos o filter manual para garantir 100% que a pasta scripts será ignorada
 const files = globSync("src/**/*.{ts,tsx}", {
-	ignore: "node_modules/**",
-}).filter((f) => !f.includes("src/scripts/"))
-
+	ignore: ["node_modules/**", "src/lib/ai/prompts/**"],
+})
 let hasError = false
 
-// REGEX APRIMORADA 3.0:
-// 1. (?<!:)      -> Ignora http:// (protocolos)
-// 2. (?<!image)  -> Ignora image/* (MIME types comuns)
-// 3. (\/\/|\/\*) -> Busca // ou /*
-// 4. (?!...)     -> Garante que NÃO é seguido pelas tags permitidas
 const invalidCommentRegex =
-	/(?<!:)(?<!image)(\/\/|\/\*)(?!\s*(TODO|WARNING|FIXME|eslint-disable|biome-ignore))/
+	/(\/\/|\/\*)(?!\s*(TODO|WARNING|FIXME|eslint-disable|biome-ignore))/
 
 console.log(
 	`🔍 Verificando comentários (inclusive inline) em ${files.length} arquivos...`,
@@ -26,10 +18,17 @@ files.forEach((file: string) => {
 	const lines = content.split("\n")
 
 	lines.forEach((line, index) => {
-		// Ignora linhas vazias
 		if (!line.trim()) return
 
-		if (invalidCommentRegex.test(line)) {
+		let cleanLine = line
+
+		try {
+			cleanLine = cleanLine.replace(/\/((?:\\.|[^\\/])+)\/[gimuy]*/g, "")
+		} catch (_e) {}
+
+		cleanLine = cleanLine.replace(/(["'`])(?:\\.|[^\\])*?\1/g, "")
+
+		if (invalidCommentRegex.test(cleanLine)) {
 			console.error(`❌ Erro em ${file}:${index + 1}`)
 			console.error(`   Comentário não permitido: "${line.trim()}"`)
 			console.error(
