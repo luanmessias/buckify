@@ -19,6 +19,14 @@ interface CreateTransactionInput {
 	categoryId: string
 }
 
+interface CreateCategoryInput {
+	name: string
+	description: string
+	budget: number
+	color?: string
+	icon?: string
+}
+
 interface UpdateCategoryInput {
 	name?: string
 	description?: string
@@ -138,6 +146,36 @@ export const resolvers = {
 		},
 	},
 	Mutation: {
+		createCategory: async (
+			_: unknown,
+			{
+				householdId,
+				category,
+			}: { householdId: string; category: CreateCategoryInput },
+		) => {
+			try {
+				const collectionRef = dbAdmin.collection("categories")
+				const docRef = collectionRef.doc()
+
+				const slug = category.name
+					.toLowerCase()
+					.replace(/[^a-z0-9]+/g, "-")
+					.replace(/(^-|-$)+/g, "")
+
+				await docRef.set({
+					...category,
+					slug,
+					householdId,
+					createdAt: Date.now(),
+				})
+
+				return { success: true, message: "Category created successfully" }
+			} catch (error) {
+				console.error("Error creating category:", error)
+				return { success: false, message: "Error creating category" }
+			}
+		},
+
 		createTransaction: async (
 			_: unknown,
 			{

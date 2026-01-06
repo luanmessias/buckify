@@ -68,6 +68,14 @@ export const typeDefs = `#graphql
     categoryId: String!
   }
 
+  input CreateCategoryInput {
+    name: String!
+    description: String!
+    budget: Float!
+    color: String
+    icon: String
+  }
+
   input UpdateCategoryInput {
     name: String
     description: String
@@ -91,6 +99,7 @@ export const typeDefs = `#graphql
   type Mutation {
     createManyTransactions(householdId: String!, transactions: [CreateTransactionInput!]!): MutationResponse
     createTransaction(householdId: String!, transaction: CreateTransactionInput!): MutationResponse
+    createCategory(householdId: String!, category: CreateCategoryInput!): MutationResponse
     updateCategory(id: String!, householdId: String!, input: UpdateCategoryInput!): MutationResponse
     updateTransaction(id: String!, householdId: String!, input: UpdateTransactionInput!): MutationResponse
   }
