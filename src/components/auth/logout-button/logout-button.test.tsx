@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth"
 import { NextIntlClientProvider } from "next-intl"
 import { describe, expect, it, vi } from "vitest"
 import { logout } from "@/app/actions/auth"
-import messages from "@/messages/pt.json"
+import messages from "@/messages/en.json"
 import { LogoutButton } from "./logout-button"
 
 vi.mock("next/navigation", () => ({

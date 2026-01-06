@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { Provider } from "react-redux"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeStore } from "@/lib/store"
-import messages from "@/messages/pt.json"
+import messages from "@/messages/en.json"
 import { CreateTransactionDialog } from "./create-transaction-dialog"
 
 const createTransactionMock = vi.fn()

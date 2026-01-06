@@ -24,6 +24,7 @@ export const handlers = [
 					{
 						id: "Receita",
 						name: "Receita",
+						slug: "receita",
 						budget: 10000,
 						color: "#00ff00",
 						icon: "TrendingUp",
@@ -31,6 +32,7 @@ export const handlers = [
 					{
 						id: "Assinatura",
 						name: "Assinatura",
+						slug: "assinatura",
 						budget: 100,
 						color: "#ff0000",
 						icon: "CreditCard",

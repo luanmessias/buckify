@@ -4,7 +4,7 @@ import { ptBR } from "date-fns/locale"
 import { type ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
 import { NextIntlClientProvider } from "next-intl"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import messages from "@/messages/pt.json"
+import messages from "@/messages/en.json"
 import { MonthSelector } from "./month-selector"
 
 const mockReplace = vi.fn()
