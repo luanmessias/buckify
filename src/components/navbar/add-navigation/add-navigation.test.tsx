@@ -1,34 +1,15 @@
+import { ApolloClient, InMemoryCache } from "@apollo/client"
+import { ApolloProvider } from "@apollo/client/react"
 import { type MockedResponse, MockLink } from "@apollo/client/testing"
-import {
-	ApolloClient,
-	ApolloNextAppProvider,
-	InMemoryCache,
-} from "@apollo/client-integration-nextjs"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { useAppSelector } from "@/lib/hooks"
 import { AddNavigation } from "./add-navigation"
 
-const MockedProvider = ({
-	mocks = [],
-	children,
-}: {
-	mocks?: ReadonlyArray<MockedResponse>
-	children: React.ReactNode
-}) => {
-	return (
-		<ApolloNextAppProvider
-			makeClient={() => {
-				return new ApolloClient({
-					cache: new InMemoryCache(),
-					link: new MockLink(mocks),
-				})
-			}}
-		>
-			{children}
-		</ApolloNextAppProvider>
-	)
-}
+vi.mock("@apollo/client/react", () => ({
+	ApolloProvider: ({ children }: { children: React.ReactNode }) => children,
+	useMutation: vi.fn(() => [vi.fn(), { loading: false }]),
+}))
 
 vi.mock("@/lib/utils", () => ({
 	cn: (...classes: (string | undefined | null | boolean)[]) =>
@@ -40,9 +21,9 @@ vi.mock("sonner", () => ({
 }))
 
 vi.mock(
-	"@/components/transactions/import-transaction-dialog/import-transaction-dialog",
+	"@/components/transactions/import-transaction-dialog/import-transaction-drawer",
 	() => ({
-		ImportTransactionDialog: ({
+		ImportTransactionDrawer: ({
 			isOpen,
 			onClose,
 		}: {
@@ -64,6 +45,23 @@ vi.mock("@/lib/hooks", () => ({
 	useAppSelector: vi.fn(),
 }))
 
+vi.mock("@/actions/scan-statement", () => ({
+	scanBankStatement: vi.fn(() =>
+		Promise.resolve({
+			success: true,
+			data: [
+				{
+					date: "2023-01-01",
+					description: "Test",
+					amount: 100,
+					categoryId: "1",
+				},
+			],
+			categories: [],
+		}),
+	),
+}))
+
 describe("AddNavigation Component", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
@@ -71,25 +69,17 @@ describe("AddNavigation Component", () => {
 	})
 
 	it("should render the floating action button", () => {
-		render(
-			<MockedProvider>
-				<AddNavigation />
-			</MockedProvider>,
-		)
+		render(<AddNavigation />)
 
 		expect(screen.getByRole("button", { name: "" })).toBeInTheDocument()
 	})
 
 	it("should toggle the menu when clicked", () => {
-		render(
-			<MockedProvider>
-				<AddNavigation />
-			</MockedProvider>,
-		)
+		render(<AddNavigation />)
 
 		const fab = screen.getByRole("button", { name: "" })
 
-		const menuItem = screen.getByText("Ler com IA")
+		const menuItem = screen.getByText("scan_statement")
 
 		const menuContainer = menuItem.closest("div.absolute.bottom-24")
 		expect(menuContainer).toHaveClass("pointer-events-none")
@@ -103,16 +93,12 @@ describe("AddNavigation Component", () => {
 	})
 
 	it("should open the import dialog when 'Ler com IA' is clicked", () => {
-		render(
-			<MockedProvider>
-				<AddNavigation />
-			</MockedProvider>,
-		)
+		render(<AddNavigation />)
 
 		const fab = screen.getByRole("button", { name: "" })
 		fireEvent.click(fab)
 
-		const importButton = screen.getByText("Ler com IA").closest("button")
+		const importButton = screen.getByText("scan_statement").closest("button")
 		expect(importButton).toBeInTheDocument()
 		if (importButton) {
 			fireEvent.click(importButton)
@@ -122,14 +108,10 @@ describe("AddNavigation Component", () => {
 	})
 
 	it("should close the import dialog when onClose is called", () => {
-		render(
-			<MockedProvider>
-				<AddNavigation />
-			</MockedProvider>,
-		)
+		render(<AddNavigation />)
 
 		fireEvent.click(screen.getByRole("button", { name: "" }))
-		const importButton = screen.getByText("Ler com IA").closest("button")
+		const importButton = screen.getByText("scan_statement").closest("button")
 		expect(importButton).toBeInTheDocument()
 		if (importButton) {
 			fireEvent.click(importButton)

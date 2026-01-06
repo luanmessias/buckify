@@ -6,7 +6,8 @@ import { type LucideIcon, Plus, ScanText, Tag, Wallet } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
-import { ImportTransactionDialog } from "@/components/transactions/import-transaction-dialog/import-transaction-dialog"
+import { CreateExpenseDrawer } from "@/components/transactions/create-transaction-dialog/create-expense-drawer"
+import { ImportTransactionDrawer } from "@/components/transactions/import-transaction-dialog/import-transaction-drawer"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
 import { useAppSelector } from "@/lib/hooks"
@@ -37,8 +38,11 @@ interface TransactionDraft {
 
 export const AddNavigation = () => {
 	const t = useTranslations("Transactions")
+	const tNav = useTranslations("Navigation")
 	const [isOpen, setIsOpen] = useState(false)
-	const [showImportModal, setShowImportModal] = useState(false)
+	const [showImportDrawer, setShowImportDrawer] = useState(false)
+	const [showAddCategoryDrawer, setShowAddCategoryDrawer] = useState(false)
+	const [showAddExpenseDrawer, setShowAddExpenseDrawer] = useState(false)
 
 	const householdId = useAppSelector((state) => state.household.id)
 
@@ -50,8 +54,18 @@ export const AddNavigation = () => {
 
 	const toggleMenu = () => setIsOpen(!isOpen)
 
-	const handleOpenImportModal = () => {
-		setShowImportModal(true)
+	const handleOpenImportDrawer = () => {
+		setShowImportDrawer(true)
+		setIsOpen(false)
+	}
+
+	const handleOpenAddCategoryDrawer = () => {
+		setShowAddCategoryDrawer(true)
+		setIsOpen(false)
+	}
+
+	const handleOpenAddExpenseDrawer = () => {
+		setShowAddExpenseDrawer(true)
 		setIsOpen(false)
 	}
 
@@ -79,7 +93,7 @@ export const AddNavigation = () => {
 			if (data?.createManyTransactions?.success) {
 				toast.success(data.createManyTransactions.message)
 				setIsOpen(false)
-				setShowImportModal(false)
+				setShowImportDrawer(false)
 			} else {
 				toast.error(
 					t("error_saving", {
@@ -105,24 +119,24 @@ export const AddNavigation = () => {
 					<ActionPill
 						isOpen={isOpen}
 						icon={Wallet}
-						label="Novo Gasto"
-						onClick={() => console.log("Gasto")}
+						label={tNav("add_expense")}
+						onClick={handleOpenAddExpenseDrawer}
 						delay="delay-[50ms]"
 					/>
 
 					<ActionPill
 						isOpen={isOpen}
 						icon={Tag}
-						label="Nova Categoria"
-						onClick={() => console.log("Categoria")}
+						label={tNav("add_category")}
+						onClick={handleOpenAddCategoryDrawer}
 						delay="delay-[100ms]"
 					/>
 
 					<ActionPill
 						isOpen={isOpen}
 						icon={ScanText}
-						label="Ler com IA"
-						onClick={handleOpenImportModal}
+						label={tNav("scan_statement")}
+						onClick={handleOpenImportDrawer}
 						delay="delay-[150ms]"
 					/>
 				</div>
@@ -159,11 +173,16 @@ export const AddNavigation = () => {
 				</Button>
 			</div>
 
-			<ImportTransactionDialog
-				isOpen={showImportModal}
-				onClose={() => setShowImportModal(false)}
+			<ImportTransactionDrawer
+				isOpen={showImportDrawer}
+				onClose={() => setShowImportDrawer(false)}
 				onConfirm={handleImportConfirm}
 				isSubmitting={loading}
+			/>
+
+			<CreateExpenseDrawer
+				isOpen={showAddExpenseDrawer}
+				onClose={() => setShowAddExpenseDrawer(false)}
 			/>
 		</>
 	)
