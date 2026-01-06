@@ -5,7 +5,7 @@ import { scanBankStatement } from "@/actions/scan-statement"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { makeStore } from "@/lib/store"
 import messages from "@/messages/en.json"
-import { ImportTransactionDialog } from "./import-transaction-dialog"
+import { ImportTransactionDrawer } from "./import-transaction-drawer"
 
 vi.mock("next-intl", () => ({
 	useTranslations: vi.fn((namespace: string) => (key: string) => {
@@ -39,7 +39,7 @@ const renderWithProvider = (ui: React.ReactElement, store = makeStore()) => {
 	return render(<Provider store={store}>{ui}</Provider>)
 }
 
-describe("ImportTransactionDialog", () => {
+describe("ImportTransactionDrawer", () => {
 	const mockOnClose = vi.fn()
 	const mockOnConfirm = vi.fn()
 
@@ -49,7 +49,7 @@ describe("ImportTransactionDialog", () => {
 
 	it("should render nothing when not open", () => {
 		renderWithProvider(
-			<ImportTransactionDialog
+			<ImportTransactionDrawer
 				isOpen={false}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}
@@ -62,7 +62,7 @@ describe("ImportTransactionDialog", () => {
 
 	it("should render upload step when open", () => {
 		renderWithProvider(
-			<ImportTransactionDialog
+			<ImportTransactionDrawer
 				isOpen={true}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}
@@ -99,7 +99,7 @@ describe("ImportTransactionDialog", () => {
 		store.dispatch(setCategories(mockCategories))
 
 		renderWithProvider(
-			<ImportTransactionDialog
+			<ImportTransactionDrawer
 				isOpen={true}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}
@@ -143,7 +143,7 @@ describe("ImportTransactionDialog", () => {
 		})
 
 		renderWithProvider(
-			<ImportTransactionDialog
+			<ImportTransactionDrawer
 				isOpen={true}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}
@@ -182,7 +182,7 @@ describe("ImportTransactionDialog", () => {
 		})
 
 		renderWithProvider(
-			<ImportTransactionDialog
+			<ImportTransactionDrawer
 				isOpen={true}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}
@@ -226,7 +226,7 @@ describe("ImportTransactionDialog", () => {
 		})
 
 		renderWithProvider(
-			<ImportTransactionDialog
+			<ImportTransactionDrawer
 				isOpen={true}
 				onClose={mockOnClose}
 				onConfirm={mockOnConfirm}

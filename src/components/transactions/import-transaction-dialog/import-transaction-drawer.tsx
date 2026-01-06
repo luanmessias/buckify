@@ -15,12 +15,14 @@ import { toast } from "sonner"
 import { scanBankStatement } from "@/actions/scan-statement"
 import { Button } from "@/components/ui/button"
 import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog"
+	Drawer,
+	DrawerClose,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerTitle,
+} from "@/components/ui/drawer"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
 	Tooltip,
@@ -55,12 +57,12 @@ interface ImportTransactionDialogProps {
 	isSubmitting?: boolean
 }
 
-export function ImportTransactionDialog({
+export const ImportTransactionDrawer = ({
 	isOpen,
 	onClose,
 	onConfirm,
 	isSubmitting = false,
-}: ImportTransactionDialogProps) {
+}: ImportTransactionDialogProps) => {
 	const t = useTranslations("Transactions")
 	const tCommon = useTranslations("Common")
 	const categories = useAppSelector((state) => state.categories.items)
@@ -125,31 +127,30 @@ export function ImportTransactionDialog({
 		})
 	}
 
-	const handleClose = () => {
-		setStep("upload")
-		setTransactions([])
-		onClose()
+	const handleOpenChange = (open: boolean) => {
+		if (!open) {
+			setStep("upload")
+			setTransactions([])
+			onClose()
+		}
 	}
 
 	return (
-		<Dialog open={isOpen} onOpenChange={handleClose}>
-			<DialogContent
-				className="w-full rounded-2xl max-w-[calc(100%-2rem)] max-h-[85vh] flex flex-col"
-				closeAriaLabel={tCommon("close")}
-			>
+		<Drawer open={isOpen} onOpenChange={handleOpenChange}>
+			<DrawerContent className="max-h-[90vh]">
 				<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
-				<DialogHeader>
-					<DialogTitle className="flex items-center gap-2">
+				<DrawerHeader>
+					<DrawerTitle className="flex items-center gap-2">
 						<UploadCloud className="w-5 h-5 text-primary" />
 						{t("import_title")}
-					</DialogTitle>
-					<DialogDescription className="text-left flex flex-col gap-1">
+					</DrawerTitle>
+					<DrawerDescription className="text-left flex flex-col gap-1">
 						<span>{t("send_image_pdf")}</span>
 						<span>{t("expenses_categorized")}</span>
-					</DialogDescription>
-				</DialogHeader>
+					</DrawerDescription>
+				</DrawerHeader>
 
-				<div className="flex-1 overflow-hidden p-1">
+				<div className="flex-1 overflow-hidden p-4">
 					{step === "upload" ? (
 						<button
 							className="border-2 w-full border-dashed border-muted-foreground/25 rounded-xl h-64 flex flex-col items-center justify-center gap-4 hover:bg-muted/50 transition-colors cursor-pointer bg-transparent"
@@ -189,7 +190,7 @@ export function ImportTransactionDialog({
 							/>
 						</button>
 					) : (
-						<ScrollArea className="h-100">
+						<ScrollArea className="h-[50vh]">
 							<div className="space-y-3">
 								<div className="flex justify-between items-center text-sm text-muted-foreground mb-4">
 									<span>
@@ -292,36 +293,44 @@ export function ImportTransactionDialog({
 					)}
 				</div>
 
-				{step === "review" && (
-					<div className="pt-4 border-t flex gap-2 justify-end">
-						<Button
-							variant="outline"
-							disabled={isSubmitting}
-							onClick={handleClose}
-						>
-							{t("cancel")}
-						</Button>
-						<Button
-							disabled={isSubmitting}
-							onClick={() => {
-								onConfirm(transactions)
-							}}
-						>
-							{isSubmitting ? (
-								<>
-									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
-									{t("saving")}
-								</>
-							) : (
-								<>
-									<Check className="w-4 h-4 mr-2" />
-									{t("confirm_import")}
-								</>
-							)}
-						</Button>
-					</div>
-				)}
-			</DialogContent>
-		</Dialog>
+				<DrawerFooter className="pt-2">
+					{step === "review" ? (
+						<div className="flex gap-2 w-full">
+							<Button
+								variant="outline"
+								className="flex-1"
+								disabled={isSubmitting}
+								onClick={() => handleOpenChange(false)}
+							>
+								{t("cancel")}
+							</Button>
+							<Button
+								className="flex-1"
+								disabled={isSubmitting}
+								onClick={() => {
+									onConfirm(transactions)
+								}}
+							>
+								{isSubmitting ? (
+									<>
+										<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+										{t("saving")}
+									</>
+								) : (
+									<>
+										<Check className="w-4 h-4 mr-2" />
+										{t("confirm_import")}
+									</>
+								)}
+							</Button>
+						</div>
+					) : (
+						<DrawerClose asChild>
+							<Button variant="outline">{tCommon("close")}</Button>
+						</DrawerClose>
+					)}
+				</DrawerFooter>
+			</DrawerContent>
+		</Drawer>
 	)
 }
