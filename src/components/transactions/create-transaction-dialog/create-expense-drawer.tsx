@@ -33,14 +33,7 @@ import {
 } from "@/components/ui/select"
 import { useAppSelector } from "@/lib/hooks"
 
-interface TransactionDraft {
-	id: string
-	date: string
-	description: string
-	amount: number
-	categoryId: string
-	isPossibleDuplicate?: boolean
-}
+
 
 interface CreateExpenseDrawerProps {
 	isOpen: boolean

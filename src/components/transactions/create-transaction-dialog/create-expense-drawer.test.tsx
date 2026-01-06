@@ -117,7 +117,7 @@ describe("CreateExpenseDrawer", () => {
 	})
 
 	it("should show validation errors for invalid input", async () => {
-		const user = userEvent.setup()
+		const _user = userEvent.setup()
 
 		renderWithProviders(
 			<CreateExpenseDrawer

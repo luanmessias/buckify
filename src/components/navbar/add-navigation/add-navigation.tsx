@@ -63,7 +63,7 @@ export const AddNavigation = () => {
 	const tNav = useTranslations("Navigation")
 	const [isOpen, setIsOpen] = useState(false)
 	const [showImportDrawer, setShowImportDrawer] = useState(false)
-	const [showAddCategoryDrawer, setShowAddCategoryDrawer] = useState(false)
+
 	const [showAddExpenseDrawer, setShowAddExpenseDrawer] = useState(false)
 
 	const householdId = useAppSelector((state) => state.household.id)
@@ -97,7 +97,9 @@ export const AddNavigation = () => {
 		setIsOpen(false)
 	}
 
-	const handleCreateExpenseConfirm = async (transaction: any) => {
+	const handleCreateExpenseConfirm = async (
+		transaction: CreateTransactionInput,
+	) => {
 		try {
 			await createTransaction({
 				variables: {
