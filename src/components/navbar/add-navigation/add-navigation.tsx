@@ -13,6 +13,18 @@ import { Typography } from "@/components/ui/typography"
 import { useAppSelector } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 
+const CREATE_TRANSACTION = gql`
+  mutation CreateTransaction($data: CreateTransactionInput!) {
+    createTransaction(data: $data) {
+      id
+      description
+      amount
+			date
+	    categoryId
+    }
+  }
+  `
+
 const CREATE_MANY_TRANSACTIONS = gql`
   mutation CreateManyTransactions($householdId: String!, $transactions: [CreateTransactionInput!]!) {
     createManyTransactions(householdId: $householdId, transactions: $transactions) {
@@ -20,12 +32,22 @@ const CREATE_MANY_TRANSACTIONS = gql`
       message
     }
   }
- `
+  `
 
 interface CreateManyTransactionsResult {
 	createManyTransactions: {
 		success: boolean
 		message: string
+	}
+}
+
+interface CreateTransactionResult {
+	CreateTransaction: {
+		id: string
+		description: string
+		amount: number
+		date: string
+		categoryId: string
 	}
 }
 
@@ -46,7 +68,13 @@ export const AddNavigation = () => {
 
 	const householdId = useAppSelector((state) => state.household.id)
 
-	const [createManyTransactions, { loading }] =
+	const [createTransaction, { loading: createLoading }] =
+		useMutation<CreateTransactionResult>(CREATE_TRANSACTION, {
+			refetchQueries: ["GetDashboardData"],
+			awaitRefetchQueries: true,
+		})
+
+	const [createManyTransactions, { loading: importLoading }] =
 		useMutation<CreateManyTransactionsResult>(CREATE_MANY_TRANSACTIONS, {
 			refetchQueries: ["GetDashboardData"],
 			awaitRefetchQueries: true,
@@ -67,6 +95,22 @@ export const AddNavigation = () => {
 	const handleOpenAddExpenseDrawer = () => {
 		setShowAddExpenseDrawer(true)
 		setIsOpen(false)
+	}
+
+	const handleCreateExpenseConfirm = async (transaction: any) => {
+		try {
+			await createTransaction({
+				variables: {
+					data: {
+						...transaction,
+						type: "expense",
+					},
+				},
+			})
+		} catch (error) {
+			console.error(error)
+			toast.error(t("error_saving_transactions"))
+		}
 	}
 
 	const handleImportConfirm = async (transactions: TransactionDraft[]) => {
@@ -177,12 +221,14 @@ export const AddNavigation = () => {
 				isOpen={showImportDrawer}
 				onClose={() => setShowImportDrawer(false)}
 				onConfirm={handleImportConfirm}
-				isSubmitting={loading}
+				isSubmitting={importLoading}
 			/>
 
 			<CreateExpenseDrawer
 				isOpen={showAddExpenseDrawer}
 				onClose={() => setShowAddExpenseDrawer(false)}
+				onConfirm={handleCreateExpenseConfirm}
+				isSubmitting={createLoading}
 			/>
 		</>
 	)

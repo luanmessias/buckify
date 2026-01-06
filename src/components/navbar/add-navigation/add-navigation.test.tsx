@@ -38,6 +38,27 @@ vi.mock(
 	}),
 )
 
+vi.mock(
+	"@/components/transactions/create-transaction-dialog/create-expense-drawer",
+	() => ({
+		CreateExpenseDrawer: ({
+			isOpen,
+			onClose,
+		}: {
+			isOpen: boolean
+			onClose: () => void
+		}) =>
+			isOpen ? (
+				<div data-testid="create-expense-drawer">
+					Create Expense Drawer{" "}
+					<button type="button" onClick={onClose}>
+						Close
+					</button>
+				</div>
+			) : null,
+	}),
+)
+
 vi.mock("@/lib/hooks", () => ({
 	useAppSelector: vi.fn(),
 }))

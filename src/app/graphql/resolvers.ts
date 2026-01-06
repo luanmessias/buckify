@@ -138,6 +138,31 @@ export const resolvers = {
 		},
 	},
 	Mutation: {
+		createTransaction: async (
+			_: unknown,
+			{
+				householdId,
+				transaction,
+			}: { householdId: string; transaction: CreateTransactionInput },
+		) => {
+			try {
+				const collectionRef = dbAdmin.collection("transactions")
+				const docRef = collectionRef.doc()
+
+				await docRef.set({
+					...transaction,
+					householdId,
+					createdAt: Date.now(),
+					type: "expense",
+				})
+
+				return { success: true, message: "Transaction created successfully" }
+			} catch (error) {
+				console.error("Error creating transaction:", error)
+				return { success: false, message: "Error creating transaction" }
+			}
+		},
+
 		createManyTransactions: async (
 			_: unknown,
 			{
