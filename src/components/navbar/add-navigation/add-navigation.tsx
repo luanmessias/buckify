@@ -14,13 +14,10 @@ import { useAppSelector } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 
 const CREATE_TRANSACTION = gql`
-  mutation createTransaction($data: CreateTransactionInput!) {
-    createTransaction(data: $data) {
-      id
-      description
-      amount
-			date
-	    categoryId
+  mutation CreateTransaction($householdId: String!, $transaction: CreateTransactionInput!) {
+    createTransaction(householdId: $householdId, transaction: $transaction) {
+      success
+      message
     }
   }
   `
@@ -41,14 +38,13 @@ interface CreateManyTransactionsResult {
 	}
 }
 
+interface MutationResponse {
+	success: boolean
+	message: string
+}
+
 interface CreateTransactionResult {
-	createTransaction: {
-		id: string
-		description: string
-		amount: number
-		date: string
-		categoryId: string
-	}
+	createTransaction: MutationResponse
 }
 
 interface TransactionDraft {
@@ -58,6 +54,13 @@ interface TransactionDraft {
 	categoryId: string
 }
 
+interface CreateTransactionInput {
+	description: string
+	amount: number
+	categoryId: string
+	date: string
+}
+
 export const AddNavigation = () => {
 	const t = useTranslations("Transactions")
 	const tNav = useTranslations("Navigation")
@@ -65,6 +68,7 @@ export const AddNavigation = () => {
 	const [showImportDrawer, setShowImportDrawer] = useState(false)
 
 	const [showAddExpenseDrawer, setShowAddExpenseDrawer] = useState(false)
+	const [showAddCategoryDrawer, setShowAddCategoryDrawer] = useState(false)
 
 	const householdId = useAppSelector((state) => state.household.id)
 
@@ -88,6 +92,8 @@ export const AddNavigation = () => {
 	}
 
 	const handleOpenAddCategoryDrawer = () => {
+		// TODO: Category Form
+		console.log(showAddCategoryDrawer)
 		setShowAddCategoryDrawer(true)
 		setIsOpen(false)
 	}
@@ -101,14 +107,28 @@ export const AddNavigation = () => {
 		transaction: CreateTransactionInput,
 	) => {
 		try {
-			await createTransaction({
+			if (!householdId) {
+				toast.error(t("session_error_reload"))
+				return
+			}
+
+			const { data } = await createTransaction({
 				variables: {
-					data: {
-						...transaction,
-						type: "expense",
-					},
+					householdId,
+					transaction,
 				},
 			})
+
+			if (data?.createTransaction?.success) {
+				toast.success(t("expense_added"))
+				setShowAddExpenseDrawer(false)
+			} else {
+				toast.error(
+					t("error_saving", {
+						message: data?.createTransaction?.message || "",
+					}),
+				)
+			}
 		} catch (error) {
 			console.error(error)
 			toast.error(t("error_saving_transactions"))

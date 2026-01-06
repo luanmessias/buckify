@@ -33,10 +33,17 @@ import {
 } from "@/components/ui/select"
 import { useAppSelector } from "@/lib/hooks"
 
+type CreateExpenseFormData = {
+	description: string
+	amount: number
+	categoryId: string
+	date: string
+}
+
 interface CreateExpenseDrawerProps {
 	isOpen: boolean
 	onClose: () => void
-	onConfirm: (transaction: z.infer<typeof createFormSchema>) => void
+	onConfirm: (transaction: CreateExpenseFormData) => Promise<void>
 	isSubmitting?: boolean
 }
 
@@ -76,8 +83,8 @@ export const CreateExpenseDrawer = ({
 		},
 	})
 
-	async function onSubmit(values: z.infer<typeof formSchema>) {
-		onConfirm(values)
+	async function onSubmit(values: CreateExpenseFormData) {
+		await onConfirm(values)
 	}
 
 	return (

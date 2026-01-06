@@ -10,7 +10,7 @@
 		"lint": "pnpm biome lint .",
 		"format": "pnpm biome format --write .",
 		"prepare": "husky",
-		"test": "vitest",
+		"test": "vitest --run",
 		"test:coverage": "vitest --coverage",
 		"test:ui": "vitest --ui --coverage",
 		"lint:architecture": "eslint 'src/**/*.{ts,tsx}'",

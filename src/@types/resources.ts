@@ -60,6 +60,7 @@ interface Resources {
       "error_saving": "Error saving: {message}",
       "error_saving_transactions": "Error saving transactions",
       "example_dinner": "Ex: Dinner out",
+      "expense_added": "Expense added successfully",
       "expense_added_success": "Expense added successfully!",
       "expenses_categorized": "Expenses categorized successfully",
       "expenses_found": "{count} expenses found!",
