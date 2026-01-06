@@ -13,11 +13,36 @@
     "session_error": "Session failure",
     "success_toast": "Login successful!"
   },
+  "Categories": {
+    "add_category": "Add Category",
+    "budget": "Budget (€)",
+    "budget_min": "Budget must be greater than 0.",
+    "budget_placeholder": "0.00",
+    "category_created": "Category created successfully!",
+    "color": "Color",
+    "color_placeholder": "Ex: #FF0000 or red",
+    "create_category_description": "Create a new category to organize your expenses.",
+    "description": "Description",
+    "description_min_length": "Description must be at least 2 characters.",
+    "description_placeholder": "Ex: Monthly grocery shopping",
+    "icon": "Icon",
+    "icon_placeholder": "Ex: shopping-cart",
+    "name": "Name",
+    "name_min_length": "Name must be at least 2 characters.",
+    "name_placeholder": "Ex: Groceries",
+    "new_category": "New Category",
+    "saving": "Saving..."
+  },
   "Common": {
     "close": "Close",
     "firebase_admin_env_error": "Critical Error: Firebase Admin environment variables not found. Check your .env.local",
     "logo_title": "Buckify Logo",
     "select_month": "Select Month"
+  },
+  "Components": {
+    "no_icons_found": "No icons found.",
+    "search_icon": "Search icon...",
+    "select_icon": "Select icon..."
   },
   "Navigation": {
     "add_category": "New Category",
