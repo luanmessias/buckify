@@ -62,9 +62,10 @@ async function main() {
 			if (!line.trim()) continue
 
 			let cleanLine = line
-					try {
-						cleanLine = cleanLine.replace(/\/((?:\\.|[^\\/])+)\/[gimuy]*/g, "")
-					} catch (_e) {}			cleanLine = cleanLine.replace(/(["'`])(?:\\.|[^\\])*?\1/g, "")
+			try {
+				cleanLine = cleanLine.replace(/\/((?:\\.|[^\\/])+)\/[gimuy]*/g, "")
+			} catch (_e) {}
+			cleanLine = cleanLine.replace(/(["'`])(?:\\.|[^\\])*?\1/g, "")
 
 			if (invalidCommentRegex.test(cleanLine)) {
 				needsCleaning = true
