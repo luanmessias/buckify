@@ -2,50 +2,48 @@ import fs from "node:fs"
 import path from "node:path"
 import { GoogleGenAI } from "@google/genai"
 import dotenv from "dotenv"
+import { GEMINI_API_MODEL } from "@/lib/ai/config"
+import { generateTranslationPrompt } from "@/lib/ai/prompts/sync-i18n-messages"
+import { MASTER_LOCALE, SUPPORTED_LANGUAGES } from "../i18n/i18n-config"
 
-// 1. Carrega variáveis de ambiente
 dotenv.config({ path: ".env.local" })
 
-// --- TIPAGEM ---
 type TranslationValue = string | TranslationObject
 interface TranslationObject {
 	[key: string]: TranslationValue
 }
 
-// --- CONFIGURAÇÃO ---
 const MESSAGES_DIR = path.join(process.cwd(), "src/messages")
-const MASTER_LANG_FILE = "pt.json"
-const MASTER_LANG_CODE = "Portuguese (Brazil)"
+const MASTER_LANG_FILE = `${MASTER_LOCALE}.json`
+const MASTER_LANG_CODE = SUPPORTED_LANGUAGES[MASTER_LOCALE]
 
-// 📝 Configure aqui os idiomas do seu projeto.
-// Se você adicionar um novo aqui que não existe na pasta, o script criará para você.
-const TARGET_LANGS: Record<string, string> = {
-	"en.json": "English (US)",
-	"es.json": "Spanish",
-	"fr.json": "French",
-	"de.json": "German",
-	// "ja.json": "Japanese", // Exemplo: Descomente para criar Japonês automaticamente
-}
-
-// Verifica API Key
-const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY
-if (!apiKey) {
-	console.error(
-		"❌ Erro: GOOGLE_GENERATIVE_AI_API_KEY não encontrada no .env.local",
+const TARGET_LANGS = Object.entries(SUPPORTED_LANGUAGES)
+	.filter(([code]) => code !== MASTER_LOCALE)
+	.reduce(
+		(acc, [code, name]) => {
+			acc[`${code}.json`] = name
+			return acc
+		},
+		{} as Record<string, string>,
 	)
+
+const apiKey =
+	process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY
+if (!apiKey) {
+	console.error("❌ Erro: GEMINI_API_KEY não encontrada no .env.local")
 	process.exit(1)
 }
 
-// Inicializa o Gemini (SDK Nova)
 const ai = new GoogleGenAI({ apiKey })
-
-// --- HELPERS ---
 
 const isObject = (item: unknown): item is TranslationObject => {
 	return typeof item === "object" && item !== null && !Array.isArray(item)
 }
 
-// 1. Identifica chaves que existem no Master mas faltam no Slave
+const isMissingValue = (value: unknown): boolean => {
+	return typeof value === "string" && value.startsWith("__MISSING__")
+}
+
 function getMissingKeys(
 	master: TranslationObject,
 	slave: TranslationObject,
@@ -58,7 +56,6 @@ function getMissingKeys(
 		const slaveValue = slave?.[key]
 
 		if (isObject(masterValue)) {
-			// Se slaveValue não for objeto (ex: undefined), trata como objeto vazio
 			const nestedSlave = isObject(slaveValue) ? slaveValue : {}
 			const nestedMissing = getMissingKeys(masterValue, nestedSlave)
 
@@ -69,8 +66,7 @@ function getMissingKeys(
 			return
 		}
 
-		// Caso base: Chave não existe no arquivo de destino
-		if (slaveValue === undefined) {
+		if (slaveValue === undefined || isMissingValue(slaveValue)) {
 			missing[key] = masterValue
 			hasMissing = true
 		}
@@ -79,7 +75,6 @@ function getMissingKeys(
 	return hasMissing ? missing : null
 }
 
-// 2. Mescla Master, Slave e Traduções novas
 function mergeAndSort(
 	master: TranslationObject,
 	slave: TranslationObject,
@@ -87,7 +82,6 @@ function mergeAndSort(
 ): TranslationObject {
 	const sorted: TranslationObject = {}
 
-	// Ordena alfabeticamente baseado no MASTER
 	Object.keys(master)
 		.sort()
 		.forEach((key) => {
@@ -104,11 +98,12 @@ function mergeAndSort(
 				return
 			}
 
-			// Prioridade: 1. Existente -> 2. Tradução Nova -> 3. Fallback
-			if (slaveValue !== undefined) {
-				sorted[key] = slaveValue
-			} else if (translatedValue !== undefined) {
+			if (translatedValue !== undefined) {
 				sorted[key] = translatedValue
+			} else if (slaveValue !== undefined && !isMissingValue(slaveValue)) {
+				sorted[key] = slaveValue
+			} else if (slaveValue !== undefined && isMissingValue(slaveValue)) {
+				sorted[key] = slaveValue
 			} else {
 				sorted[key] = `__MISSING__ ${masterValue}`
 			}
@@ -117,45 +112,38 @@ function mergeAndSort(
 	return sorted
 }
 
-// 3. Chama a AI para traduzir
 async function translatePayload(
 	payload: TranslationObject,
 	targetLang: string,
 ): Promise<TranslationObject | null> {
 	try {
-		const prompt = `
-      You are a professional translator for a Finance App. 
-      Translate the values of the following JSON from '${MASTER_LANG_CODE}' to '${targetLang}'.
-      
-      Rules:
-      1. Keep the JSON structure and keys EXACTLY the same.
-      2. Only translate the values (strings).
-      3. Do not add any explanation, only return the valid JSON string.
-      
-      JSON to translate:
-      ${JSON.stringify(payload, null, 2)}
-    `
+		const payloadSize = JSON.stringify(payload).length
+		if (payloadSize > 30000)
+			console.warn(`⚠️ Payload grande (${payloadSize} chars).`)
+
+		const prompt = generateTranslationPrompt(
+			MASTER_LANG_CODE,
+			targetLang,
+			payload,
+		)
 
 		const { text } = await ai.models.generateContent({
-			model: "gemini-1.5-flash",
+			model: GEMINI_API_MODEL,
 			contents: prompt,
-			config: {
-				responseMimeType: "application/json",
-			},
+			config: { responseMimeType: "application/json" },
 		})
 
 		const cleanJson = text ? text.trim() : "{}"
 		return JSON.parse(cleanJson)
 	} catch (error) {
 		console.error(
-			`⚠️ Erro ao traduzir para ${targetLang}:`,
+			`⚠️ Erro CRÍTICO ao traduzir para ${targetLang}:`,
 			error instanceof Error ? error.message : String(error),
 		)
 		return null
 	}
 }
 
-// --- MAIN ---
 async function main() {
 	const masterPath = path.join(MESSAGES_DIR, MASTER_LANG_FILE)
 
@@ -172,13 +160,25 @@ async function main() {
 		`🤖 Iniciando AI Translation Sync (Base: ${MASTER_LANG_FILE})...\n`,
 	)
 
-	// Itera sobre a CONFIGURAÇÃO, permitindo criar novos arquivos
+	const existingFiles = fs
+		.readdirSync(MESSAGES_DIR)
+		.filter((f) => f.endsWith(".json"))
+
+	const allowedFiles = new Set([MASTER_LANG_FILE, ...Object.keys(TARGET_LANGS)])
+
+	for (const file of existingFiles) {
+		if (!allowedFiles.has(file)) {
+			const filePath = path.join(MESSAGES_DIR, file)
+			console.log(`🗑️ Idioma removido da config. Deletando arquivo: ${file}`)
+			fs.unlinkSync(filePath)
+		}
+	}
+
 	for (const [fileName, langName] of Object.entries(TARGET_LANGS)) {
 		const filePath = path.join(MESSAGES_DIR, fileName)
 		let slaveContent: TranslationObject = {}
 		let isNewFile = false
 
-		// A. Auto-Criação de Arquivo
 		if (!fs.existsSync(filePath)) {
 			console.log(
 				`🆕 Novo idioma detectado: ${langName} (${fileName}). Criando arquivo...`,
@@ -196,21 +196,19 @@ async function main() {
 			slaveContent = {}
 		}
 
-		// B. Detecta Diff
 		const missingKeys = getMissingKeys(masterContent, slaveContent)
 		let translatedData: TranslationObject | null = null
 
-		if (missingKeys) {
+		if (missingKeys && Object.keys(missingKeys).length > 0) {
+			const keysCount = JSON.stringify(missingKeys).split(":").length - 1
 			console.log(
-				`🌍 ${isNewFile ? "Traduzindo TUDO" : "Sincronizando"} para ${fileName} (${langName})...`,
+				`🌍 ${isNewFile ? "Traduzindo ARQUIVO COMPLETO" : "Reparando/Sincronizando"} ${keysCount} chaves para ${fileName} (${langName})...`,
 			)
-
 			translatedData = await translatePayload(missingKeys, langName)
 		} else {
-			console.log(`✅ ${fileName} já está sincronizado.`)
+			console.log(`✅ ${fileName} já está 100% sincronizado.`)
 		}
 
-		// C. Salva
 		const finalContent = mergeAndSort(
 			masterContent,
 			slaveContent,
@@ -219,7 +217,6 @@ async function main() {
 		fs.writeFileSync(filePath, `${JSON.stringify(finalContent, null, 2)}\n`)
 	}
 
-	// D. Ordena o Master também
 	const sortedMaster = mergeAndSort(masterContent, masterContent, null)
 	fs.writeFileSync(masterPath, `${JSON.stringify(sortedMaster, null, 2)}\n`)
 
