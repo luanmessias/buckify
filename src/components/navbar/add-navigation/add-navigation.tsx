@@ -14,7 +14,7 @@ import { useAppSelector } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 
 const CREATE_TRANSACTION = gql`
-  mutation CreateTransaction($data: CreateTransactionInput!) {
+  mutation createTransaction($data: CreateTransactionInput!) {
     createTransaction(data: $data) {
       id
       description
@@ -42,7 +42,7 @@ interface CreateManyTransactionsResult {
 }
 
 interface CreateTransactionResult {
-	CreateTransaction: {
+	createTransaction: {
 		id: string
 		description: string
 		amount: number
