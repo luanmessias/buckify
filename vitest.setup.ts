@@ -14,9 +14,14 @@ vi.mock("next-intl", async (importOriginal) => {
 	return {
 		...actual,
 
-		useTranslations: () => (key: string) => {
-			const messages = require("./src/messages/en.json")
-			return messages.Auth?.[key] || key
+		useTranslations: (namespace: string) => (key: string) => {
+			if (namespace === "Auth") {
+				return key
+			}
+			if (namespace === "Navigation") {
+				return key
+			}
+			return key
 		},
 		useLocale: () => "en",
 	}

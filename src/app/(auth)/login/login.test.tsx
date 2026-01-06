@@ -66,7 +66,9 @@ describe("LoginPage", () => {
 
 	it("should render the login button with google", () => {
 		renderWithProviders(<LoginPage />)
-		expect(screen.getByText(messages.Auth.google_button)).toBeInTheDocument()
+		expect(
+			screen.getByRole("button", { name: "google_button" }),
+		).toBeInTheDocument()
 	})
 
 	it("should call createSession and refresh router on successful login", async () => {
@@ -92,7 +94,7 @@ describe("LoginPage", () => {
 		})
 
 		await waitFor(() => {
-			expect(toast.success).toHaveBeenCalledWith(messages.Auth.success_toast)
+			expect(toast.success).toHaveBeenCalledWith("success_toast")
 		})
 
 		await waitFor(() => {
@@ -109,7 +111,7 @@ describe("LoginPage", () => {
 		})
 
 		const button = screen.getByRole("button", {
-			name: messages.Auth.google_button,
+			name: "google_button",
 		})
 
 		await user.click(button)
@@ -127,14 +129,14 @@ describe("LoginPage", () => {
 		signInWithPopupMock.mockRejectedValueOnce(new Error("Network error"))
 
 		const button = screen.getByRole("button", {
-			name: messages.Auth.google_button,
+			name: "google_button",
 		})
 
 		await user.click(button)
 
 		await waitFor(() => {
 			expect(button).not.toBeDisabled()
-			expect(toast.error).toHaveBeenCalledWith(messages.Auth.login_error)
+			expect(toast.error).toHaveBeenCalledWith("login_error")
 		})
 	})
 })

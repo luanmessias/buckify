@@ -27,6 +27,7 @@ interface Resources {
       "home": "Home",
       "profile": "Profile",
       "read_with_ai": "Read with AI",
+      "scan_statement": "Import Expenses",
       "stats": "Stats"
     },
     "Transactions": {
@@ -60,7 +61,7 @@ interface Resources {
       "error_saving_transactions": "Error saving transactions",
       "example_dinner": "Ex: Dinner out",
       "expense_added_success": "Expense added successfully!",
-      "expenses_categorized": "Despesas categorizadas com sucesso",
+      "expenses_categorized": "Expenses categorized successfully",
       "expenses_found": "{count} expenses found!",
       "file_too_large": "File too large (Max 4MB)",
       "hidden_categories": "+ {count} other categories hidden in the shadows...",
@@ -76,7 +77,7 @@ interface Resources {
       "saving": "Saving...",
       "select": "Select",
       "select_category": "Select a category.",
-      "send_image_pdf": "Clique para enviar PDF ou Imagem (JPG, PNG)",
+      "send_image_pdf": "Click to upload PDF or Image (JPG, PNG)",
       "session_error_reload": "Session error. Reload the page.",
       "spent": "spent",
       "supported_formats": "PDF or Image (JPG, PNG)",

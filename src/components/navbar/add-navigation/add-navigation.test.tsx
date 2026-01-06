@@ -1,6 +1,3 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client"
-import { ApolloProvider } from "@apollo/client/react"
-import { type MockedResponse, MockLink } from "@apollo/client/testing"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { useAppSelector } from "@/lib/hooks"
