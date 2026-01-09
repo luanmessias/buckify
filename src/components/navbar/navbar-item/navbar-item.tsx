@@ -29,8 +29,8 @@ export const NavbarItem = ({ href, icon: Icon, label }: NavbarItemProps) => {
 				className={cn(
 					"w-6 h-6 shrink-0 transition-all duration-300",
 					"text-muted-foreground scale-100",
-					"group-hover:text-(--color-hades-500) group-hover:-translate-y-1 group-hover:scale-110",
-					isActive && "text-(--color-hades-500) scale-110",
+					"group-hover:text-(--color-hades-300) group-hover:-translate-y-1 group-hover:scale-110",
+					isActive && "text-(--color-hades-300) scale-110",
 				)}
 			/>
 
@@ -39,8 +39,8 @@ export const NavbarItem = ({ href, icon: Icon, label }: NavbarItemProps) => {
 				className={cn(
 					"text-[10px] font-medium transition-all duration-300",
 					"text-muted-foreground opacity-70",
-					"group-hover:text-(--color-hades-500) group-hover:opacity-100",
-					isActive && "text-(--color-hades-500) opacity-100 font-bold",
+					"group-hover:text-(--color-hades-300) group-hover:opacity-100",
+					isActive && "text-(--color-hades-300) opacity-100 font-bold",
 				)}
 			>
 				{label}
