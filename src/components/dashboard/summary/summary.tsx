@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
+import { MonthSelector } from "@/components/month-selector/month-selector"
 import { Typography } from "@/components/ui/typography"
 import type { Category, Transaction } from "@/lib/types"
 import { cn } from "@/lib/utils"
-import { MonthSelector } from "../month-selector/month-selector"
 
 interface SummaryProps {
 	transactions: Transaction[]
@@ -132,12 +132,18 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 							)}
 
 							<div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
-								<span className="text-muted-foreground text-[10px] font-medium uppercase tracking-widest mb-1">
+								<Typography
+									variant="muted"
+									className="text-[10px] font-medium uppercase tracking-widest mb-1"
+								>
 									{t("total_spent")}
-								</span>
-								<span className="text-2xl font-bold text-foreground drop-shadow-lg">
+								</Typography>
+								<Typography
+									variant="h1"
+									className="text-2xl font-bold text-foreground drop-shadow-lg"
+								>
 									{formatCurrency(totalSpent)}
-								</span>
+								</Typography>
 							</div>
 						</div>
 
@@ -190,13 +196,19 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 													boxShadow: `0 0 10px ${cat.color}40`,
 												}}
 											/>
-											<span className="text-muted-foreground group-hover:text-foreground transition-colors">
+											<Typography
+												variant="muted"
+												className="group-hover:text-foreground transition-colors"
+											>
 												{cat.name}
-											</span>
+											</Typography>
 										</div>
-										<span className="font-medium text-foreground tracking-wide">
+										<Typography
+											variant="p"
+											className="font-medium text-foreground tracking-wide"
+										>
 											{formatCurrency(cat.value)}
-										</span>
+										</Typography>
 									</div>
 								))}
 
