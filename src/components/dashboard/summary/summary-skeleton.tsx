@@ -42,26 +42,6 @@ export const SummarySkeleton = () => {
 					</div>
 				</div>
 			</div>
-
-			<div className="h-px bg-border/50" />
-
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-				{[1, 2, 3, 4].map((i) => (
-					<div
-						key={i}
-						className="h-24 rounded-xl border p-4 flex items-center gap-4"
-					>
-						<Skeleton className="h-10 w-10 rounded-lg" /> {}
-						<div className="space-y-2 flex-1">
-							<div className="flex justify-between">
-								<Skeleton className="h-4 w-24" />
-								<Skeleton className="h-4 w-16" />
-							</div>
-							<Skeleton className="h-2 w-full rounded-full" />
-						</div>
-					</div>
-				))}
-			</div>
 		</section>
 	)
 }
