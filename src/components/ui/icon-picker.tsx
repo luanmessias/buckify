@@ -75,8 +75,8 @@ export function IconPicker({ value, onChange }: IconPickerProps) {
 						/>
 					</div>
 				</div>
-				<ScrollArea className="h-75 p-4">
-					<div className="grid grid-cols-5 gap-2">
+				<ScrollArea className="h-75">
+					<div className="grid grid-cols-5 gap-2 p-4">
 						{filteredIcons.map((iconName) => (
 							<Button
 								key={iconName}
