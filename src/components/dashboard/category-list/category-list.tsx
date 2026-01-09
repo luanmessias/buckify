@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
 import type { Category, Transaction } from "@/lib/types"
 import { CategoryCard } from "../category-card/category-card"
 
@@ -31,17 +32,18 @@ export const CategoryList = ({
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-8">
-			{data.map((category) => (
-				<CategoryCard
-					key={category.id}
-					id={category.id}
-					name={category.name}
-					slug={category.slug}
-					icon={category.icon || "MoreHorizontal"}
-					color="var(--color-hades-300)"
-					amountSpent={category.value}
-					budget={category.budget}
-				/>
+			{data.map((category, index) => (
+				<AnimatedWrapper key={category.id} delay={index * 0.2}>
+					<CategoryCard
+						id={category.id}
+						name={category.name}
+						slug={category.slug}
+						icon={category.icon || "MoreHorizontal"}
+						color="var(--color-hades-300)"
+						amountSpent={category.value}
+						budget={category.budget}
+					/>
+				</AnimatedWrapper>
 			))}
 		</div>
 	)
