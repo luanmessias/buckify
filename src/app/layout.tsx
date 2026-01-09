@@ -4,6 +4,7 @@ import "./globals.css"
 import { cookies } from "next/headers"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
+import NextTopLoader from "nextjs-toploader"
 import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
 import { ThemeProvider } from "@/components/providers/theme-provider/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
@@ -42,6 +43,18 @@ export default async function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
+				<NextTopLoader
+					color="#22c55e"
+					initialPosition={0.08}
+					crawlSpeed={200}
+					height={3}
+					crawl={true}
+					showSpinner={false}
+					easing="ease"
+					speed={200}
+					shadow="0 0 10px #22c55e,0 0 5px #22c55e"
+				/>
+
 				<NextIntlClientProvider messages={messages}>
 					<StoreProvider initialHouseholdId={householdId}>
 						<AuthProvider>
