@@ -3,11 +3,19 @@ import { dbAdmin } from "@/lib/firebase-admin"
 import { resolvers } from "./resolvers"
 
 vi.mock("@/lib/firebase-admin", () => {
+	const docMock = {
+		get: vi.fn(),
+		set: vi.fn(),
+		update: vi.fn(),
+		delete: vi.fn(),
+	}
+
 	const collectionMock = {
 		where: vi.fn().mockReturnThis(),
 		orderBy: vi.fn().mockReturnThis(),
+		limit: vi.fn().mockReturnThis(),
 		get: vi.fn(),
-		doc: vi.fn(),
+		doc: vi.fn(() => docMock),
 	}
 
 	const batchMock = {
@@ -71,6 +79,12 @@ describe("GraphQL Resolvers", () => {
 			it("should filter by categoryId and date range", async () => {
 				const collectionMock = dbAdmin.collection("transactions")
 				;(collectionMock.get as unknown as Mock).mockResolvedValue({ docs: [] })
+
+				const categoryDocMock = { exists: true, id: "cat1" }
+				const docMock = { get: vi.fn().mockResolvedValue(categoryDocMock) }
+				;(
+					dbAdmin.collection("categories").doc as unknown as Mock
+				).mockReturnValue(docMock)
 
 				await resolvers.Query.getTransactions(null, {
 					startDate: "2024-01-01",
@@ -154,11 +168,16 @@ describe("GraphQL Resolvers", () => {
 			})
 
 			it("should throw error if category not found", async () => {
-				const mockDoc = { exists: false }
+				const mockDoc = { exists: false, data: vi.fn() }
 				const docMock = { get: vi.fn().mockResolvedValue(mockDoc) }
 				;(
 					dbAdmin.collection("categories").doc as unknown as Mock
 				).mockReturnValue(docMock)
+
+				const collectionMock = dbAdmin.collection("categories")
+				;(collectionMock.get as unknown as Mock).mockResolvedValue({
+					empty: true,
+				})
 
 				await expect(
 					resolvers.Query.getCategory(null, { id: "c1", householdId: "h1" }),
@@ -216,7 +235,7 @@ describe("GraphQL Resolvers", () => {
 				expect(batchMock.commit).toHaveBeenCalled()
 				expect(result).toEqual({
 					success: true,
-					message: "2 transações importadas!",
+					message: "2 transactions imported!",
 				})
 			})
 
@@ -242,7 +261,7 @@ describe("GraphQL Resolvers", () => {
 				})
 
 				expect(result.success).toBe(false)
-				expect(result.message).toBe("Erro interno ao salvar.")
+				expect(result.message).toBe("Internal error saving.")
 			})
 		})
 

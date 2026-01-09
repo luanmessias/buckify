@@ -34,10 +34,32 @@ interface Resources {
       "new_category": "New Category",
       "saving": "Saving..."
     },
+    "Category": {
+      "back": "Back",
+      "budget_hint_text": "Adjusting recalculates remaining balance",
+      "cancel": "Cancel",
+      "category_name": "Category Name",
+      "category_updated": "Category updated successfully",
+      "currency_symbol": "€",
+      "delete_category": "Delete Category",
+      "edit_category": "Edit Category",
+      "edit_category_description": "Make changes to your category here. Click save when you're done.",
+      "error_updating": "Error updating category",
+      "icon": "Icon",
+      "monthly_budget": "Monthly Budget",
+      "name_placeholder": "Ex: Supermarket",
+      "remaining": "Remaining",
+      "save_changes": "Save Changes",
+      "total_spent": "Spent",
+      "used_of_budget": "Used"
+    },
     "Common": {
       "close": "Close",
       "firebase_admin_env_error": "Critical Error: Firebase Admin environment variables not found. Check your .env.local",
+      "loading": "Loading...",
       "logo_title": "Buckify Logo",
+      "next_year": "Next Year",
+      "previous_year": "Previous Year",
       "select_month": "Select Month"
     },
     "Components": {

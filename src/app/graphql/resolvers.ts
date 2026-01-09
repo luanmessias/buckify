@@ -48,14 +48,38 @@ export const resolvers = {
 			_: unknown,
 			{ startDate, endDate, householdId, categoryId }: GetTransactionsArgs,
 		) => {
+			let targetCategoryId = categoryId
+
+			if (categoryId) {
+				const catDoc = await dbAdmin
+					.collection("categories")
+					.doc(categoryId)
+					.get()
+
+				if (catDoc.exists) {
+					targetCategoryId = catDoc.id
+				} else {
+					const snapshot = await dbAdmin
+						.collection("categories")
+						.where("householdId", "==", householdId)
+						.where("slug", "==", categoryId)
+						.limit(1)
+						.get()
+
+					if (!snapshot.empty) {
+						targetCategoryId = snapshot.docs[0].id
+					}
+				}
+			}
+
 			let query: Query = dbAdmin.collection("transactions")
 
 			if (householdId) {
 				query = query.where("householdId", "==", householdId)
 			}
 
-			if (categoryId) {
-				query = query.where("categoryId", "==", categoryId)
+			if (targetCategoryId) {
+				query = query.where("categoryId", "==", targetCategoryId)
 			}
 
 			if (startDate && endDate) {
@@ -67,14 +91,7 @@ export const resolvers = {
 
 			const snapshot = await query.get()
 
-			return snapshot.docs.map((doc) => {
-				const data = doc.data()
-				return {
-					id: doc.id,
-					...data,
-					createdAt: data.createdAt,
-				}
-			})
+			return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 		},
 
 		getCategories: async (_: unknown, { householdId }: GetCategoriesArgs) => {
@@ -100,13 +117,24 @@ export const resolvers = {
 			_: unknown,
 			{ id, householdId }: { id: string; householdId: string },
 		) => {
-			const doc = await dbAdmin.collection("categories").doc(id).get()
+			let doc = await dbAdmin.collection("categories").doc(id).get()
+			let data = doc.data()
 
 			if (!doc.exists) {
-				throw new Error("Category not found")
-			}
+				const slugSnapshot = await dbAdmin
+					.collection("categories")
+					.where("householdId", "==", householdId)
+					.where("slug", "==", id)
+					.limit(1)
+					.get()
 
-			const data = doc.data()
+				if (!slugSnapshot.empty) {
+					doc = slugSnapshot.docs[0]
+					data = doc.data()
+				} else {
+					throw new Error("Category not found")
+				}
+			}
 
 			if (data?.householdId !== householdId) {
 				throw new Error("Unauthorized")
@@ -210,7 +238,7 @@ export const resolvers = {
 		) => {
 			try {
 				if (!transactions || transactions.length === 0) {
-					return { success: false, message: "Nenhuma transação enviada." }
+					return { success: false, message: "No transactions sent." }
 				}
 
 				const batch = dbAdmin.batch()
@@ -231,11 +259,11 @@ export const resolvers = {
 
 				return {
 					success: true,
-					message: `${transactions.length} transações importadas!`,
+					message: `${transactions.length} transactions imported!`,
 				}
 			} catch (error) {
-				console.error("Erro ao salvar lote:", error)
-				return { success: false, message: "Erro interno ao salvar." }
+				console.error("Error saving batch:", error)
+				return { success: false, message: "Internal error saving." }
 			}
 		},
 
