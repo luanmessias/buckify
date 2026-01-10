@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Roboto, Roboto_Mono } from "next/font/google"
 import "./globals.css"
+import type { Viewport } from "next"
 import { cookies } from "next/headers"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
@@ -10,6 +11,14 @@ import { ThemeProvider } from "@/components/providers/theme-provider/theme-provi
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/providers/auth-provider"
 import StoreProvider from "@/providers/store-provider"
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
+	viewportFit: "cover",
+}
 
 const geistSans = Roboto({
 	variable: "--roboto",
@@ -41,7 +50,7 @@ export default async function RootLayout({
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-dvh text-foreground`}
 			>
 				<NextTopLoader
 					color="#22c55e"

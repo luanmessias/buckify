@@ -1,25 +1,61 @@
 "use client"
 
 import { useTranslations } from "next-intl"
+import { useEffect, useRef, useState } from "react"
 import { LogoutButton } from "@/components/auth/logout-button/logout-button"
 import { ThemeToggle } from "@/components/layout/theme-toggle/theme-toggle"
 import { Logo } from "@/components/ui/logo"
+import { cn } from "@/lib/utils"
 
 export const Header = () => {
 	const t = useTranslations("Common")
+
+	const [isVisible, setIsVisible] = useState(true)
+	const lastScrollY = useRef(0)
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const currentScrollY = window.scrollY
+
+			if (currentScrollY < 10) {
+				setIsVisible(true)
+				return
+			}
+
+			if (currentScrollY > lastScrollY.current + 10) {
+				setIsVisible(false)
+			} else if (currentScrollY < lastScrollY.current - 10) {
+				setIsVisible(true)
+			}
+
+			lastScrollY.current = currentScrollY
+		}
+
+		window.addEventListener("scroll", handleScroll, { passive: true })
+		return () => window.removeEventListener("scroll", handleScroll)
+	}, [])
+
 	return (
 		<header
-			className="
-				flex items-center justify-between
-				px-4 py-4 h-16 border-b bg-background"
+			className={cn(
+				"fixed top-0 left-0 right-0 z-50",
+				"h-16 w-full",
+				"flex items-center justify-between px-4 py-4",
+
+				"bg-background/80 backdrop-blur-md border-b",
+
+				"transition-transform duration-300 ease-in-out",
+
+				isVisible ? "translate-y-0" : "-translate-y-full",
+			)}
 		>
 			<div>
 				<Logo className="text-primary h-7" title={t("logo_title")} />
 			</div>
 
-			<div>
+			<div className="flex items-center gap-2">
+				{" "}
 				<ThemeToggle />
-
 				<LogoutButton />
 			</div>
 		</header>
