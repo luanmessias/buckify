@@ -19,7 +19,7 @@
 		"i18n:types": "i18next-resources-for-ts interface -i ./src/messages -o ./src/@types/resources.ts",
 		"i18n:sync": "tsx src/scripts/sync-translations.ts",
 		"i18n:prune": "tsx src/scripts/prune-translations.ts",
-		"check:all": "pnpm i18n:types && pnpm i18n:sync && pnpm i18n:prune && pnpm lint:architecture && pnpm check:comments && pnpm fix:comments && pnpm test"
+		"check:all": "pnpm i18n:types && pnpm i18n:sync && pnpm i18n:prune && pnpm lint:architecture && pnpm fix:comments && pnpm check:comments && pnpm test"
 	},
 	"lint-staged": {
 		"*.{js,ts,jsx,tsx,json,css}": "biome check --write",
