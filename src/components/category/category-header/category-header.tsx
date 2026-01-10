@@ -8,11 +8,19 @@ import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
+
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
 import { MonthSelector } from "@/components/month-selector/month-selector"
 import { Button } from "@/components/ui/button"
 import type { Category } from "@/lib/types"
 import { UpdateCategoryDrawer } from "./drawers/update-category/update-category"
+
+interface UpdateCategoryResponse {
+	updateCategory: {
+		success: boolean
+		message?: string
+	}
+}
 
 const UPDATE_CATEGORY = gql`
   mutation UpdateCategory($id: String!, $householdId: String!, $input: UpdateCategoryInput!) {
@@ -39,7 +47,7 @@ export const CategoryHeader = ({
 	const [updateCategory, { loading: isUpdating }] = useMutation(
 		UPDATE_CATEGORY,
 		{
-			refetchQueries: ["GetCategory", "GetCategories"],
+			refetchQueries: ["GetCategoryData"],
 			awaitRefetchQueries: true,
 		},
 	)
@@ -55,7 +63,7 @@ export const CategoryHeader = ({
 		},
 	) => {
 		try {
-			const { data: response } = await updateCategory({
+			const result = await updateCategory({
 				variables: {
 					id,
 					householdId,
@@ -63,7 +71,7 @@ export const CategoryHeader = ({
 				},
 			})
 
-			if (response?.updateCategory?.success) {
+			if ((result.data as UpdateCategoryResponse)?.updateCategory?.success) {
 				toast.success(t("category_updated"))
 				setIsOpen(false)
 			} else {
@@ -78,17 +86,10 @@ export const CategoryHeader = ({
 	const backUrl = currentMonth ? `/?month=${currentMonth}` : "/"
 
 	return (
-		<AnimatedWrapper className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/40 px-4 py-3">
+		<AnimatedWrapper className="sticky top-0 z-40 bg-background/80 backdrop-blur-md px-4 py-3">
 			<div className="flex items-center justify-between max-w-7xl mx-auto">
-				<Link href={backUrl} prefetch>
-					<Button
-						variant="ghost"
-						size="icon"
-						className="-ml-2 hover:bg-muted/50"
-					>
-						<ArrowLeft className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
-						<span className="sr-only">{t("back")}</span>
-					</Button>
+				<Link href={backUrl} prefetch aria-label={t("back")}>
+					<ArrowLeft className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
 				</Link>
 
 				<div className="flex-1 flex justify-center">
@@ -98,10 +99,11 @@ export const CategoryHeader = ({
 				<Button
 					variant="ghost"
 					size="icon"
-					className="-mr-2 hover:bg-muted/50"
 					onClick={() => setIsOpen(true)}
+					aria-label={t("edit_category")}
+					className="[&_svg]:size-6 hover:bg-transparent"
 				>
-					<Cog className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+					<Cog className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
 				</Button>
 
 				<UpdateCategoryDrawer
