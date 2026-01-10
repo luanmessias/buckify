@@ -4,6 +4,7 @@ import { signInWithPopup, signInWithRedirect } from "firebase/auth"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
+import { devLogin } from "@/actions/dev-auth"
 import { RadiantButton } from "@/components/layout/radiant-button/radiant-button"
 import {
 	Card,
@@ -19,6 +20,8 @@ export default function LoginPage() {
 	const [isLoading, setIsLoading] = useState(false)
 	const t = useTranslations("Auth")
 	const tCommon = useTranslations("Common")
+
+	const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === "true"
 
 	const handleGoogleLogin = () => {
 		setIsLoading(true)
@@ -57,6 +60,17 @@ export default function LoginPage() {
 				>
 					{t("google_button")}
 				</RadiantButton>
+
+				{isDevMode && (
+					<form action={devLogin} className="mt-4">
+						<button
+							type="submit"
+							className="w-full p-3 bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500/30 rounded-lg text-sm font-bold border border-emerald-500/50 transition-all"
+						>
+							{t("dev_mode_button")}
+						</button>
+					</form>
+				)}
 			</CardContent>
 		</Card>
 	)

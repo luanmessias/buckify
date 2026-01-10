@@ -3,6 +3,7 @@ interface Resources {
     "Auth": {
       "connecting": "Connecting...",
       "connecting_description": "Creating your secure session.",
+      "dev_mode_button": "DEV MODE",
       "error_description": "Unable to authenticate with Google. Please try again.",
       "error_title": "Connection Error",
       "google_button": "Sign in with Google",
