@@ -1,20 +1,45 @@
+"use client"
+
 import { Ghost, Home } from "lucide-react"
 import Link from "next/link"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
+import { cn } from "@/lib/utils" 
 
-export default async function NotFound() {
-	const t = await getTranslations("NotFound")
+export default function NotFound() {
+	const t = useTranslations("NotFound")
+	const { theme } = useTheme()
+
+	const primaryPulsatingLightClass =
+		theme === "dark" ? "bg-blue-800/30" : "bg-primary/30"
+	const whiteLightEffectClass =
+		theme === "dark" ? "from-black/10" : "from-white/10"
 
 	return (
 		<div className="flex min-h-dvh items-center justify-center p-4">
 			<div className="relative w-full max-w-md">
-				<div className="absolute -top-20 -left-20 h-64 w-64 animate-pulse rounded-full bg-primary/30 opacity-50 blur-3xl" />
-				<div className="absolute -right-20 -bottom-20 h-64 w-64 animate-pulse rounded-full bg-purple-500/30 opacity-50 blur-3xl delay-700" />
+				<div
+					className={cn(
+						"absolute -top-20 -left-20 h-64 w-64 animate-pulse rounded-full opacity-50 blur-3xl",
+						primaryPulsatingLightClass,
+					)}
+				/>
+				<div
+					className={cn(
+						"absolute -right-20 -bottom-20 h-64 w-64 animate-pulse rounded-full opacity-50 blur-3xl delay-700",
+						primaryPulsatingLightClass,
+					)}
+				/>
 
 				<div className="relative z-10 overflow-hidden rounded-2xl border border-white/10 bg-card/40 p-8 text-center shadow-2xl backdrop-blur-xl">
-					<div className="pointer-events-none absolute top-0 right-0 h-32 w-32 rounded-bl-full bg-linear-to-br from-white/10 to-transparent" />
+					<div
+						className={cn(
+							"pointer-events-none absolute top-0 right-0 h-32 w-32 rounded-bl-full bg-linear-to-br to-transparent",
+							whiteLightEffectClass,
+						)}
+					/>
 
 					<div className="mb-6 flex justify-center">
 						<div className="relative">
