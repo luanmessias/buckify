@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form"
 import { IconPicker } from "@/components/ui/icon-picker"
 import { Input } from "@/components/ui/input"
+import { Slider } from "@/components/ui/slider"
 
 type CreateCategoryFormData = {
 	name: string
@@ -57,6 +58,7 @@ export const CreateCategoryDrawer = ({
 	isSubmitting = false,
 }: CreateCategoryDrawerProps) => {
 	const t = useTranslations("Categories")
+	const tCategory = useTranslations("Category")
 	const tCommon = useTranslations("Common")
 
 	const handleOpenChange = (open: boolean) => {
@@ -154,23 +156,46 @@ export const CreateCategoryDrawer = ({
 								name="budget"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("budget")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												step="0.01"
-												placeholder={t("budget_placeholder")}
-												{...field}
-												value={(field.value as number) || ""}
-												onChange={(e) => {
-													const val =
-														e.target.value === ""
-															? undefined
-															: Number(e.target.value)
-													field.onChange(val)
-												}}
-											/>
-										</FormControl>
+										<div className="flex justify-between items-end">
+											<FormLabel>{tCategory("monthly_budget")}</FormLabel>
+
+											<div className="flex items-center gap-1 border-b border-border/50 focus-within:border-primary transition-colors">
+												<span className="text-sm text-muted-foreground">
+													{tCategory("currency_symbol")}
+												</span>
+												<FormControl>
+													<input
+														type="number"
+														className="w-16 bg-transparent text-right font-mono text-lg font-bold focus:outline-none"
+														placeholder={t("budget_placeholder")}
+														{...field}
+														value={(field.value as number) || 0}
+														onChange={(e) => {
+															const val =
+																e.target.value === ""
+																	? 0
+																	: Number(e.target.value)
+															field.onChange(val)
+														}}
+													/>
+												</FormControl>
+											</div>
+										</div>
+
+										<Slider
+											defaultValue={[0]}
+											value={[Number(field.value) || 0]}
+											max={3000}
+											step={10}
+											onValueChange={(vals) => field.onChange(vals[0])}
+											className="py-4"
+										/>
+										<p className="text-[10px] text-muted-foreground/60 text-center">
+											{tCategory("budget_hint_text", {
+												defaultMessage:
+													"Adjusting recalculates remaining balance",
+											})}
+										</p>
 										<FormMessage />
 									</FormItem>
 								)}

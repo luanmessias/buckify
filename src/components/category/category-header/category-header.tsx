@@ -8,12 +8,11 @@ import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
-
+import { UpdateCategoryDrawer } from "@/components/category/category-drawers/update-category/update-category"
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
 import { MonthSelector } from "@/components/month-selector/month-selector"
 import { Button } from "@/components/ui/button"
 import type { Category } from "@/lib/types"
-import { UpdateCategoryDrawer } from "./drawers/update-category/update-category"
 
 interface UpdateCategoryResponse {
 	updateCategory: {
@@ -86,34 +85,36 @@ export const CategoryHeader = ({
 	const backUrl = currentMonth ? `/?month=${currentMonth}` : "/"
 
 	return (
-		<AnimatedWrapper className="sticky top-0 z-40 bg-background/80 backdrop-blur-md px-4 py-3">
-			<div className="flex items-center justify-between max-w-7xl mx-auto">
-				<Link href={backUrl} prefetch aria-label={t("back")}>
-					<ArrowLeft className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
-				</Link>
+		<>
+			<AnimatedWrapper className="sticky top-0 z-40 bg-background/80 backdrop-blur-md px-4 py-3">
+				<div className="flex items-center justify-between max-w-7xl mx-auto">
+					<Link href={backUrl} prefetch aria-label={t("back")}>
+						<ArrowLeft className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+					</Link>
 
-				<div className="flex-1 flex justify-center">
-					<MonthSelector className="bg-transparent border-transparent shadow-none hover:bg-muted/20 w-auto" />
+					<div className="flex-1 flex justify-center">
+						<MonthSelector className="bg-transparent border-transparent shadow-none hover:bg-muted/20 w-auto" />
+					</div>
+
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={() => setIsOpen(true)}
+						aria-label={t("edit_category")}
+						className="[&_svg]:size-6 hover:bg-transparent"
+					>
+						<Cog className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+					</Button>
 				</div>
+			</AnimatedWrapper>
 
-				<Button
-					variant="ghost"
-					size="icon"
-					onClick={() => setIsOpen(true)}
-					aria-label={t("edit_category")}
-					className="[&_svg]:size-6 hover:bg-transparent"
-				>
-					<Cog className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
-				</Button>
-
-				<UpdateCategoryDrawer
-					isOpen={isOpen}
-					onClose={() => setIsOpen(false)}
-					category={category}
-					onUpdate={handleUpdate}
-					isSubmitting={isUpdating}
-				/>
-			</div>
-		</AnimatedWrapper>
+			<UpdateCategoryDrawer
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+				category={category}
+				onUpdate={handleUpdate}
+				isSubmitting={isUpdating}
+			/>
+		</>
 	)
 }

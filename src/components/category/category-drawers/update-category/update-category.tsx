@@ -1,6 +1,6 @@
 "use client"
 
-import { Save, Trash2 } from "lucide-react"
+import { Save, Tag, Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -33,7 +33,6 @@ interface UpdateCategoryDrawerProps {
 			color?: string
 		},
 	) => Promise<void>
-	onDelete?: (id: string) => Promise<void>
 	isSubmitting?: boolean
 }
 
@@ -42,7 +41,6 @@ export const UpdateCategoryDrawer = ({
 	onClose,
 	category,
 	onUpdate,
-	onDelete,
 	isSubmitting = false,
 }: UpdateCategoryDrawerProps) => {
 	const t = useTranslations("Category")
@@ -84,6 +82,7 @@ export const UpdateCategoryDrawer = ({
 				<div className="absolute right-0 top-0 w-64 h-64 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
 				<DrawerHeader>
 					<DrawerTitle className="flex items-center gap-2">
+						<Tag className="w-5 h-5 text-primary" />
 						{t("edit_category")}
 					</DrawerTitle>
 					<DrawerDescription className="text-left">
@@ -94,12 +93,7 @@ export const UpdateCategoryDrawer = ({
 				<div className="flex-1 overflow-hidden p-4 space-y-8">
 					<div className="grid grid-cols-2 gap-4">
 						<div className="space-y-2">
-							<Label
-								htmlFor="name"
-								className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold"
-							>
-								{t("category_name")}
-							</Label>
+							<Label htmlFor="name">{t("category_name")}</Label>
 							<Input
 								id="name"
 								value={name}
@@ -110,23 +104,20 @@ export const UpdateCategoryDrawer = ({
 						</div>
 
 						<div className="space-y-2">
-							<Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
-								{t("icon")}
-							</Label>
+							<Label>{t("icon")}</Label>
 							<div className="w-full">
-								<IconPicker value={icon} onChange={setIcon} />
+								<IconPicker
+									value={icon}
+									onChange={setIcon}
+									className="h-10 bg-muted/20 border-border/50 hover:bg-muted/20 focus:bg-background transition-all"
+								/>
 							</div>
 						</div>
 					</div>
 
 					<div className="space-y-4">
 						<div className="flex justify-between items-end">
-							<Label
-								htmlFor="budget"
-								className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold mb-1"
-							>
-								{t("monthly_budget")}
-							</Label>
+							<Label htmlFor="budget">{t("monthly_budget")}</Label>
 
 							<div className="flex items-center gap-1 border-b border-border/50 focus-within:border-primary transition-colors">
 								<span className="text-sm text-muted-foreground">
@@ -154,18 +145,6 @@ export const UpdateCategoryDrawer = ({
 								defaultMessage: "Adjusting recalculates remaining balance",
 							})}
 						</p>
-					</div>
-
-					<div className="pt-6 mt-4 border-t border-border/40">
-						<Button
-							variant="ghost"
-							onClick={() => category?.id && onDelete?.(category.id)}
-							disabled={isSubmitting || !onDelete || !category}
-							className="w-full text-destructive hover:bg-destructive/10 hover:text-destructive gap-2 text-xs uppercase tracking-wider h-10"
-						>
-							<Trash2 className="w-4 h-4" />
-							{t("delete_category")}
-						</Button>
 					</div>
 
 					<Button

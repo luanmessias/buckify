@@ -1,28 +1,72 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Provider } from "react-redux"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { vi } from "vitest"
 import { makeStore } from "@/lib/store"
 import messages from "@/messages/en.json"
 import { CreateCategoryDrawer } from "./create-category-drawer"
 
+// Mock matchMedia to simulate desktop environment
+Object.defineProperty(window, "matchMedia", {
+	writable: true,
+	value: vi.fn().mockImplementation((query) => ({
+		matches: true, // Always true for desktop simulation
+		media: query,
+		onchange: null,
+		addListener: vi.fn(), // Deprecated
+		removeListener: vi.fn(), // Deprecated
+		addEventListener: vi.fn(),
+		removeEventListener: vi.fn(),
+		dispatchEvent: vi.fn(),
+	})),
+})
+
+// Mock translations
 vi.mock("next-intl", () => ({
-	useTranslations: vi.fn((namespace: string) => (key: string) => {
-		if (namespace === "Categories") {
-			return (
-				(messages.Categories as unknown as Record<string, string>)[key] || key
-			)
+	useTranslations: () => (key: string) => {
+		// Flatten the messages object to look up keys
+		const flattenMessages = (obj: any, prefix = "") => {
+			return Object.keys(obj).reduce((acc: any, k: any) => {
+				const pre = prefix.length ? prefix + "." : ""
+				if (typeof obj[k] === "object" && obj[k] !== null) {
+					Object.assign(acc, flattenMessages(obj[k], pre + k))
+				} else {
+					acc[pre + k] = obj[k]
+				}
+				return acc
+			}, {})
 		}
-		if (namespace === "Common") {
-			return (messages.Common as unknown as Record<string, string>)[key] || key
+		const flat = flattenMessages(messages)
+
+		// Handle specific namespace lookups if needed, or just return the key if not found
+		// Ideally we would map the namespace passed to useTranslations to the keys in messages
+		// For simplicity in this test, we can try to find the key in the flat object
+		// But since we are passing specific keys like "name_placeholder" which are keys in the json...
+
+		// Let's improve this:
+		// The component calls useTranslations("Categories")
+		// The key passed is "name_placeholder"
+		// We expect messages.Categories.name_placeholder
+
+		// If key exists in messages.Categories, return it.
+		// Since we don't know the namespace here easily without complex mocking,
+		// let's just search in all namespaces or specific ones we know.
+
+		if (messages.Categories[key as keyof typeof messages.Categories]) {
+			return messages.Categories[key as keyof typeof messages.Categories]
 		}
-		if (namespace === "Components") {
-			return (
-				(messages.Components as unknown as Record<string, string>)[key] || key
-			)
+		if (messages.Category[key as keyof typeof messages.Category]) {
+			return messages.Category[key as keyof typeof messages.Category]
 		}
+		if (messages.Common[key as keyof typeof messages.Common]) {
+			return messages.Common[key as keyof typeof messages.Common]
+		}
+		if (messages.Components[key as keyof typeof messages.Components]) {
+			return messages.Components[key as keyof typeof messages.Components]
+		}
+
 		return key
-	}),
+	},
 }))
 
 const renderWithProviders = (ui: React.ReactElement) => {
