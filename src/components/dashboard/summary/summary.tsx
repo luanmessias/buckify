@@ -72,19 +72,23 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 	const hasData = totalSpent > 0
 	const { theme } = useTheme()
 
-	const lightModeClasses =
-		"bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 shadow-xl shadow-zinc-300/50"
-	const darkModeClasses =
-		"bg-gradient-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50"
-
-	const borderClasses = theme === "dark" ? darkModeClasses : lightModeClasses
+	const tooltipStyle = {
+		backgroundColor: theme === "dark" ? "#1a1d21" : "#ffffff",
+		borderColor: theme === "dark" ? "#2e3238" : "#e4e4e7",
+		color: theme === "dark" ? "#e5e5e5" : "#09090b",
+		borderRadius: "8px",
+		boxShadow:
+			theme === "dark"
+				? "0 10px 15px -3px rgba(0, 0, 0, 0.5)"
+				: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+		fontSize: "0.875rem",
+	}
 
 	return (
 		<section className="px-4">
 			<AnimatedWrapper
 				className={cn(
-					"relative overflow-hidden rounded-xl p-px",
-					borderClasses,
+					"relative overflow-hidden rounded-xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 p-px shadow-xl shadow-zinc-300/50 dark:from-[#5D6F6E] dark:via-[#636E70] dark:to-[#A0D199] dark:shadow-2xl dark:shadow-black/50",
 				)}
 			>
 				<div className="relative z-10 h-full rounded-xl bg-card p-6 text-card-foreground">
@@ -129,15 +133,10 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 											formatter={(value: number | undefined) =>
 												formatCurrency(value ?? 0)
 											}
-											contentStyle={{
-												backgroundColor: "#1a1d21",
-												borderColor: "#2e3238",
-												color: "#e5e5e5",
-												borderRadius: "8px",
-												boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
-												fontSize: "0.875rem",
+											contentStyle={tooltipStyle}
+											itemStyle={{
+												color: theme === "dark" ? "#e5e5e5" : "#09090b",
 											}}
-											itemStyle={{ color: "#e5e5e5" }}
 										/>
 									</PieChart>
 								</ResponsiveContainer>
