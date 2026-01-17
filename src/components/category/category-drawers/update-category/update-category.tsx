@@ -1,6 +1,6 @@
 "use client"
 
-import { Save, Tag, Trash2 } from "lucide-react"
+import { Save, Tag } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"

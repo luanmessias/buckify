@@ -9,6 +9,7 @@ import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
 import { CategoryHeader } from "../category-header/category-header"
 import { CategorySummary } from "../category-summary/category-summary"
+import { CategoryTransactionList } from "../category-transaction-list/category-transaction-list"
 
 interface CategoryViewProps {
 	categoryId: string
@@ -72,6 +73,7 @@ export const CategoryView = ({
 				transactions={data.getTransactions}
 				category={data.getCategory}
 			/>
+			<CategoryTransactionList transactions={data.getTransactions} />
 		</div>
 	)
 }
