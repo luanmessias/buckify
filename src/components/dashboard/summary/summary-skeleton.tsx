@@ -28,7 +28,7 @@ export const SummarySkeleton = () => {
 							</div>
 						</div>
 
-						<div className="space-y-4">
+						<div className="space-y-4 hidden md:block">
 							{[1, 2, 3].map((i) => (
 								<div key={i} className="flex justify-between items-center">
 									<div className="flex items-center gap-3">
