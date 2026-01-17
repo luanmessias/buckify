@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export const SummarySkeleton = () => {
 	return (
-		<section className="p-4 space-y-8">
+		<section className="px-4 space-y-8">
 			<div className="relative rounded-2xl p-6 border bg-card/50 flex flex-col">
 				<Skeleton className="h-4 w-32 mb-8" />
 
