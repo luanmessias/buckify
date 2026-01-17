@@ -54,16 +54,16 @@ export const CategorySummary = ({
 		}).format(value)
 
 	return (
-		<AnimatedWrapper className="relative rounded-xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
-			<div className="bg-card text-card-foreground rounded-xl p-6 h-full relative z-10">
-				<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
+		<AnimatedWrapper className="relative overflow-hidden rounded-xl bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] p-px shadow-2xl shadow-black/50">
+			<div className="relative z-10 h-full rounded-xl bg-card p-6 text-card-foreground">
+				<div className="pointer-events-none absolute top-0 right-0 h-70 w-70 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 
-				<div className="flex flex-col items-center justify-center relative z-10">
+				<div className="relative z-10 flex flex-col items-center justify-center">
 					<Typography variant="h3" className="mb-1 font-bold tracking-tight">
 						{category.name}
 					</Typography>
 
-					<div className="relative h-48 w-full max-w-75 mt-4">
+					<div className="relative mt-4 h-48 w-full max-w-75">
 						<ResponsiveContainer width="100%" height="100%">
 							<PieChart>
 								<defs>
@@ -129,27 +129,27 @@ export const CategorySummary = ({
 							</PieChart>
 						</ResponsiveContainer>
 
-						<div className="absolute inset-0 top-10 flex flex-col items-center justify-center pointer-events-none">
+						<div className="pointer-events-none absolute inset-0 top-10 flex flex-col items-center justify-center">
 							<Typography
 								variant="h1"
-								className="text-4xl font-extrabold drop-shadow-md"
+								className="font-extrabold text-4xl drop-shadow-md"
 							>
 								{Math.round(percentage)}%
 							</Typography>
 							<Typography
 								variant="muted"
-								className="text-xs uppercase tracking-widest mt-1"
+								className="mt-1 text-xs uppercase tracking-widest"
 							>
 								{t("used_of_budget")}
 							</Typography>
 						</div>
 					</div>
 
-					<div className="w-full flex justify-between items-center mt-2 border-t border-border/40 pt-4">
+					<div className="mt-2 flex w-full items-center justify-between border-border/40 border-t pt-4">
 						<div className="text-left">
 							<Typography
 								variant="muted"
-								className="text-[10px] uppercase font-bold text-muted-foreground/70"
+								className="font-bold text-[10px] text-muted-foreground/70 uppercase"
 							>
 								{t("total_spent")}
 							</Typography>
@@ -161,7 +161,7 @@ export const CategorySummary = ({
 						<div className="text-right">
 							<Typography
 								variant="muted"
-								className="text-[10px] uppercase font-bold text-muted-foreground/70"
+								className="font-bold text-[10px] text-muted-foreground/70 uppercase"
 							>
 								{t("remaining")}
 							</Typography>

@@ -72,18 +72,18 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 	}
 
 	const TriggerButton = (
-		<div className={cn("flex items-center  w-full", className)}>
+		<div className={cn("flex w-full items-center", className)}>
 			<Button
 				variant="outline"
 				className={cn(
 					"w-full justify-between text-left font-normal",
-					"bg-zinc-900 border-zinc-800 text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50",
-					"h-12 px-4 rounded-xl shadow-sm transition-colors",
+					"border-zinc-800 bg-zinc-900 text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50",
+					"h-12 rounded-xl px-4 shadow-sm transition-colors",
 				)}
 			>
 				<div className="flex items-center gap-3">
 					<CalendarIcon className="h-4 w-4 text-zinc-400" />
-					<span className="text-lg tracking-wider uppercase">
+					<span className="text-lg uppercase tracking-wider">
 						{format(currentDate, "MMMM yyyy", { locale: currentLocale })}
 					</span>
 				</div>
@@ -97,7 +97,7 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 			<Popover open={open} onOpenChange={setIsOpen}>
 				<PopoverTrigger asChild>{TriggerButton}</PopoverTrigger>
 				<PopoverContent
-					className="w-75 p-0 border-zinc-800 bg-zinc-950 text-zinc-100"
+					className="w-75 border-zinc-800 bg-zinc-950 p-0 text-zinc-100"
 					align="start"
 				>
 					<MonthGrid
@@ -113,9 +113,9 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 	return (
 		<Drawer open={open} onOpenChange={setIsOpen}>
 			<DrawerTrigger asChild>{TriggerButton}</DrawerTrigger>
-			<DrawerContent className="bg-zinc-950 border-zinc-800 text-zinc-100">
+			<DrawerContent className="border-zinc-800 bg-zinc-950 text-zinc-100">
 				<DrawerTitle className="sr-only">{t("select_month")}</DrawerTitle>
-				<div className="mt-4 border-t border-zinc-800 pt-4 pb-8">
+				<div className="mt-4 border-zinc-800 border-t pt-4 pb-8">
 					<MonthGrid
 						currentDate={currentDate}
 						locale={currentLocale}
@@ -162,25 +162,25 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 	})
 
 	return (
-		<div className="p-4 mx-auto max-w-87.5">
-			<div className="flex items-center justify-between mb-6 px-2">
+		<div className="mx-auto max-w-87.5 p-4">
+			<div className="mb-6 flex items-center justify-between px-2">
 				<Button
 					variant="ghost"
 					size="icon"
 					onClick={prevYear}
-					className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-zinc-800"
+					className="h-8 w-8 text-zinc-400 hover:bg-zinc-800 hover:text-white"
 					aria-label={t("previous_year")}
 				>
 					<ChevronLeft className="h-4 w-4" />
 				</Button>
 
-				<div className="text-xl font-medium tracking-wide">{menuYear}</div>
+				<div className="font-medium text-xl tracking-wide">{menuYear}</div>
 
 				<Button
 					variant="ghost"
 					size="icon"
 					onClick={nextYear}
-					className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-zinc-800"
+					className="h-8 w-8 text-zinc-400 hover:bg-zinc-800 hover:text-white"
 					aria-label={t("next_year")}
 				>
 					<ChevronRight className="h-4 w-4" />
@@ -209,15 +209,15 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 							variant="ghost"
 							disabled={isDisabled}
 							className={cn(
-								"h-12 sm:h-10 text-xs font-medium uppercase tracking-wider transition-all duration-200",
-								"text-zinc-400 hover:text-white hover:bg-zinc-800",
+								"h-12 font-medium text-xs uppercase tracking-wider transition-all duration-200 sm:h-10",
+								"text-zinc-400 hover:bg-zinc-800 hover:text-white",
 								isSelected && [
 									"bg-[#4ADE80] text-black hover:bg-[#4ADE80] hover:text-black",
 									"shadow-[0_0_20px_-5px_#4ADE80]",
-									"font-bold scale-105",
+									"scale-105 font-bold",
 								],
 								isDisabled &&
-									"opacity-30 cursor-not-allowed hover:bg-transparent pointer-events-none",
+									"pointer-events-none cursor-not-allowed opacity-30 hover:bg-transparent",
 							)}
 						>
 							<Link

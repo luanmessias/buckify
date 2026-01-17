@@ -79,10 +79,10 @@ export const UpdateCategoryDrawer = ({
 	return (
 		<Drawer open={isOpen} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90vh]">
-				<div className="absolute right-0 top-0 w-64 h-64 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
+				<div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 				<DrawerHeader>
 					<DrawerTitle className="flex items-center gap-2">
-						<Tag className="w-5 h-5 text-primary" />
+						<Tag className="h-5 w-5 text-primary" />
 						{t("edit_category")}
 					</DrawerTitle>
 					<DrawerDescription className="text-left">
@@ -90,7 +90,7 @@ export const UpdateCategoryDrawer = ({
 					</DrawerDescription>
 				</DrawerHeader>
 
-				<div className="flex-1 overflow-hidden p-4 space-y-8">
+				<div className="flex-1 space-y-8 overflow-hidden p-4">
 					<div className="grid grid-cols-2 gap-4">
 						<div className="space-y-2">
 							<Label htmlFor="name">{t("category_name")}</Label>
@@ -98,7 +98,7 @@ export const UpdateCategoryDrawer = ({
 								id="name"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
-								className="h-10 bg-muted/20 border-border/50 focus:bg-background transition-all"
+								className="h-10 border-border/50 bg-muted/20 transition-all focus:bg-background"
 								placeholder={t("name_placeholder")}
 							/>
 						</div>
@@ -109,25 +109,25 @@ export const UpdateCategoryDrawer = ({
 								<IconPicker
 									value={icon}
 									onChange={setIcon}
-									className="h-10 bg-muted/20 border-border/50 hover:bg-muted/20 focus:bg-background transition-all"
+									className="h-10 border-border/50 bg-muted/20 transition-all hover:bg-muted/20 focus:bg-background"
 								/>
 							</div>
 						</div>
 					</div>
 
 					<div className="space-y-4">
-						<div className="flex justify-between items-end">
+						<div className="flex items-end justify-between">
 							<Label htmlFor="budget">{t("monthly_budget")}</Label>
 
-							<div className="flex items-center gap-1 border-b border-border/50 focus-within:border-primary transition-colors">
-								<span className="text-sm text-muted-foreground">
+							<div className="flex items-center gap-1 border-border/50 border-b transition-colors focus-within:border-primary">
+								<span className="text-muted-foreground text-sm">
 									{t("currency_symbol")}
 								</span>
 								<input
 									type="number"
 									value={budget}
 									onChange={(e) => setBudget(Number(e.target.value))}
-									className="w-16 bg-transparent text-right font-mono text-lg font-bold focus:outline-none"
+									className="w-16 bg-transparent text-right font-bold font-mono text-lg focus:outline-none"
 								/>
 							</div>
 						</div>
@@ -140,7 +140,7 @@ export const UpdateCategoryDrawer = ({
 							onValueChange={handleSliderChange}
 							className="py-4"
 						/>
-						<p className="text-[10px] text-muted-foreground/60 text-center">
+						<p className="text-center text-[10px] text-muted-foreground/60">
 							{t("budget_hint_text", {
 								defaultMessage: "Adjusting recalculates remaining balance",
 							})}
@@ -150,9 +150,9 @@ export const UpdateCategoryDrawer = ({
 					<Button
 						onClick={handleSave}
 						disabled={isSubmitting}
-						className="w-full gap-2 h-11 text-base font-semibold shadow-lg shadow-primary/20"
+						className="h-11 w-full gap-2 font-semibold text-base shadow-lg shadow-primary/20"
 					>
-						<Save className="w-4 h-4" />
+						<Save className="h-4 w-4" />
 						{t("save_changes")}
 					</Button>
 				</div>

@@ -8,7 +8,7 @@ export const Divider = ({ className }: SeparatorProps) => {
 	return (
 		<div
 			className={twMerge(
-				"h-px w-full bg-linear-to-r from-transparent via-border to-transparent my-8",
+				"my-8 h-px w-full bg-linear-to-r from-transparent via-border to-transparent",
 				className,
 			)}
 		/>

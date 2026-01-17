@@ -15,9 +15,9 @@ export default function DashboardLayout({
 	}
 
 	return (
-		<div className="flex flex-col min-h-screen pb-(--navbar-height) pt-(--topbar-height)">
+		<div className="flex min-h-screen flex-col pt-(--topbar-height) pb-(--navbar-height)">
 			<Header />
-			<main className="flex-1 container mx-auto">{children}</main>
+			<main className="container mx-auto flex-1">{children}</main>
 			<NavbarWrapper />
 		</div>
 	)

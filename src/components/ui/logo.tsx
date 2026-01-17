@@ -26,7 +26,7 @@ export function Logo({
 			fill="none"
 			role="img"
 			className={cn(
-				"h-8 text-foreground fill-current transition-all duration-300",
+				"h-8 fill-current text-foreground transition-all duration-300",
 				variant === "icon" ? "w-auto" : "w-auto",
 				className,
 			)}

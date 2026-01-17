@@ -37,8 +37,8 @@ export default function LoginPage() {
 	}
 
 	return (
-		<Card className="relative w-full max-w-sm mx-auto border bg-card">
-			<div className="absolute right-0 top-0 w-32 h-32 bg-linear-to-br from-primary/10 to-transparent opacity-50 rounded-bl-full pointer-events-none"></div>
+		<Card className="relative mx-auto w-full max-w-sm border bg-card">
+			<div className="pointer-events-none absolute top-0 right-0 h-32 w-32 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-50"></div>
 			<CardHeader className="space-y-1 text-center">
 				<Logo
 					variant="icon"
@@ -65,7 +65,7 @@ export default function LoginPage() {
 					<form action={devLogin} className="mt-4">
 						<button
 							type="submit"
-							className="w-full p-3 bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500/30 rounded-lg text-sm font-bold border border-emerald-500/50 transition-all"
+							className="w-full rounded-lg border border-emerald-500/50 bg-emerald-500/20 p-3 font-bold text-emerald-500 text-sm transition-all hover:bg-emerald-500/30"
 						>
 							{t("dev_mode_button")}
 						</button>

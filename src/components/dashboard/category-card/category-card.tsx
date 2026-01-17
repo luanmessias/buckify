@@ -45,14 +45,14 @@ export const CategoryCard = ({
 
 	return (
 		<Link href={`/category/${slug}${queryPrefix}${queryString}`}>
-			<div className="bg-card/50 border border-border/50 rounded-xl p-4 flex flex-col gap-3 hover:bg-card/80 transition-colors group relative overflow-hidden cursor-pointer">
+			<div className="group relative flex cursor-pointer flex-col gap-3 overflow-hidden rounded-xl border border-border/50 bg-card/50 p-4 transition-colors hover:bg-card/80">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<div className="p-0 rounded-lg" style={{ color: color }}>
-							<Icon name={icon} className="w-6 h-6" />
+						<div className="rounded-lg p-0" style={{ color: color }}>
+							<Icon name={icon} className="h-6 w-6" />
 						</div>
 						<div>
-							<h3 className="font-semibold text-sm text-foreground">{name}</h3>
+							<h3 className="font-semibold text-foreground text-sm">{name}</h3>
 							<Typography variant="muted" className="text-xs">
 								{formatCurrency(amountSpent)} {t("spent")} /{" "}
 								{formatCurrency(budget)} {t("available")}
@@ -63,7 +63,7 @@ export const CategoryCard = ({
 					<Typography
 						as="span"
 						className={cn(
-							"text-sm font-bold",
+							"font-bold text-sm",
 							isOverBudget ? "text-red-400" : "text-hades-300",
 						)}
 					>
@@ -71,7 +71,7 @@ export const CategoryCard = ({
 					</Typography>
 				</div>
 
-				<div className="h-2 w-full bg-secondary rounded-full overflow-hidden relative">
+				<div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
 					<div
 						className="h-full rounded-full transition-all duration-500 ease-out"
 						style={{
@@ -81,7 +81,7 @@ export const CategoryCard = ({
 					/>
 				</div>
 
-				<div className="flex justify-between items-center text-xs mt-1">
+				<div className="mt-1 flex items-center justify-between text-xs">
 					<span className="text-muted-foreground">{t("remaining_label")}</span>
 					<span
 						className={cn(

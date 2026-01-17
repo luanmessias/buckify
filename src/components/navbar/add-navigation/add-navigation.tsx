@@ -232,7 +232,7 @@ export const AddNavigation = () => {
 
 	return (
 		<>
-			<div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-center justify-center visible">
+			<div className="visible absolute -top-6 left-1/2 flex -translate-x-1/2 items-center justify-center">
 				<div
 					className={cn(
 						"absolute bottom-24 flex flex-col-reverse items-center gap-3",
@@ -267,10 +267,10 @@ export const AddNavigation = () => {
 				<Button
 					className={cn(
 						"group relative z-50 cursor-pointer",
-						"w-16 h-16 p-0 rounded-full",
-						"bg-primary text-hades-950 border-[3px] border-hades-950",
+						"h-16 w-16 rounded-full p-0",
+						"border-[3px] border-hades-950 bg-primary text-hades-950",
 						"shadow-[0_0_20px_rgba(var(--color-hades-500-rgb),0.3)]",
-						"hover:scale-105 active:scale-95 transition-all duration-300",
+						"transition-all duration-300 hover:scale-105 active:scale-95",
 						"flex items-center justify-center overflow-visible",
 						"[&_svg]:size-6",
 					)}
@@ -278,10 +278,10 @@ export const AddNavigation = () => {
 				>
 					<div
 						className={cn(
-							"absolute left-1 right-1 top-4 h-full -z-10 rounded-full",
+							"absolute top-4 right-1 left-1 -z-10 h-full rounded-full",
 							"bg-linear-to-tr from-(--color-hades-500) to-cyan-400",
 							"opacity-0 blur-lg transition-all duration-500",
-							isOpen && "opacity-60 translate-y-2 scale-110",
+							isOpen && "translate-y-2 scale-110 opacity-60",
 						)}
 					/>
 

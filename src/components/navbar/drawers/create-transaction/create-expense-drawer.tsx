@@ -90,10 +90,10 @@ export const CreateExpenseDrawer = ({
 	return (
 		<Drawer open={isOpen} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90vh]">
-				<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
+				<div className="pointer-events-none absolute top-0 right-0 h-70 w-70 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 				<DrawerHeader>
 					<DrawerTitle className="flex items-center gap-2">
-						<Plus className="w-5 h-5 text-primary" />
+						<Plus className="h-5 w-5 text-primary" />
 						{t("new_expense")}
 					</DrawerTitle>
 					<DrawerDescription className="text-left">
@@ -112,14 +112,14 @@ export const CreateExpenseDrawer = ({
 										<FormLabel>{t("amount")}</FormLabel>
 										<FormControl>
 											<div className="relative">
-												<span className="absolute left-3 top-4 text-muted-foreground font-bold">
+												<span className="absolute top-4 left-3 font-bold text-muted-foreground">
 													{t("currency_symbol")}
 												</span>
 												<Input
 													type="number"
 													step="0.01"
 													placeholder={t("amount_placeholder")}
-													className="pl-8 text-2xl font-bold h-14"
+													className="h-14 pl-8 font-bold text-2xl"
 													{...field}
 													value={(field.value as number) || ""}
 													onChange={(e) => {
@@ -193,7 +193,7 @@ export const CreateExpenseDrawer = ({
 														type="date"
 														{...field}
 													/>
-													<CalendarIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50 pointer-events-none" />
+													<CalendarIcon className="pointer-events-none absolute top-2.5 right-3 h-4 w-4 opacity-50" />
 												</div>
 											</FormControl>
 											<FormMessage />
@@ -204,7 +204,7 @@ export const CreateExpenseDrawer = ({
 
 							<Button
 								type="submit"
-								className="w-full h-11"
+								className="h-11 w-full"
 								disabled={isSubmitting}
 							>
 								{isSubmitting ? (

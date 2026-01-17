@@ -35,10 +35,10 @@ export const NavbarWrapper = () => {
 	return (
 		<nav
 			className={cn(
-				"fixed bottom-0 w-full h-(--navbar-height)",
+				"fixed bottom-0 h-(--navbar-height) w-full",
 				"flex items-center justify-center",
-				"bg-background/80 backdrop-blur-md border-b",
-				"border-t border-white/5",
+				"border-b bg-background/80 backdrop-blur-md",
+				"border-white/5 border-t",
 				"shadow-[0_-5px_20px_rgba(0,0,0,0.3)]",
 				"z-40",
 				"transition-transform duration-300 ease-in-out",
@@ -48,7 +48,7 @@ export const NavbarWrapper = () => {
 		>
 			<AddNavigation />
 
-			<div className="grid grid-cols-5 w-full max-w-md px-4 h-full items-center">
+			<div className="grid h-full w-full max-w-md grid-cols-5 items-center px-4">
 				<NavbarItem href="/" icon={House} label={t("home")} />
 				<NavbarItem href="/stats" icon={BarChart3} label={t("stats")} />
 

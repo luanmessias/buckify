@@ -87,10 +87,10 @@ export const CreateCategoryDrawer = ({
 	return (
 		<Drawer open={isOpen} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90vh]">
-				<div className="absolute right-0 top-0 w-64 h-64 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
+				<div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 				<DrawerHeader>
 					<DrawerTitle className="flex items-center gap-2">
-						<Tag className="w-5 h-5 text-primary" />
+						<Tag className="h-5 w-5 text-primary" />
 						{t("new_category")}
 					</DrawerTitle>
 					<DrawerDescription className="text-left">
@@ -156,17 +156,17 @@ export const CreateCategoryDrawer = ({
 								name="budget"
 								render={({ field }) => (
 									<FormItem>
-										<div className="flex justify-between items-end">
+										<div className="flex items-end justify-between">
 											<FormLabel>{tCategory("monthly_budget")}</FormLabel>
 
-											<div className="flex items-center gap-1 border-b border-border/50 focus-within:border-primary transition-colors">
-												<span className="text-sm text-muted-foreground">
+											<div className="flex items-center gap-1 border-border/50 border-b transition-colors focus-within:border-primary">
+												<span className="text-muted-foreground text-sm">
 													{tCategory("currency_symbol")}
 												</span>
 												<FormControl>
 													<input
 														type="number"
-														className="w-16 bg-transparent text-right font-mono text-lg font-bold focus:outline-none"
+														className="w-16 bg-transparent text-right font-bold font-mono text-lg focus:outline-none"
 														placeholder={t("budget_placeholder")}
 														{...field}
 														value={(field.value as number) || 0}
@@ -190,7 +190,7 @@ export const CreateCategoryDrawer = ({
 											onValueChange={(vals) => field.onChange(vals[0])}
 											className="py-4"
 										/>
-										<p className="text-[10px] text-muted-foreground/60 text-center">
+										<p className="text-center text-[10px] text-muted-foreground/60">
 											{tCategory("budget_hint_text", {
 												defaultMessage:
 													"Adjusting recalculates remaining balance",
@@ -203,7 +203,7 @@ export const CreateCategoryDrawer = ({
 
 							<Button
 								type="submit"
-								className="w-full h-11"
+								className="h-11 w-full"
 								disabled={isSubmitting}
 							>
 								{isSubmitting ? (

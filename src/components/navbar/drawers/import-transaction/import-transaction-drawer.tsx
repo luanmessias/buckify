@@ -138,13 +138,13 @@ export const ImportTransactionDrawer = ({
 	return (
 		<Drawer open={isOpen} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90vh]">
-				<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
+				<div className="pointer-events-none absolute top-0 right-0 h-70 w-70 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 				<DrawerHeader>
 					<DrawerTitle className="flex items-center gap-2">
-						<UploadCloud className="w-5 h-5 text-primary" />
+						<UploadCloud className="h-5 w-5 text-primary" />
 						{t("import_title")}
 					</DrawerTitle>
-					<DrawerDescription className="text-left flex flex-col gap-1">
+					<DrawerDescription className="flex flex-col gap-1 text-left">
 						<span>{t("send_image_pdf")}</span>
 						<span>{t("expenses_categorized")}</span>
 					</DrawerDescription>
@@ -153,22 +153,22 @@ export const ImportTransactionDrawer = ({
 				<div className="flex-1 overflow-hidden p-4">
 					{step === "upload" ? (
 						<button
-							className="border-2 w-full border-dashed border-muted-foreground/25 rounded-xl h-64 flex flex-col items-center justify-center gap-4 hover:bg-muted/50 transition-colors cursor-pointer bg-transparent"
+							className="flex h-64 w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-muted-foreground/25 border-dashed bg-transparent transition-colors hover:bg-muted/50"
 							onClick={() => !isAnalyzing && fileInputRef.current?.click()}
 							disabled={isAnalyzing}
 							type="button"
 						>
 							{isAnalyzing ? (
-								<div className="flex flex-col items-center gap-2 animate-pulse">
-									<Loader2 className="w-10 h-10 text-primary animate-spin" />
+								<div className="flex animate-pulse flex-col items-center gap-2">
+									<Loader2 className="h-10 w-10 animate-spin text-primary" />
 									<Typography variant="muted">
 										{t("reading_transactions")}
 									</Typography>
 								</div>
 							) : (
 								<>
-									<div className="p-4 bg-muted rounded-full">
-										<FileText className="w-8 h-8 text-muted-foreground" />
+									<div className="rounded-full bg-muted p-4">
+										<FileText className="h-8 w-8 text-muted-foreground" />
 									</div>
 									<div className="text-center">
 										<Typography variant="p" className="font-medium">
@@ -192,7 +192,7 @@ export const ImportTransactionDrawer = ({
 					) : (
 						<ScrollArea className="h-[50vh]">
 							<div className="space-y-3">
-								<div className="flex justify-between items-center text-sm text-muted-foreground mb-4">
+								<div className="mb-4 flex items-center justify-between text-muted-foreground text-sm">
 									<span>
 										{t("expenses_found", { count: transactions.length })}
 									</span>
@@ -209,47 +209,45 @@ export const ImportTransactionDrawer = ({
 								{transactions.map((item, idx) => (
 									<div
 										key={item.id}
-										className={`
-											flex flex-col sm:flex-row sm:items-center gap-3 p-3 rounded-lg border animate-in fade-in slide-in-from-bottom-2
-											${
-												item.isPossibleDuplicate
-													? "bg-amber-500/10 border-amber-500/30 dark:bg-amber-950/30"
-													: "bg-card border-input"
-											}
+										className={`fade-in flex animate-in flex-col gap-3 rounded-lg border p-3 sm:flex-row sm:items-center slide-in-from-bottom-2${
+											item.isPossibleDuplicate
+												? "border-amber-500/30 bg-amber-500/10 dark:bg-amber-950/30"
+												: "border-input bg-card"
+										}
 										`}
 									>
-										<div className="flex justify-between items-center flex-1 min-w-0">
+										<div className="flex min-w-0 flex-1 items-center justify-between">
 											<div className="flex items-center gap-2">
 												{item.isPossibleDuplicate && (
 													<TooltipProvider>
 														<Tooltip delayDuration={0}>
 															<TooltipTrigger asChild>
-																<div className="cursor-help text-amber-500 hover:text-amber-400 transition-colors">
-																	<AlertTriangle className="w-4 h-4" />
+																<div className="cursor-help text-amber-500 transition-colors hover:text-amber-400">
+																	<AlertTriangle className="h-4 w-4" />
 																</div>
 															</TooltipTrigger>
-															<TooltipContent className="bg-amber-950 border-amber-800 text-amber-100 font-medium text-xs">
+															<TooltipContent className="border-amber-800 bg-amber-950 font-medium text-amber-100 text-xs">
 																<p>{t("possible_duplicate")}</p>
-																<p className="opacity-80 font-normal">
+																<p className="font-normal opacity-80">
 																	{t("duplicate_description")}
 																</p>
 															</TooltipContent>
 														</Tooltip>
 													</TooltipProvider>
 												)}
-												<p className="font-medium truncate text-sm">
+												<p className="truncate font-medium text-sm">
 													{item.description}
 												</p>
 											</div>
-											<p className="text-xs text-muted-foreground">
+											<p className="text-muted-foreground text-xs">
 												{item.date}
 											</p>
 										</div>
 
-										<div className="w-full flex items-center justify-between gap-2">
+										<div className="flex w-full items-center justify-between gap-2">
 											<div className="relative">
 												<select
-													className="h-8 w-auto appearance-none rounded border border-input bg-background pl-3 pr-8 text-xs focus:ring-1 focus:ring-primary cursor-pointer"
+													className="h-8 w-auto cursor-pointer appearance-none rounded border border-input bg-background pr-8 pl-3 text-xs focus:ring-1 focus:ring-primary"
 													value={item.categoryId}
 													disabled={isSubmitting}
 													onChange={(e) =>
@@ -264,13 +262,13 @@ export const ImportTransactionDrawer = ({
 													))}
 												</select>
 
-												<ChevronDown className="absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground pointer-events-none opacity-70" />
+												<ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground opacity-70" />
 											</div>
 
 											<div className="flex items-center gap-2">
 												<Typography
 													as="div"
-													className="font-mono font-medium w-20 text-right"
+													className="w-20 text-right font-medium font-mono"
 												>
 													€{item.amount.toFixed(2)}
 												</Typography>
@@ -279,10 +277,10 @@ export const ImportTransactionDrawer = ({
 													variant="ghost"
 													disabled={isSubmitting}
 													size="icon"
-													className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+													className="h-8 w-8 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
 													onClick={() => handleRemoveItem(idx)}
 												>
-													<X className="w-4 h-4" />
+													<X className="h-4 w-4" />
 												</Button>
 											</div>
 										</div>
@@ -295,7 +293,7 @@ export const ImportTransactionDrawer = ({
 
 				<DrawerFooter className="pt-2">
 					{step === "review" ? (
-						<div className="flex gap-2 w-full">
+						<div className="flex w-full gap-2">
 							<Button
 								variant="outline"
 								className="flex-1"
@@ -313,12 +311,12 @@ export const ImportTransactionDrawer = ({
 							>
 								{isSubmitting ? (
 									<>
-										<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+										<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 										{t("saving")}
 									</>
 								) : (
 									<>
-										<Check className="w-4 h-4 mr-2" />
+										<Check className="mr-2 h-4 w-4" />
 										{t("confirm_import")}
 									</>
 								)}

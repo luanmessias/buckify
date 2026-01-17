@@ -24,30 +24,30 @@ export const ActionPill = ({
 			type="button"
 			onClick={onClick}
 			className={cn(
-				"group flex items-center cursor-pointer justify-start gap-3 pl-2 pr-4 py-2 rounded-full w-48",
-				"border backdrop-blur-md shadow-lg transition-all duration-300 ease-out",
-				"bg-[#1a1d21]/90 border-white/10 text-muted-foreground",
-				"hover:bg-[#1a1d21] hover:border-(--color-hades-300) hover:text-white hover:scale-105",
+				"group flex w-48 cursor-pointer items-center justify-start gap-3 rounded-full py-2 pr-4 pl-2",
+				"border shadow-lg backdrop-blur-md transition-all duration-300 ease-out",
+				"border-white/10 bg-[#1a1d21]/90 text-muted-foreground",
+				"hover:scale-105 hover:border-(--color-hades-300) hover:bg-[#1a1d21] hover:text-white",
 
 				isPremium &&
 					"border-primary/30 bg-primary/10 text-primary hover:bg-primary/20",
 
 				isOpen
-					? `opacity-100 translate-y-0 scale-100 ${delay}`
-					: "opacity-0 translate-y-8 scale-90 pointer-events-none",
+					? `translate-y-0 scale-100 opacity-100 ${delay}`
+					: "pointer-events-none translate-y-8 scale-90 opacity-0",
 			)}
 		>
 			<div
 				className={cn(
-					"p-2 rounded-full bg-white/5 ring-1 ring-white/10 transition-colors shrink-0",
+					"shrink-0 rounded-full bg-white/5 p-2 ring-1 ring-white/10 transition-colors",
 					"group-hover:bg-(--color-hades-300) group-hover:text-black",
 					isPremium && "bg-primary/20 text-primary",
 				)}
 			>
-				<Icon className="w-5 h-5" />
+				<Icon className="h-5 w-5" />
 			</div>
 
-			<Typography variant="small" className="font-medium whitespace-nowrap">
+			<Typography variant="small" className="whitespace-nowrap font-medium">
 				{label}
 			</Typography>
 		</button>

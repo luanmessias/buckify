@@ -72,20 +72,20 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 
 	return (
 		<section className="px-4">
-			<AnimatedWrapper className="relative rounded-xl p-px overflow-hidden bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50">
-				<div className="bg-card text-card-foreground rounded-xl p-6 h-full relative z-10">
-					<div className="absolute right-0 top-0 w-70 h-70 bg-linear-to-br from-primary/10 to-transparent opacity-30 rounded-bl-full pointer-events-none" />
+			<AnimatedWrapper className="relative overflow-hidden rounded-xl bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] p-px shadow-2xl shadow-black/50">
+				<div className="relative z-10 h-full rounded-xl bg-card p-6 text-card-foreground">
+					<div className="pointer-events-none absolute top-0 right-0 h-70 w-70 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 
 					<Typography
 						variant="h2"
-						className="mb-2 text-muted-foreground tracking-wider uppercase text-xs border-0"
+						className="mb-2 border-0 text-muted-foreground text-xs uppercase tracking-wider"
 					>
 						{t("month_summary")}
 					</Typography>
 
 					<MonthSelector className="mb-4" />
 
-					<div className="flex flex-col md:flex-row items-center justify-between gap-8">
+					<div className="flex flex-col items-center justify-between gap-8 md:flex-row">
 						<div className="relative h-60 w-60 shrink-0">
 							{hasData ? (
 								<ResponsiveContainer width="100%" height="100%">
@@ -106,7 +106,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 												<Cell
 													key={entry.id}
 													fill={entry.color || "#333"}
-													className="stroke-card stroke-2"
+													className="stroke-2 stroke-card"
 												/>
 											))}
 										</Pie>
@@ -128,37 +128,37 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 									</PieChart>
 								</ResponsiveContainer>
 							) : (
-								<div className="w-full h-full rounded-full border-15 border-muted/10 flex items-center justify-center animate-in fade-in duration-500" />
+								<div className="fade-in flex h-full w-full animate-in items-center justify-center rounded-full border-15 border-muted/10 duration-500" />
 							)}
 
-							<div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+							<div className="pointer-events-none absolute inset-0 flex select-none flex-col items-center justify-center">
 								<Typography
 									variant="muted"
-									className="text-[10px] font-medium uppercase tracking-widest mb-1"
+									className="mb-1 font-medium text-[10px] uppercase tracking-widest"
 								>
 									{t("total_spent")}
 								</Typography>
 								<Typography
 									variant="h1"
-									className="text-2xl font-bold text-foreground drop-shadow-lg"
+									className="font-bold text-2xl text-foreground drop-shadow-lg"
 								>
 									{formatCurrency(totalSpent)}
 								</Typography>
 							</div>
 						</div>
 
-						<div className="flex-1 w-full space-y-6">
+						<div className="w-full flex-1 space-y-6">
 							<div className="flex justify-between md:justify-end">
 								<div className="text-left">
 									<Typography
 										variant="muted"
-										className="text-xs uppercase tracking-wider mb-1"
+										className="mb-1 text-xs uppercase tracking-wider"
 									>
 										{t("budget")}
 									</Typography>
 									<Typography
 										variant="p"
-										className="font-bold text-xl text-foreground"
+										className="font-bold text-foreground text-xl"
 									>
 										{formatCurrency(totalBudget)}
 									</Typography>
@@ -166,7 +166,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 								<div className="text-right">
 									<Typography
 										variant="muted"
-										className="text-xs uppercase tracking-wider mb-1"
+										className="mb-1 text-xs uppercase tracking-wider"
 									>
 										{t("remaining")}
 									</Typography>
@@ -182,15 +182,15 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 								</div>
 							</div>
 
-							<div className="space-y-3 gap-10 border-t border-border/40 pt-6 hidden md:block">
+							<div className="hidden gap-10 space-y-3 border-border/40 border-t pt-6 md:block">
 								{chartData.slice(0, 3).map((cat) => (
 									<div
 										key={cat.id}
-										className="flex h-4 items-center justify-between text-sm group"
+										className="group flex h-4 items-center justify-between text-sm"
 									>
 										<div className="flex items-center gap-3">
 											<div
-												className="w-2.5 h-2.5 rounded-full ring-2 ring-transparent transition-all group-hover:scale-110"
+												className="h-2.5 w-2.5 rounded-full ring-2 ring-transparent transition-all group-hover:scale-110"
 												style={{
 													backgroundColor: cat.color,
 													boxShadow: `0 0 10px ${cat.color}40`,
@@ -198,7 +198,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 											/>
 											<Typography
 												variant="muted"
-												className="group-hover:text-foreground transition-colors"
+												className="transition-colors group-hover:text-foreground"
 											>
 												{cat.name}
 											</Typography>
@@ -214,7 +214,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 								{chartData.length > 3 && (
 									<Typography
 										variant="muted"
-										className="text-xs text-center pt-2 italic"
+										className="pt-2 text-center text-xs italic"
 									>
 										{t("hidden_categories", { count: chartData.length - 3 })}
 									</Typography>
@@ -224,7 +224,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 					</div>
 				</div>
 
-				<div className="absolute -inset-1 bg-primary/20 blur-3xl opacity-10 pointer-events-none z-0" />
+				<div className="pointer-events-none absolute -inset-1 z-0 bg-primary/20 opacity-10 blur-3xl" />
 			</AnimatedWrapper>
 		</section>
 	)

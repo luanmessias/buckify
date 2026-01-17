@@ -86,14 +86,14 @@ export const CategoryHeader = ({
 
 	return (
 		<>
-			<AnimatedWrapper className="sticky top-0 z-40 bg-background/80 backdrop-blur-md px-4 py-3">
-				<div className="flex items-center justify-between max-w-7xl mx-auto">
+			<AnimatedWrapper className="sticky top-0 z-40 bg-background/80 px-4 py-3 backdrop-blur-md">
+				<div className="mx-auto flex max-w-7xl items-center justify-between">
 					<Link href={backUrl} prefetch aria-label={t("back")}>
-						<ArrowLeft className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+						<ArrowLeft className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
 					</Link>
 
-					<div className="flex-1 flex justify-center">
-						<MonthSelector className="bg-transparent border-transparent shadow-none hover:bg-muted/20 w-auto" />
+					<div className="flex flex-1 justify-center">
+						<MonthSelector className="w-auto border-transparent bg-transparent shadow-none hover:bg-muted/20" />
 					</div>
 
 					<Button
@@ -101,9 +101,9 @@ export const CategoryHeader = ({
 						size="icon"
 						onClick={() => setIsOpen(true)}
 						aria-label={t("edit_category")}
-						className="[&_svg]:size-6 hover:bg-transparent"
+						className="hover:bg-transparent [&_svg]:size-6"
 					>
-						<Cog className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+						<Cog className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
 					</Button>
 				</div>
 			</AnimatedWrapper>

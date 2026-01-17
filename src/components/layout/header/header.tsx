@@ -38,11 +38,11 @@ export const Header = () => {
 	return (
 		<header
 			className={cn(
-				"fixed top-0 left-0 right-0 z-50",
+				"fixed top-0 right-0 left-0 z-50",
 				"h-16 w-full",
 				"flex items-center justify-between px-4 py-4",
 
-				"bg-background/80 backdrop-blur-md border-b",
+				"border-b bg-background/80 backdrop-blur-md",
 
 				"transition-transform duration-300 ease-in-out",
 
@@ -50,7 +50,7 @@ export const Header = () => {
 			)}
 		>
 			<div>
-				<Logo className="text-primary h-7" title={t("logo_title")} />
+				<Logo className="h-7 text-primary" title={t("logo_title")} />
 			</div>
 
 			<div className="flex items-center gap-2">

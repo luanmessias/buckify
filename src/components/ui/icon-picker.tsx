@@ -105,10 +105,10 @@ export function IconPicker({ value, onChange, className }: IconPickerProps) {
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent className="h-[80vh]">
-				<DrawerHeader className="text-left px-4 pt-4">
+				<DrawerHeader className="px-4 pt-4 text-left">
 					<DrawerTitle>{t("select_icon")}</DrawerTitle>
 				</DrawerHeader>
-				<div className="px-4 pb-4 h-full overflow-hidden flex flex-col">
+				<div className="flex h-full flex-col overflow-hidden px-4 pb-4">
 					<IconPickerContent
 						value={value}
 						onChange={(icon) => {
@@ -174,9 +174,9 @@ function IconPickerContent({
 	}, [search, icons])
 
 	return (
-		<div className="flex flex-col h-full space-y-4">
+		<div className="flex h-full flex-col space-y-4">
 			<div className="relative">
-				<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+				<Search className="absolute top-2.5 left-2 h-4 w-4 text-muted-foreground" />
 				<Input
 					placeholder={t("search_icon")}
 					value={search}
@@ -187,21 +187,21 @@ function IconPickerContent({
 					<button
 						onClick={() => setSearch("")}
 						type="button"
-						className="absolute right-2 top-2.5 text-muted-foreground hover:text-foreground"
+						className="absolute top-2.5 right-2 text-muted-foreground hover:text-foreground"
 					>
 						<X className="h-4 w-4" />
 					</button>
 				)}
 			</div>
 
-			<ScrollArea className="flex-1 -mx-1">
-				<div className="grid grid-cols-5 sm:grid-cols-6 gap-2 p-1">
+			<ScrollArea className="-mx-1 flex-1">
+				<div className="grid grid-cols-5 gap-2 p-1 sm:grid-cols-6">
 					{filteredIcons.map((iconName) => (
 						<Button
 							key={iconName}
 							variant={value === iconName ? "default" : "outline"}
 							className={cn(
-								"h-12 w-full p-0 aspect-square",
+								"aspect-square h-12 w-full p-0",
 								value === iconName && "bg-primary text-primary-foreground",
 							)}
 							onClick={() => onChange(iconName)}

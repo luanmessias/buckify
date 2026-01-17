@@ -2,10 +2,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export const CategoryCardSkeleton = () => {
 	return (
-		<div className="bg-card/50 border border-border/50 rounded-xl p-4 flex flex-col gap-3 relative overflow-hidden">
+		<div className="relative flex flex-col gap-3 overflow-hidden rounded-xl border border-border/50 bg-card/50 p-4">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-3">
-					<Skeleton className="w-6 h-6 rounded-lg" />
+					<Skeleton className="h-6 w-6 rounded-lg" />
 					<div className="space-y-1.5">
 						<Skeleton className="h-4 w-24" />
 						<Skeleton className="h-3 w-32" />
@@ -17,7 +17,7 @@ export const CategoryCardSkeleton = () => {
 
 			<Skeleton className="h-2 w-full rounded-full" />
 
-			<div className="flex justify-between items-center mt-1">
+			<div className="mt-1 flex items-center justify-between">
 				<Skeleton className="h-3 w-20" />
 				<Skeleton className="h-3 w-16" />
 			</div>

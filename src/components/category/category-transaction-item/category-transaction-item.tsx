@@ -23,7 +23,7 @@ export const CategoryTransactionItem = ({
 	return (
 		<button
 			type="button"
-			className="bg-card/50 border border-border/50 rounded-xl p-4 flex justify-between items-center hover:bg-card/80 transition-colors group relative overflow-hidden cursor-pointer w-full text-left"
+			className="group relative flex w-full cursor-pointer items-center justify-between overflow-hidden rounded-xl border border-border/50 bg-card/50 p-4 text-left transition-colors hover:bg-card/80"
 			onClick={() => onEdit?.(transaction)}
 		>
 			<div className="flex flex-col gap-1">

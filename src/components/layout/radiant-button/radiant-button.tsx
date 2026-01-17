@@ -37,12 +37,12 @@ export const RadiantButton = ({
 			{isLoading ? (
 				<div className="flex items-center gap-2 text-muted-foreground">
 					<Loader2 className="h-5 w-5 animate-spin text-primary" />
-					<span className="text-sm font-medium uppercase tracking-widest text-black">
+					<span className="font-medium text-black text-sm uppercase tracking-widest">
 						{t("connecting")}
 					</span>
 				</div>
 			) : (
-				<div className="flex gap-2 h-full w-full uppercase items-center justify-center rounded-xl bg-[#0f1115] transition duration-300 ease-in-out group-hover:bg-white/5 group-hover:text-black">
+				<div className="flex h-full w-full items-center justify-center gap-2 rounded-xl bg-[#0f1115] uppercase transition duration-300 ease-in-out group-hover:bg-white/5 group-hover:text-black">
 					{t("google_button")}
 				</div>
 			)}

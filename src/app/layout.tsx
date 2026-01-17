@@ -50,7 +50,7 @@ export default async function RootLayout({
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-dvh text-foreground`}
+				className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-background text-foreground antialiased`}
 			>
 				<NextTopLoader
 					color="#22c55e"
