@@ -4,7 +4,6 @@ import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
 import { useSearchParams } from "next/navigation"
-import { useMemo } from "react"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
 import { CategoryHeader } from "../category-header/category-header"
@@ -45,7 +44,7 @@ export const CategoryView = ({
 	categoryId,
 	householdId,
 }: CategoryViewProps) => {
-	const dispatch = useAppDispatch()
+	const _dispatch = useAppDispatch()
 	const searchParams = useSearchParams()
 
 	const currentMonth =

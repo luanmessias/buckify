@@ -22,32 +22,35 @@ Object.defineProperty(window, "matchMedia", {
 
 vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => {
-		const flattenMessages = (obj: any, prefix = "") => {
-			return Object.keys(obj).reduce((acc: any, k: any) => {
-				const pre = prefix.length ? prefix + "." : ""
-				if (typeof obj[k] === "object" && obj[k] !== null) {
-					Object.assign(acc, flattenMessages(obj[k], pre + k))
-				} else {
-					acc[pre + k] = obj[k]
-				}
-				return acc
-			}, {})
+		const flattenMessages = (obj: Record<string, unknown>, prefix = "") => {
+			return Object.keys(obj).reduce(
+				(acc: Record<string, unknown>, k: string) => {
+					const pre = prefix.length ? `${prefix}.` : ""
+					if (
+						typeof obj[k] === "object" &&
+						obj[k] !== null &&
+						!Array.isArray(obj[k])
+					) {
+						Object.assign(
+							acc,
+							flattenMessages(obj[k] as Record<string, unknown>, pre + k),
+						)
+					} else {
+						acc[pre + k] = obj[k]
+					}
+					return acc
+				},
+				{},
+			)
 		}
-		const flat = flattenMessages(messages)
+		const _flat = flattenMessages(messages)
 
 		if (messages.Categories[key as keyof typeof messages.Categories]) {
 			return messages.Categories[key as keyof typeof messages.Categories]
 		}
-		if (messages.Category[key as keyof typeof messages.Category]) {
-			return messages.Category[key as keyof typeof messages.Category]
-		}
-		if (messages.Common[key as keyof typeof messages.Common]) {
-			return messages.Common[key as keyof typeof messages.Common]
-		}
 		if (messages.Components[key as keyof typeof messages.Components]) {
 			return messages.Components[key as keyof typeof messages.Components]
 		}
-
 		return key
 	},
 }))
