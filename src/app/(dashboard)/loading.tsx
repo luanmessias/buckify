@@ -3,7 +3,7 @@ import { SummarySkeleton } from "@/components/dashboard/summary/summary-skeleton
 
 export default function Loading() {
 	return (
-		<div className="space-y-4 animate-in fade-in duration-500">
+		<div className="animate-in fade-in duration-500">
 			<SummarySkeleton />
 
 			<div className="grid p-4 gap-4 md:grid-cols-2 lg:grid-cols-3">
