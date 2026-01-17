@@ -78,7 +78,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 
 					<Typography
 						variant="h2"
-						className="mb-2 text-muted-foreground tracking-wider uppercase text-xs"
+						className="mb-2 text-muted-foreground tracking-wider uppercase text-xs border-0"
 					>
 						{t("month_summary")}
 					</Typography>
@@ -148,7 +148,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 						</div>
 
 						<div className="flex-1 w-full space-y-6">
-							<div className="flex justify-between md:justify-end gap-10 border-b border-border/40 pb-6">
+							<div className="flex justify-between md:justify-end">
 								<div className="text-left">
 									<Typography
 										variant="muted"
@@ -181,11 +181,12 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 									</Typography>
 								</div>
 							</div>
-							<div className="space-y-3 hidden md:block">
+
+							<div className="space-y-3 gap-10 border-t border-border/40 pt-6 hidden md:block">
 								{chartData.slice(0, 3).map((cat) => (
 									<div
 										key={cat.id}
-										className="flex items-center justify-between text-sm group"
+										className="flex h-4 items-center justify-between text-sm group"
 									>
 										<div className="flex items-center gap-3">
 											<div
@@ -210,7 +211,6 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 										</Typography>
 									</div>
 								))}
-
 								{chartData.length > 3 && (
 									<Typography
 										variant="muted"
@@ -219,7 +219,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 										{t("hidden_categories", { count: chartData.length - 3 })}
 									</Typography>
 								)}
-							</div>{" "}
+							</div>
 						</div>
 					</div>
 				</div>

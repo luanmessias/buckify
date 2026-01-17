@@ -113,6 +113,7 @@ interface Resources {
       "expenses_categorized": "Expenses categorized successfully",
       "expenses_found": "{count} expenses found!",
       "file_too_large": "File too large (Max 4MB)",
+      "hidden_categories": "+{count} hidden categories",
       "import_title": "Import Statement with AI",
       "logout": "Logout",
       "month_summary": "Month Summary",
