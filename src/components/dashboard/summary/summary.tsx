@@ -181,46 +181,46 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 									</Typography>
 								</div>
 							</div>
+							<div className="space-y-3 hidden md:block">
+								{chartData.slice(0, 3).map((cat) => (
+									<div
+										key={cat.id}
+										className="flex items-center justify-between text-sm group"
+									>
+										<div className="flex items-center gap-3">
+											<div
+												className="w-2.5 h-2.5 rounded-full ring-2 ring-transparent transition-all group-hover:scale-110"
+												style={{
+													backgroundColor: cat.color,
+													boxShadow: `0 0 10px ${cat.color}40`,
+												}}
+											/>
+											<Typography
+												variant="muted"
+												className="group-hover:text-foreground transition-colors"
+											>
+												{cat.name}
+											</Typography>
+										</div>
+										<Typography
+											variant="p"
+											className="font-medium text-foreground tracking-wide"
+										>
+											{formatCurrency(cat.value)}
+										</Typography>
+									</div>
+								))}
 
-							                            <div className="space-y-3 hidden md:block">
-							                                {chartData.slice(0, 3).map((cat) => (
-							                                    <div
-							                                        key={cat.id}
-							                                        className="flex items-center justify-between text-sm group"
-							                                    >
-							                                        <div className="flex items-center gap-3">
-							                                            <div
-							                                                className="w-2.5 h-2.5 rounded-full ring-2 ring-transparent transition-all group-hover:scale-110"
-							                                                style={{
-							                                                    backgroundColor: cat.color,
-							                                                    boxShadow: `0 0 10px ${cat.color}40`,
-							                                                }}
-							                                            />
-							                                            <Typography
-							                                                variant="muted"
-							                                                className="group-hover:text-foreground transition-colors"
-							                                            >
-							                                                {cat.name}
-							                                            </Typography>
-							                                        </div>
-							                                        <Typography
-							                                            variant="p"
-							                                            className="font-medium text-foreground tracking-wide"
-							                                        >
-							                                            {formatCurrency(cat.value)}
-							                                        </Typography>
-							                                    </div>
-							                                ))}
-							
-							                                {chartData.length > 3 && (
-							                                    <Typography
-							                                        variant="muted"
-							                                        className="text-xs text-center pt-2 italic"
-							                                    >
-							                                        {t("hidden_categories", { count: chartData.length - 3 })}
-							                                    </Typography>
-							                                )}
-							                            </div>						</div>
+								{chartData.length > 3 && (
+									<Typography
+										variant="muted"
+										className="text-xs text-center pt-2 italic"
+									>
+										{t("hidden_categories", { count: chartData.length - 3 })}
+									</Typography>
+								)}
+							</div>{" "}
+						</div>
 					</div>
 				</div>
 
