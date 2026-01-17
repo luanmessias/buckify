@@ -10,13 +10,11 @@ export default async function NotFound() {
 	return (
 		<div className="flex min-h-dvh items-center justify-center p-4">
 			<div className="relative w-full max-w-md">
-				{/* Background Glow Effect */}
 				<div className="absolute -top-20 -left-20 h-64 w-64 animate-pulse rounded-full bg-primary/30 opacity-50 blur-3xl" />
 				<div className="absolute -right-20 -bottom-20 h-64 w-64 animate-pulse rounded-full bg-purple-500/30 opacity-50 blur-3xl delay-700" />
 
-				{/* Glassmorphism Card */}
 				<div className="relative z-10 overflow-hidden rounded-2xl border border-white/10 bg-card/40 p-8 text-center shadow-2xl backdrop-blur-xl">
-					<div className="pointer-events-none absolute top-0 right-0 h-32 w-32 rounded-bl-full bg-gradient-to-br from-white/10 to-transparent" />
+					<div className="pointer-events-none absolute top-0 right-0 h-32 w-32 rounded-bl-full bg-linear-to-br from-white/10 to-transparent" />
 
 					<div className="mb-6 flex justify-center">
 						<div className="relative">
@@ -27,7 +25,7 @@ export default async function NotFound() {
 
 					<Typography
 						variant="h1"
-						className="mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text font-bold text-6xl text-transparent"
+						className="mb-2 bg-linear-to-r from-primary to-primary/60 bg-clip-text font-bold text-6xl text-transparent"
 					>
 						404
 					</Typography>
