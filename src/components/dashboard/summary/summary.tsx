@@ -1,6 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
+import { useTheme } from "next-themes"
 import { useMemo } from "react"
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
@@ -69,10 +70,23 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 		}).format(value)
 
 	const hasData = totalSpent > 0
+	const { theme } = useTheme()
+
+	const lightModeClasses =
+		"bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 shadow-xl shadow-zinc-300/50"
+	const darkModeClasses =
+		"bg-gradient-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] shadow-2xl shadow-black/50"
+
+	const borderClasses = theme === "dark" ? darkModeClasses : lightModeClasses
 
 	return (
 		<section className="px-4">
-			<AnimatedWrapper className="relative overflow-hidden rounded-xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 p-px shadow-xl shadow-zinc-300/50">
+			<AnimatedWrapper
+				className={cn(
+					"relative overflow-hidden rounded-xl p-px",
+					borderClasses,
+				)}
+			>
 				<div className="relative z-10 h-full rounded-xl bg-card p-6 text-card-foreground">
 					<div className="pointer-events-none absolute top-0 right-0 h-70 w-70 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 
