@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
-import { cn } from "@/lib/utils" 
+import { cn } from "@/lib/utils"
 
 export default function NotFound() {
 	const t = useTranslations("NotFound")
