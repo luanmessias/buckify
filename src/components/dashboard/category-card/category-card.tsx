@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -19,7 +21,6 @@ export const CategoryCard = ({
 	name,
 	slug,
 	icon,
-	color,
 	amountSpent,
 	budget,
 }: CategoryCardProps) => {
@@ -32,10 +33,6 @@ export const CategoryCard = ({
 	const percentage = Math.min((amountSpent / budget) * 100, 100)
 	const remaining = budget - amountSpent
 	const isOverBudget = remaining < 0
-	const radiantGradient =
-		"linear-gradient(to left, #5D6F6E, #636E70, #A7B6A3, #81B8B3, #A0D199)"
-	const errorGradient =
-		"linear-gradient(to left, #450a0a, #7f1d1d, #b91c1c, #ef4444)"
 
 	const formatCurrency = (val: number) =>
 		new Intl.NumberFormat("pt-PT", {
@@ -43,54 +40,107 @@ export const CategoryCard = ({
 			currency: "EUR",
 		}).format(val)
 
+	const radius = 45
+	const strokeWidth = 5
+	const circumference = 2 * Math.PI * radius
+
+	const themeColorClass = isOverBudget ? "text-destructive" : "text-primary"
+	const iconBgClass = isOverBudget ? "bg-destructive/10" : "bg-primary/10"
+
 	return (
 		<Link href={`/category/${slug}${queryPrefix}${queryString}`}>
-			<div className="group relative flex cursor-pointer flex-col gap-3 overflow-hidden rounded-xl border border-border/50 bg-card/50 p-4 transition-colors hover:bg-card/80">
-				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-3">
-						<div className="rounded-lg p-0" style={{ color: color }}>
-							<Icon name={icon} className="h-6 w-6" />
-						</div>
-						<div>
-							<h3 className="font-semibold text-foreground text-sm">{name}</h3>
-							<Typography variant="muted" className="text-xs">
-								{formatCurrency(amountSpent)} {t("spent")} /{" "}
-								{formatCurrency(budget)} {t("available")}
-							</Typography>
-						</div>
+			<div className="group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border border-border/40 bg-card p-3 transition-all hover:border-border/80 hover:bg-card/80 hover:shadow-sm">
+				<div className="relative flex h-16 w-16 shrink-0 items-center justify-center">
+					<div
+						className={cn(
+							"z-10 flex h-10 w-10 items-center justify-center rounded-full transition-colors",
+							iconBgClass,
+							"text-foreground/80",
+						)}
+					>
+						<Icon name={icon} className="h-6 w-6" />
 					</div>
 
-					<Typography
-						as="span"
-						className={cn(
-							"font-bold text-sm",
-							isOverBudget ? "text-red-400" : "text-hades-300",
-						)}
+					<svg
+						className="absolute h-full w-full -rotate-90 transform p-0.5"
+						viewBox="0 0 100 100"
 					>
-						{percentage.toFixed(0)}%
+						<title>{`${name} - ${percentage.toFixed(0)}% spent`}</title>
+						<circle
+							cx="50"
+							cy="50"
+							r={radius}
+							fill="transparent"
+							stroke="currentColor"
+							strokeWidth={strokeWidth}
+							className="text-muted/20"
+						/>
+						<circle
+							cx="50"
+							cy="50"
+							r={radius}
+							fill="transparent"
+							stroke="currentColor"
+							strokeWidth={strokeWidth}
+							strokeLinecap="round"
+							strokeDasharray={circumference}
+							strokeDashoffset={
+								circumference - (percentage / 100) * circumference
+							}
+							className={cn(
+								"transition-all duration-1000 ease-out",
+								themeColorClass,
+							)}
+						/>
+					</svg>
+				</div>
+
+				<div className="flex flex-1 flex-col justify-center gap-1">
+					<div className="flex items-center justify-between">
+						<Typography
+							variant="h3"
+							className="font-bold text-[15px] leading-none"
+						>
+							{name}
+						</Typography>
+						<Typography
+							variant="small"
+							className={cn("font-extrabold text-sm", themeColorClass)}
+						>
+							{percentage.toFixed(0)}%
+						</Typography>
+					</div>
+
+					<Typography variant="p" className="font-medium text-xs">
+						<Typography
+							variant="small"
+							className="font-semibold text-foreground"
+						>
+							{formatCurrency(amountSpent)}
+						</Typography>{" "}
+						/ {formatCurrency(budget)}
 					</Typography>
-				</div>
 
-				<div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
-					<div
-						className="h-full rounded-full transition-all duration-500 ease-out"
-						style={{
-							width: `${percentage}%`,
-							background: isOverBudget ? errorGradient : radiantGradient,
-						}}
-					/>
-				</div>
-
-				<div className="mt-1 flex items-center justify-between text-xs">
-					<span className="text-muted-foreground">{t("remaining_label")}</span>
-					<span
-						className={cn(
-							"font-medium",
-							isOverBudget ? "text-red-400" : "text-hades-300",
-						)}
-					>
-						{formatCurrency(remaining)}
-					</span>
+					<div className="mt-1 flex items-center justify-between border-border/30 border-t pt-1.5">
+						<Typography
+							variant="small"
+							className="font-bold text-[10px] uppercase tracking-wider"
+						>
+							{t("remaining_label")}
+						</Typography>
+						<Typography
+							variant="small"
+							className={cn(
+								"font-bold font-mono text-sm",
+								remaining > 0
+									? "text-emerald-600 dark:text-emerald-500"
+									: "text-destructive",
+							)}
+						>
+							{remaining > 0 ? "+" : ""}
+							{formatCurrency(remaining)}
+						</Typography>
+					</div>
 				</div>
 			</div>
 		</Link>

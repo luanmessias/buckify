@@ -147,7 +147,7 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 	const maxDate = startOfMonth(addMonths(today, 1))
 
 	const nextYear = () => setMenuYear(menuYear + 1)
-	const _prevYear = () => setMenuYear(menuYear - 1)
+	const prevYear = () => setMenuYear(menuYear - 1)
 
 	const isMonthDisabled = (monthIndex: number) => {
 		const dateToCheck = startOfMonth(
@@ -167,6 +167,7 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 				<Button
 					variant="ghost"
 					size="icon"
+					onClick={prevYear}
 					className="h-8 w-8 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
 					aria-label={t("previous_year")}
 				>
