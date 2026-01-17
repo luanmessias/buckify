@@ -77,12 +77,12 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 				variant="outline"
 				className={cn(
 					"w-full justify-between text-left font-normal",
-					"border-zinc-800 bg-zinc-900 text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50",
+					"border-input bg-input text-input-foreground hover:bg-accent hover:text-accent-foreground",
 					"h-12 rounded-xl px-4 shadow-sm transition-colors",
 				)}
 			>
 				<div className="flex items-center gap-3">
-					<CalendarIcon className="h-4 w-4 text-zinc-400" />
+					<CalendarIcon className="h-4 w-4 text-muted-foreground" />
 					<span className="text-lg uppercase tracking-wider">
 						{format(currentDate, "MMMM yyyy", { locale: currentLocale })}
 					</span>
@@ -97,7 +97,7 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 			<Popover open={open} onOpenChange={setIsOpen}>
 				<PopoverTrigger asChild>{TriggerButton}</PopoverTrigger>
 				<PopoverContent
-					className="w-75 border-zinc-800 bg-zinc-950 p-0 text-zinc-100"
+					className="w-75 border bg-popover p-0 text-popover-foreground"
 					align="start"
 				>
 					<MonthGrid
@@ -113,9 +113,9 @@ export const MonthSelector = ({ className }: MonthSelectorProps) => {
 	return (
 		<Drawer open={open} onOpenChange={setIsOpen}>
 			<DrawerTrigger asChild>{TriggerButton}</DrawerTrigger>
-			<DrawerContent className="border-zinc-800 bg-zinc-950 text-zinc-100">
+			<DrawerContent className="border bg-background text-foreground">
 				<DrawerTitle className="sr-only">{t("select_month")}</DrawerTitle>
-				<div className="mt-4 border-zinc-800 border-t pt-4 pb-8">
+				<div className="mt-4 border-border border-t pt-4 pb-8">
 					<MonthGrid
 						currentDate={currentDate}
 						locale={currentLocale}
@@ -147,7 +147,7 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 	const maxDate = startOfMonth(addMonths(today, 1))
 
 	const nextYear = () => setMenuYear(menuYear + 1)
-	const prevYear = () => setMenuYear(menuYear - 1)
+	const _prevYear = () => setMenuYear(menuYear - 1)
 
 	const isMonthDisabled = (monthIndex: number) => {
 		const dateToCheck = startOfMonth(
@@ -167,8 +167,7 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 				<Button
 					variant="ghost"
 					size="icon"
-					onClick={prevYear}
-					className="h-8 w-8 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+					className="h-8 w-8 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
 					aria-label={t("previous_year")}
 				>
 					<ChevronLeft className="h-4 w-4" />
@@ -180,7 +179,7 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 					variant="ghost"
 					size="icon"
 					onClick={nextYear}
-					className="h-8 w-8 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+					className="h-8 w-8 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
 					aria-label={t("next_year")}
 				>
 					<ChevronRight className="h-4 w-4" />
@@ -210,7 +209,7 @@ function MonthGrid({ currentDate, locale, onSelect }: MonthGridProps) {
 							disabled={isDisabled}
 							className={cn(
 								"h-12 font-medium text-xs uppercase tracking-wider transition-all duration-200 sm:h-10",
-								"text-zinc-400 hover:bg-zinc-800 hover:text-white",
+								"text-muted-foreground hover:bg-accent hover:text-accent-foreground",
 								isSelected && [
 									"bg-[#4ADE80] text-black hover:bg-[#4ADE80] hover:text-black",
 									"shadow-[0_0_20px_-5px_#4ADE80]",

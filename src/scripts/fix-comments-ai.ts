@@ -42,7 +42,7 @@ async function cleanCodeWithAI(filePath: string, code: string) {
 }
 
 async function main() {
-	const files = globSync("src/**/*.{ts,tsx}", {
+	const files = globSync("src/**/*.{ts,tsx,css}", {
 		ignore: ["node_modules/**", "src/lib/ai/prompts/**"],
 	})
 
@@ -63,8 +63,12 @@ async function main() {
 
 			let cleanLine = line
 			try {
-				cleanLine = cleanLine.replace(/\/((?:\\.|[^\\/])+)\/[gimuy]*/g, "")
+				cleanLine = cleanLine.replace(
+					/\/(?![*/])((?:\\.|[^\\/])+)\/[gimuy]*/g,
+					"",
+				)
 			} catch (_e) {}
+
 			cleanLine = cleanLine.replace(/(["'`])(?:\\.|[^\\])*?\1/g, "")
 
 			if (invalidCommentRegex.test(cleanLine)) {

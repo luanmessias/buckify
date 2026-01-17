@@ -72,7 +72,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 
 	return (
 		<section className="px-4">
-			<AnimatedWrapper className="relative overflow-hidden rounded-xl bg-linear-to-br from-[#5D6F6E] via-[#636E70] to-[#A0D199] p-px shadow-2xl shadow-black/50">
+			<AnimatedWrapper className="relative overflow-hidden rounded-xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 p-px shadow-xl shadow-zinc-300/50">
 				<div className="relative z-10 h-full rounded-xl bg-card p-6 text-card-foreground">
 					<div className="pointer-events-none absolute top-0 right-0 h-70 w-70 rounded-bl-full bg-linear-to-br from-primary/10 to-transparent opacity-30" />
 

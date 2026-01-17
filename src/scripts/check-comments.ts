@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import { globSync } from "glob"
 
-const files = globSync("src/**/*.{ts,tsx}", {
+const files = globSync("src/**/*.{ts,tsx,css}", {
 	ignore: ["node_modules/**", "src/lib/ai/prompts/**"],
 })
 let hasError = false
@@ -23,7 +23,10 @@ files.forEach((file: string) => {
 		let cleanLine = line
 
 		try {
-			cleanLine = cleanLine.replace(/\/((?:\\.|[^\\/])+)\/[gimuy]*/g, "")
+			cleanLine = cleanLine.replace(
+				/\/(?![*/])((?:\\.|[^\\/])+)\/[gimuy]*/g,
+				"",
+			)
 		} catch (_e) {}
 
 		cleanLine = cleanLine.replace(/(["'`])(?:\\.|[^\\])*?\1/g, "")
