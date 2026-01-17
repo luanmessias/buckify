@@ -25,7 +25,7 @@
 		"*.{js,ts,jsx,tsx,json,css}": "biome check --write",
 		"*.{ts,tsx}": [
 			"bash -c 'pnpm exec tsc --noEmit'",
-			"bash -c 'pnpm test --run'"
+			"bash -c 'pnpm test'"
 		]
 	},
 	"dependencies": {

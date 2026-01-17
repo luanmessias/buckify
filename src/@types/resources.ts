@@ -1,139 +1,139 @@
 interface Resources {
-  "en": {
-    "Auth": {
-      "connecting": "Connecting...",
-      "connecting_description": "Creating your secure session.",
-      "dev_mode_button": "DEV MODE",
-      "error_description": "Unable to authenticate with Google. Please try again.",
-      "error_title": "Connection Error",
-      "google_button": "Sign in with Google",
-      "login_error": "Unable to start login.",
-      "login_subtitle": "Smart financial control",
-      "login_title": "Buckify",
-      "redirecting": "Redirecting...",
-      "retry": "Try",
-      "session_error": "Session failure",
-      "success_toast": "Login successful!"
-    },
-    "Categories": {
-      "add_category": "Add Category",
-      "budget": "Budget (€)",
-      "budget_min": "Budget must be greater than 0.",
-      "budget_placeholder": "0.00",
-      "category_created": "Category created successfully!",
-      "color": "Color",
-      "color_placeholder": "Ex: #FF0000 or red",
-      "create_category_description": "Create a new category to organize your expenses.",
-      "description": "Description",
-      "description_min_length": "Description must be at least 2 characters.",
-      "description_placeholder": "Ex: Monthly grocery shopping",
-      "icon": "Icon",
-      "icon_placeholder": "Ex: shopping-cart",
-      "name": "Name",
-      "name_min_length": "Name must be at least 2 characters.",
-      "name_placeholder": "Ex: Groceries",
-      "new_category": "New Category",
-      "saving": "Saving..."
-    },
-    "Category": {
-      "back": "Back",
-      "budget_hint_text": "Adjusting recalculates remaining balance",
-      "cancel": "Cancel",
-      "category_name": "Category Name",
-      "category_updated": "Category updated successfully",
-      "currency_symbol": "€",
-      "delete_category": "Delete Category",
-      "edit_category": "Edit Category",
-      "edit_category_description": "Make changes to your category here. Click save when you're done.",
-      "error_updating": "Error updating category",
-      "icon": "Icon",
-      "monthly_budget": "Monthly Budget",
-      "name_placeholder": "Ex: Supermarket",
-      "remaining": "Remaining",
-      "save_changes": "Save Changes",
-      "total_spent": "Spent",
-      "used_of_budget": "Used"
-    },
-    "Common": {
-      "close": "Close",
-      "firebase_admin_env_error": "Critical Error: Firebase Admin environment variables not found. Check your .env.local",
-      "loading": "Loading...",
-      "logo_title": "Buckify Logo",
-      "next_year": "Next Year",
-      "previous_year": "Previous Year",
-      "select_month": "Select Month"
-    },
-    "Components": {
-      "no_icons_found": "No icons found.",
-      "search_icon": "Search icon...",
-      "select_icon": "Select icon..."
-    },
-    "Navigation": {
-      "add_category": "New Category",
-      "add_expense": "New Expense",
-      "cards": "Cards",
-      "home": "Home",
-      "profile": "Profile",
-      "read_with_ai": "Read with AI",
-      "scan_statement": "Import Expenses",
-      "stats": "Stats"
-    },
-    "Transactions": {
-      "add_expense": "Add Expense",
-      "amount": "Amount (€)",
-      "amount_min": "The amount must be greater than 0.",
-      "amount_placeholder": "0.00",
-      "available": "avail.",
-      "back": "Back",
-      "budget": "Budget",
-      "cancel": "Cancel",
-      "categories": {
-        "casa": "Home",
-        "mercado": "Market",
-        "outros": "Others",
-        "restaurantes": "Restaurants & Leisure",
-        "saude": "Health & Care",
-        "transporte": "Transport"
-      },
-      "category": "Category",
-      "click_to_upload": "Click to upload",
-      "confirm_import": "Confirm Import",
-      "currency_symbol": "€",
-      "date": "Date",
-      "date_required": "The date is required.",
-      "description": "Description",
-      "description_min_length": "The description must have at least 2 characters.",
-      "duplicate_description": "This transaction might be a duplicate of an existing one.",
-      "error_parsing_statement": "Error parsing statement",
-      "error_saving": "Error saving: {message}",
-      "error_saving_transactions": "Error saving transactions",
-      "example_dinner": "Ex: Dinner out",
-      "expense_added": "Expense added successfully",
-      "expense_added_success": "Expense added successfully!",
-      "expenses_categorized": "Expenses categorized successfully",
-      "expenses_found": "{count} expenses found!",
-      "file_too_large": "File too large (Max 4MB)",
-      "hidden_categories": "+{count} hidden categories",
-      "import_title": "Import Statement with AI",
-      "logout": "Logout",
-      "month_summary": "Month Summary",
-      "new_expense": "New Expense",
-      "others": "Others",
-      "possible_duplicate": "Possible Duplicate",
-      "reading_transactions": "Reading transactions...",
-      "remaining": "Remaining",
-      "remaining_label": "Remaining:",
-      "saving": "Saving...",
-      "select": "Select",
-      "select_category": "Select a category.",
-      "send_image_pdf": "Click to upload PDF or Image (JPG, PNG)",
-      "session_error_reload": "Session error. Reload the page.",
-      "spent": "spent",
-      "supported_formats": "PDF or Image (JPG, PNG)",
-      "total_spent": "Total Spent",
-      "transactions_found": "{count} transactions found!"
-    }
-  }
+	en: {
+		Auth: {
+			connecting: "Connecting..."
+			connecting_description: "Creating your secure session."
+			dev_mode_button: "DEV MODE"
+			error_description: "Unable to authenticate with Google. Please try again."
+			error_title: "Connection Error"
+			google_button: "Sign in with Google"
+			login_error: "Unable to start login."
+			login_subtitle: "Smart financial control"
+			login_title: "Buckify"
+			redirecting: "Redirecting..."
+			retry: "Try"
+			session_error: "Session failure"
+			success_toast: "Login successful!"
+		}
+		Categories: {
+			add_category: "Add Category"
+			budget: "Budget (€)"
+			budget_min: "Budget must be greater than 0."
+			budget_placeholder: "0.00"
+			category_created: "Category created successfully!"
+			color: "Color"
+			color_placeholder: "Ex: #FF0000 or red"
+			create_category_description: "Create a new category to organize your expenses."
+			description: "Description"
+			description_min_length: "Description must be at least 2 characters."
+			description_placeholder: "Ex: Monthly grocery shopping"
+			icon: "Icon"
+			icon_placeholder: "Ex: shopping-cart"
+			name: "Name"
+			name_min_length: "Name must be at least 2 characters."
+			name_placeholder: "Ex: Groceries"
+			new_category: "New Category"
+			saving: "Saving..."
+		}
+		Category: {
+			back: "Back"
+			budget_hint_text: "Adjusting recalculates remaining balance"
+			cancel: "Cancel"
+			category_name: "Category Name"
+			category_updated: "Category updated successfully"
+			currency_symbol: "€"
+			delete_category: "Delete Category"
+			edit_category: "Edit Category"
+			edit_category_description: "Make changes to your category here. Click save when you're done."
+			error_updating: "Error updating category"
+			icon: "Icon"
+			monthly_budget: "Monthly Budget"
+			name_placeholder: "Ex: Supermarket"
+			remaining: "Remaining"
+			save_changes: "Save Changes"
+			total_spent: "Spent"
+			used_of_budget: "Used"
+		}
+		Common: {
+			close: "Close"
+			firebase_admin_env_error: "Critical Error: Firebase Admin environment variables not found. Check your .env.local"
+			loading: "Loading..."
+			logo_title: "Buckify Logo"
+			next_year: "Next Year"
+			previous_year: "Previous Year"
+			select_month: "Select Month"
+		}
+		Components: {
+			no_icons_found: "No icons found."
+			search_icon: "Search icon..."
+			select_icon: "Select icon..."
+		}
+		Navigation: {
+			add_category: "New Category"
+			add_expense: "New Expense"
+			cards: "Cards"
+			home: "Home"
+			profile: "Profile"
+			read_with_ai: "Read with AI"
+			scan_statement: "Import Expenses"
+			stats: "Stats"
+		}
+		Transactions: {
+			add_expense: "Add Expense"
+			amount: "Amount (€)"
+			amount_min: "The amount must be greater than 0."
+			amount_placeholder: "0.00"
+			available: "avail."
+			back: "Back"
+			budget: "Budget"
+			cancel: "Cancel"
+			categories: {
+				casa: "Home"
+				mercado: "Market"
+				outros: "Others"
+				restaurantes: "Restaurants & Leisure"
+				saude: "Health & Care"
+				transporte: "Transport"
+			}
+			category: "Category"
+			click_to_upload: "Click to upload"
+			confirm_import: "Confirm Import"
+			currency_symbol: "€"
+			date: "Date"
+			date_required: "The date is required."
+			description: "Description"
+			description_min_length: "The description must have at least 2 characters."
+			duplicate_description: "This transaction might be a duplicate of an existing one."
+			error_parsing_statement: "Error parsing statement"
+			error_saving: "Error saving: {message}"
+			error_saving_transactions: "Error saving transactions"
+			example_dinner: "Ex: Dinner out"
+			expense_added: "Expense added successfully"
+			expense_added_success: "Expense added successfully!"
+			expenses_categorized: "Expenses categorized successfully"
+			expenses_found: "{count} expenses found!"
+			file_too_large: "File too large (Max 4MB)"
+			hidden_categories: "+{count} hidden categories"
+			import_title: "Import Statement with AI"
+			logout: "Logout"
+			month_summary: "Month Summary"
+			new_expense: "New Expense"
+			others: "Others"
+			possible_duplicate: "Possible Duplicate"
+			reading_transactions: "Reading transactions..."
+			remaining: "Remaining"
+			remaining_label: "Remaining:"
+			saving: "Saving..."
+			select: "Select"
+			select_category: "Select a category."
+			send_image_pdf: "Click to upload PDF or Image (JPG, PNG)"
+			session_error_reload: "Session error. Reload the page."
+			spent: "spent"
+			supported_formats: "PDF or Image (JPG, PNG)"
+			total_spent: "Total Spent"
+			transactions_found: "{count} transactions found!"
+		}
+	}
 }
 
-export default Resources;
+export default Resources

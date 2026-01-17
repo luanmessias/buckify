@@ -1,2 +1,1 @@
-pnpm biome check --write . 
-pnpm check:all
+npx lint-staged
