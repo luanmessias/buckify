@@ -1,9 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react"
-import { describe, it, expect, vi } from "vitest"
-import { CategoryTransactionItem } from "./category-transaction-item"
+import { fireEvent, render, screen } from "@testing-library/react"
+import { describe, expect, it, vi } from "vitest"
 import type { Transaction } from "@/lib/types"
+import { CategoryTransactionItem } from "./category-transaction-item"
 
-// Mock translations
 vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
 }))
@@ -22,10 +21,6 @@ describe("CategoryTransactionItem", () => {
 
 		expect(screen.getByText("Test Transaction")).toBeInTheDocument()
 		expect(screen.getByText("27/10/2023")).toBeInTheDocument()
-		// We expect the currency formatted. Since we hardcoded pt-PT and EUR, it should look like '50,00 €' or similiar depending on node env.
-		// To be safe, we can just check if it contains "50,00" or similar, or mock Intl.NumberFormat.
-		// Let's just check if it renders *something* for amount.
-		// Actually, let's just check the description and date for now to avoid locale issues in test env.
 	})
 
 	it("should call onEdit when clicked", () => {
