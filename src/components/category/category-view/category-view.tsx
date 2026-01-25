@@ -36,7 +36,7 @@ const GET_CATEGORY_DATA = gql`
       budget
       color
       icon
-    }       
+    }
   }
 `
 
@@ -62,6 +62,7 @@ export const CategoryView = ({
 				householdId,
 				categoryId,
 			},
+			fetchPolicy: "cache-and-network",
 		},
 	)
 
@@ -72,7 +73,10 @@ export const CategoryView = ({
 				transactions={data.getTransactions}
 				category={data.getCategory}
 			/>
-			<CategoryTransactionList transactions={data.getTransactions} />
+			<CategoryTransactionList
+				transactions={data.getTransactions}
+				householdId={householdId}
+			/>
 		</div>
 	)
 }

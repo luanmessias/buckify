@@ -21,6 +21,11 @@ interface UpdateCategoryResponse {
 	}
 }
 
+interface CategoryHeaderProps {
+	category: Category
+	householdId: string
+}
+
 const UPDATE_CATEGORY = gql`
   mutation UpdateCategory($id: String!, $householdId: String!, $input: UpdateCategoryInput!) {
     updateCategory(id: $id, householdId: $householdId, input: $input) {
@@ -29,11 +34,6 @@ const UPDATE_CATEGORY = gql`
     }
   }
 `
-
-interface CategoryHeaderProps {
-	category: Category
-	householdId: string
-}
 
 export const CategoryHeader = ({
 	category,

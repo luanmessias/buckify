@@ -16,6 +16,7 @@ import {
 import { IconPicker } from "@/components/ui/icon-picker"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { MoneyInput } from "@/components/ui/money-input"
 import { Slider } from "@/components/ui/slider"
 import type { Category } from "@/lib/types"
 
@@ -76,6 +77,12 @@ export const UpdateCategoryDrawer = ({
 		})
 	}
 
+	const hasChanges = category
+		? name !== category.name ||
+			budget !== category.budget ||
+			icon !== (category.icon || "circle-dashed")
+		: false
+
 	return (
 		<Drawer open={isOpen} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90vh]">
@@ -123,11 +130,10 @@ export const UpdateCategoryDrawer = ({
 								<span className="text-muted-foreground text-sm">
 									{t("currency_symbol")}
 								</span>
-								<input
-									type="number"
+								<MoneyInput
 									value={budget}
-									onChange={(e) => setBudget(Number(e.target.value))}
-									className="w-16 bg-transparent text-right font-bold font-mono text-lg focus:outline-none"
+									onValueChange={setBudget}
+									className="w-16 text-lg"
 								/>
 							</div>
 						</div>
@@ -149,7 +155,7 @@ export const UpdateCategoryDrawer = ({
 
 					<Button
 						onClick={handleSave}
-						disabled={isSubmitting}
+						disabled={!hasChanges || isSubmitting}
 						className="h-11 w-full gap-2 font-semibold text-base shadow-lg shadow-primary/20"
 					>
 						<Save className="h-4 w-4" />
