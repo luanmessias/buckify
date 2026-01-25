@@ -33,7 +33,14 @@ interface Resources {
       "name_min_length": "Name must be at least 2 characters.",
       "name_placeholder": "Ex: Groceries",
       "new_category": "New Category",
-      "saving": "Saving..."
+      "saving": "Saving...",
+      "search_categories": "Search categories...",
+      "sort_budget_asc": "Budget (Low to High)",
+      "sort_budget_desc": "Budget (High to Low)",
+      "sort_name_asc": "Name (A-Z)",
+      "sort_name_desc": "Name (Z-A)",
+      "sort_spent_asc": "Spent (Low to High)",
+      "sort_spent_desc": "Spent (High to Low)"
     },
     "Category": {
       "back": "Back",

@@ -20,7 +20,7 @@ vi.mock("../category-card/category-card", () => ({
 	),
 }))
 
-const mockCategories = [
+const mockData = [
 	{
 		id: "cat1",
 		name: "Casa",
@@ -30,6 +30,7 @@ const mockCategories = [
 		icon: "Home",
 		description: "",
 		householdId: "",
+		value: 250,
 	},
 	{
 		id: "cat2",
@@ -40,109 +41,72 @@ const mockCategories = [
 		icon: "Party",
 		description: "",
 		householdId: "",
-	},
-]
-
-const mockTransactions = [
-	{
-		id: "t1",
-		amount: 200,
-		categoryId: "cat1",
-		description: "Aluguel",
-		date: "2024-05-01",
-		category: "Casa",
-	},
-	{
-		id: "t2",
-		amount: 50,
-		categoryId: "cat1",
-		description: "Luz",
-		date: "2024-05-02",
-		category: "Casa",
-	},
-	{
-		id: "t3",
-		amount: 100,
-		categoryId: "cat2",
-		description: "Cinema",
-		date: "2024-05-03",
-		category: "Lazer",
+		value: 100,
 	},
 ]
 
 describe("CategoryList Component", () => {
-	it("should render the category cards grid with aggregated values", () => {
+	it("should render the category cards grid with provided data", () => {
 		render(
 			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CategoryList
-					transactions={mockTransactions}
-					categories={mockCategories}
-				/>
+				<CategoryList data={mockData} />
 			</NextIntlClientProvider>,
 		)
 
 		expect(screen.getByTestId("card-Casa")).toHaveTextContent("Casa - 250")
-
 		expect(screen.getByTestId("card-Lazer")).toHaveTextContent("Lazer - 100")
 	})
 
 	it("should render categories with 0 spent", () => {
-		const transactionsWithUnusedCategory = [...mockTransactions]
-		const unusedCategory = {
-			id: "cat3",
-			name: "Unused",
-			slug: "unused",
-			budget: 100,
-			color: "#ccc",
-			icon: "Ghost",
-			description: "",
-			householdId: "",
-		}
-		const categories = [...mockCategories, unusedCategory]
+		const dataWithUnused = [
+			...mockData,
+			{
+				id: "cat3",
+				name: "Unused",
+				slug: "unused",
+				budget: 100,
+				color: "#ccc",
+				icon: "Ghost",
+				description: "",
+				householdId: "",
+				value: 0,
+			},
+		]
 
 		render(
 			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CategoryList
-					transactions={transactionsWithUnusedCategory}
-					categories={categories}
-				/>
+				<CategoryList data={dataWithUnused} />
 			</NextIntlClientProvider>,
 		)
 
 		expect(screen.getByTestId("card-Unused")).toBeInTheDocument()
 	})
 
-	it("should sort categories by spent amount (descending)", () => {
-		const modifiedTransactions = [
-			{
-				id: "t1",
-				amount: 100,
-				categoryId: "cat1",
-				description: "Aluguel",
-				date: "2024-05-01",
-				category: "Casa",
-			},
-			{
-				id: "t3",
-				amount: 500,
-				categoryId: "cat2",
-				description: "Cinema",
-				date: "2024-05-03",
-				category: "Lazer",
-			},
-		]
+	it("should render in the provided order", () => {
+		const sortedData = [...mockData].sort((a, b) => b.value - a.value)
 
 		render(
 			<NextIntlClientProvider locale="pt" messages={messages}>
-				<CategoryList
-					transactions={modifiedTransactions}
-					categories={mockCategories}
-				/>
+				<CategoryList data={sortedData} />
 			</NextIntlClientProvider>,
 		)
 
 		const cards = screen.getAllByTestId(/^card-/)
-		expect(cards[0]).toHaveTextContent("Lazer")
-		expect(cards[1]).toHaveTextContent("Casa")
+		expect(cards[0]).toHaveTextContent("Casa")
+		expect(cards[1]).toHaveTextContent("Lazer")
+
+		const invertedData = [...mockData].sort((a, b) => a.value - b.value)
+
+		render(
+			<NextIntlClientProvider locale="pt" messages={messages}>
+				<CategoryList data={invertedData} />
+			</NextIntlClientProvider>,
+		)
+
+		const _cardsInverted = screen.getAllByTestId(/^card-/)
+		
+		
+		
+		expect(cards[0]).toHaveTextContent("Casa")
 	})
 })

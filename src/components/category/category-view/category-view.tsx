@@ -3,15 +3,14 @@
 import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
+import { ArrowDownAZ, Calendar, DollarSign } from "lucide-react"
 import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { useMemo, useState } from "react"
+import type { SortDirection, SortOptionItem } from "@/components/ui/list-filter"
+import { ListFilter } from "@/components/ui/list-filter"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
-import type {
-	SortDirection,
-	SortOption,
-} from "../category-filter/category-filter"
-import { CategoryFilter } from "../category-filter/category-filter"
 import { CategoryHeader } from "../category-header/category-header"
 import { CategorySummary } from "../category-summary/category-summary"
 import { CategoryTransactionList } from "../category-transaction-list/category-transaction-list"
@@ -50,11 +49,12 @@ export const CategoryView = ({
 	categoryId,
 	householdId,
 }: CategoryViewProps) => {
+	const t = useTranslations("Category")
 	const _dispatch = useAppDispatch()
 	const searchParams = useSearchParams()
 
 	const [searchTerm, setSearchTerm] = useState("")
-	const [sortBy, setSortBy] = useState<SortOption>("date")
+	const [sortBy, setSortBy] = useState("date")
 	const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
 
 	const currentMonth =
@@ -75,6 +75,27 @@ export const CategoryView = ({
 			fetchPolicy: "cache-and-network",
 		},
 	)
+
+	const sortOptions: SortOptionItem[] = [
+		{
+			value: "date",
+			labelAsc: t("sort_date_asc"),
+			labelDesc: t("sort_date_desc"),
+			icon: <Calendar className="h-4 w-4 text-muted-foreground" />,
+		},
+		{
+			value: "amount",
+			labelAsc: t("sort_amount_asc"),
+			labelDesc: t("sort_amount_desc"),
+			icon: <DollarSign className="h-4 w-4 text-muted-foreground" />,
+		},
+		{
+			value: "description",
+			labelAsc: t("sort_description_asc"),
+			labelDesc: t("sort_description_desc"),
+			icon: <ArrowDownAZ className="h-4 w-4 text-muted-foreground" />,
+		},
+	]
 
 	const filteredTransactions = useMemo(() => {
 		let transactions = [...data.getTransactions]
@@ -111,13 +132,14 @@ export const CategoryView = ({
 				transactions={data.getTransactions}
 				category={data.getCategory}
 			/>
-			<CategoryFilter
+			<ListFilter
 				searchTerm={searchTerm}
 				onSearchChange={setSearchTerm}
 				sortBy={sortBy}
 				onSortChange={setSortBy}
 				sortDirection={sortDirection}
 				onSortDirectionChange={setSortDirection}
+				sortOptions={sortOptions}
 			/>
 			<CategoryTransactionList
 				transactions={filteredTransactions}

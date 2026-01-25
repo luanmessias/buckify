@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { CategoryFilter } from "./category-filter"
+import { ListFilter } from "./list-filter"
 
 vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
@@ -47,16 +47,22 @@ vi.mock("@/components/ui/select", () => ({
 	),
 }))
 
-describe("CategoryFilter", () => {
+describe("ListFilter", () => {
+	const sortOptions = [
+		{ value: "date", labelAsc: "Date Asc", labelDesc: "Date Desc" },
+		{ value: "amount", labelAsc: "Amount Asc", labelDesc: "Amount Desc" },
+	]
+
 	it("should render search input and sort select", () => {
 		render(
-			<CategoryFilter
+			<ListFilter
 				searchTerm=""
 				onSearchChange={vi.fn()}
 				sortBy="date"
 				onSortChange={vi.fn()}
 				sortDirection="desc"
 				onSortDirectionChange={vi.fn()}
+				sortOptions={sortOptions}
 			/>,
 		)
 
@@ -69,13 +75,14 @@ describe("CategoryFilter", () => {
 	it("should call onSearchChange when input changes", () => {
 		const onSearchChange = vi.fn()
 		render(
-			<CategoryFilter
+			<ListFilter
 				searchTerm=""
 				onSearchChange={onSearchChange}
 				sortBy="date"
 				onSortChange={vi.fn()}
 				sortDirection="desc"
 				onSortDirectionChange={vi.fn()}
+				sortOptions={sortOptions}
 			/>,
 		)
 
@@ -90,13 +97,14 @@ describe("CategoryFilter", () => {
 		const onSortDirectionChange = vi.fn()
 
 		render(
-			<CategoryFilter
+			<ListFilter
 				searchTerm=""
 				onSearchChange={vi.fn()}
 				sortBy="date"
 				onSortChange={onSortChange}
 				sortDirection="desc"
 				onSortDirectionChange={onSortDirectionChange}
+				sortOptions={sortOptions}
 			/>,
 		)
 

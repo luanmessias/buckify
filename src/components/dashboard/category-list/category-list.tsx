@@ -1,34 +1,16 @@
 "use client"
 
-import { useMemo } from "react"
 import { AnimatedWrapper } from "@/components/layout/animated-wrapper/animated-wrapper"
-import type { Category, Transaction } from "@/lib/types"
+import type { Category } from "@/lib/types"
 import { CategoryCard } from "../category-card/category-card"
 
+export type CategoryWithData = Category & { value: number }
+
 interface CategoryListProps {
-	transactions: Transaction[]
-	categories: Category[]
+	data: CategoryWithData[]
 }
 
-export const CategoryList = ({
-	transactions,
-	categories,
-}: CategoryListProps) => {
-	const data = useMemo(() => {
-		return categories
-			.map((category) => {
-				const amount = transactions
-					.filter((t) => t.categoryId === category.id)
-					.reduce((acc, t) => acc + t.amount, 0)
-
-				return {
-					...category,
-					value: amount,
-				}
-			})
-			.sort((a, b) => b.value - a.value)
-	}, [transactions, categories])
-
+export const CategoryList = ({ data }: CategoryListProps) => {
 	return (
 		<div className="grid grid-cols-1 gap-4 px-4 pb-8 md:grid-cols-2">
 			{data.map((category, index) => (
