@@ -4,8 +4,14 @@ import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/client/react"
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns"
 import { useSearchParams } from "next/navigation"
+import { useMemo, useState } from "react"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
+import type {
+	SortDirection,
+	SortOption,
+} from "../category-filter/category-filter"
+import { CategoryFilter } from "../category-filter/category-filter"
 import { CategoryHeader } from "../category-header/category-header"
 import { CategorySummary } from "../category-summary/category-summary"
 import { CategoryTransactionList } from "../category-transaction-list/category-transaction-list"
@@ -47,6 +53,10 @@ export const CategoryView = ({
 	const _dispatch = useAppDispatch()
 	const searchParams = useSearchParams()
 
+	const [searchTerm, setSearchTerm] = useState("")
+	const [sortBy, setSortBy] = useState<SortOption>("date")
+	const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
+
 	const currentMonth =
 		searchParams.get("month") || format(new Date(), "yyyy-MM")
 	const parsedDate = parseISO(currentMonth)
@@ -66,6 +76,34 @@ export const CategoryView = ({
 		},
 	)
 
+	const filteredTransactions = useMemo(() => {
+		let transactions = [...data.getTransactions]
+
+		if (searchTerm) {
+			transactions = transactions.filter((t) =>
+				t.description.toLowerCase().includes(searchTerm.toLowerCase()),
+			)
+		}
+
+		transactions.sort((a, b) => {
+			let comparison = 0
+			switch (sortBy) {
+				case "date":
+					comparison = new Date(a.date).getTime() - new Date(b.date).getTime()
+					break
+				case "amount":
+					comparison = a.amount - b.amount
+					break
+				case "description":
+					comparison = a.description.localeCompare(b.description)
+					break
+			}
+			return sortDirection === "asc" ? comparison : -comparison
+		})
+
+		return transactions
+	}, [data.getTransactions, searchTerm, sortBy, sortDirection])
+
 	return (
 		<div className="flex flex-col gap-4 p-4">
 			<CategoryHeader category={data.getCategory} householdId={householdId} />
@@ -73,8 +111,16 @@ export const CategoryView = ({
 				transactions={data.getTransactions}
 				category={data.getCategory}
 			/>
+			<CategoryFilter
+				searchTerm={searchTerm}
+				onSearchChange={setSearchTerm}
+				sortBy={sortBy}
+				onSortChange={setSortBy}
+				sortDirection={sortDirection}
+				onSortDirectionChange={setSortDirection}
+			/>
 			<CategoryTransactionList
-				transactions={data.getTransactions}
+				transactions={filteredTransactions}
 				householdId={householdId}
 			/>
 		</div>

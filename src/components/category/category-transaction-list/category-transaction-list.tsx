@@ -98,13 +98,9 @@ export const CategoryTransactionList = ({
 		}
 	}
 
-	const sortedTransactions = [...transactions].sort((a, b) => {
-		return new Date(b.date).getTime() - new Date(a.date).getTime()
-	})
-
 	return (
 		<div className="flex flex-col gap-2">
-			{sortedTransactions.map((transaction, index) => (
+			{transactions.map((transaction, index) => (
 				<AnimatedWrapper key={transaction.id} delay={index * 0.1}>
 					<CategoryTransactionItem
 						transaction={transaction}

@@ -37,7 +37,7 @@ describe("CategoryTransactionList", () => {
 		},
 	]
 
-	it("should render a list of transactions sorted by date descending", () => {
+	it("should render a list of transactions in the provided order", () => {
 		render(
 			<CategoryTransactionList
 				transactions={mockTransactions}
@@ -47,7 +47,7 @@ describe("CategoryTransactionList", () => {
 
 		const items = screen.getAllByText(/Transaction \d/)
 		expect(items).toHaveLength(2)
-		expect(items[0]).toHaveTextContent("Transaction 2")
-		expect(items[1]).toHaveTextContent("Transaction 1")
+		expect(items[0]).toHaveTextContent("Transaction 1")
+		expect(items[1]).toHaveTextContent("Transaction 2")
 	})
 })
