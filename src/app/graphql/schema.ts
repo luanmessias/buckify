@@ -96,12 +96,18 @@ export const typeDefs = `#graphql
     message: String
   }
 
+  type TransactionMutationResponse {
+    success: Boolean!
+    message: String
+    transaction: Transaction
+  }
+
   type Mutation {
     createManyTransactions(householdId: String!, transactions: [CreateTransactionInput!]!): MutationResponse
     createTransaction(householdId: String!, transaction: CreateTransactionInput!): MutationResponse
     createCategory(householdId: String!, category: CreateCategoryInput!): MutationResponse
     updateCategory(id: String!, householdId: String!, input: UpdateCategoryInput!): MutationResponse
-    updateTransaction(id: String!, householdId: String!, input: UpdateTransactionInput!): MutationResponse
+    updateTransaction(id: String!, householdId: String!, input: UpdateTransactionInput!): TransactionMutationResponse
   }
 
   type Query {

@@ -1,5 +1,4 @@
 import { format, parseISO } from "date-fns"
-import { useTranslations } from "next-intl"
 import { Typography } from "@/components/ui/typography"
 import type { Transaction } from "@/lib/types"
 
@@ -12,8 +11,6 @@ export const CategoryTransactionItem = ({
 	transaction,
 	onEdit,
 }: CategoryTransactionItemProps) => {
-	const _t = useTranslations("Category")
-
 	const formatCurrency = (val: number) =>
 		new Intl.NumberFormat("pt-PT", {
 			style: "currency",

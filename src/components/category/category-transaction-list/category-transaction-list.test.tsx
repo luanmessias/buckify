@@ -7,6 +7,18 @@ vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
 }))
 
+vi.mock("@apollo/client/react", () => ({
+	useMutation: vi.fn(() => [vi.fn(), { loading: false }]),
+	useSuspenseQuery: vi.fn(() => ({
+		data: {
+			getCategories: [
+				{ id: "cat1", name: "Category 1" },
+				{ id: "cat2", name: "Category 2" },
+			],
+		},
+	})),
+}))
+
 describe("CategoryTransactionList", () => {
 	const mockTransactions: Transaction[] = [
 		{
@@ -26,7 +38,12 @@ describe("CategoryTransactionList", () => {
 	]
 
 	it("should render a list of transactions sorted by date descending", () => {
-		render(<CategoryTransactionList transactions={mockTransactions} />)
+		render(
+			<CategoryTransactionList
+				transactions={mockTransactions}
+				householdId="test-household"
+			/>,
+		)
 
 		const items = screen.getAllByText(/Transaction \d/)
 		expect(items).toHaveLength(2)

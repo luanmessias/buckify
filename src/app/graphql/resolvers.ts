@@ -334,7 +334,13 @@ export const resolvers = {
 
 				await docRef.update(updateData)
 
-				return { success: true, message: "Transaction updated successfully" }
+				const updatedDoc = await docRef.get()
+
+				return {
+					success: true,
+					message: "Transaction updated successfully",
+					transaction: { id: updatedDoc.id, ...updatedDoc.data() },
+				}
 			} catch (error) {
 				console.error("Update transaction error:", error)
 				return { success: false, message: "Error updating transaction" }
