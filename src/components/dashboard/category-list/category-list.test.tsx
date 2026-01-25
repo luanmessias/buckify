@@ -104,9 +104,7 @@ describe("CategoryList Component", () => {
 		)
 
 		const _cardsInverted = screen.getAllByTestId(/^card-/)
-		
-		
-		
+
 		expect(cards[0]).toHaveTextContent("Casa")
 	})
 })
