@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form"
 import { IconPicker } from "@/components/ui/icon-picker"
 import { Input } from "@/components/ui/input"
+import { MoneyInput } from "@/components/ui/money-input"
 import { Slider } from "@/components/ui/slider"
 
 type CreateCategoryFormData = {
@@ -164,19 +165,11 @@ export const CreateCategoryDrawer = ({
 													{tCategory("currency_symbol")}
 												</span>
 												<FormControl>
-													<input
-														type="number"
-														className="w-16 bg-transparent text-right font-bold font-mono text-lg focus:outline-none"
+													<MoneyInput
+														className="w-16 text-lg"
 														placeholder={t("budget_placeholder")}
-														{...field}
-														value={(field.value as number) || 0}
-														onChange={(e) => {
-															const val =
-																e.target.value === ""
-																	? 0
-																	: Number(e.target.value)
-															field.onChange(val)
-														}}
+														value={Number(field.value) || 0}
+														onValueChange={field.onChange}
 													/>
 												</FormControl>
 											</div>

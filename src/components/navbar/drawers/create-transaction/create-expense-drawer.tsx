@@ -24,6 +24,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { MoneyInput } from "@/components/ui/money-input"
 import {
 	Select,
 	SelectContent,
@@ -31,6 +32,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
+import { Slider } from "@/components/ui/slider"
 import { useAppSelector } from "@/lib/hooks"
 
 type CreateExpenseFormData = {
@@ -104,54 +106,25 @@ export const CreateExpenseDrawer = ({
 				<div className="flex-1 overflow-hidden p-4">
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-							<FormField
-								control={form.control}
-								name="amount"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("amount")}</FormLabel>
-										<FormControl>
-											<div className="relative">
-												<span className="absolute top-4 left-3 font-bold text-muted-foreground">
-													{t("currency_symbol")}
-												</span>
-												<Input
-													type="number"
-													step="0.01"
-													placeholder={t("amount_placeholder")}
-													className="h-14 pl-8 font-bold text-2xl"
-													{...field}
-													value={(field.value as number) || ""}
-													onChange={(e) => {
-														const val =
-															e.target.value === ""
-																? undefined
-																: Number(e.target.value)
-														field.onChange(val)
-													}}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={form.control}
-								name="description"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("description")}</FormLabel>
-										<FormControl>
-											<Input placeholder={t("example_dinner")} {...field} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
 							<div className="grid grid-cols-2 gap-4">
+								<FormField
+									control={form.control}
+									name="description"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{t("description")}</FormLabel>
+											<FormControl>
+												<Input
+													placeholder={t("example_dinner")}
+													className="h-10 border-border/50 bg-muted/20 transition-all focus:bg-background"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
 								<FormField
 									control={form.control}
 									name="categoryId"
@@ -163,7 +136,7 @@ export const CreateExpenseDrawer = ({
 												value={field.value}
 											>
 												<FormControl>
-													<SelectTrigger>
+													<SelectTrigger className="h-10 border-border/50 bg-muted/20 transition-all focus:bg-background">
 														<SelectValue placeholder={t("select")} />
 													</SelectTrigger>
 												</FormControl>
@@ -179,28 +152,64 @@ export const CreateExpenseDrawer = ({
 										</FormItem>
 									)}
 								/>
-
-								<FormField
-									control={form.control}
-									name="date"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{t("date")}</FormLabel>
-											<FormControl>
-												<div className="relative">
-													<Input
-														className="block w-full [&::-webkit-calendar-picker-indicator]:opacity-0"
-														type="date"
-														{...field}
-													/>
-													<CalendarIcon className="pointer-events-none absolute top-2.5 right-3 h-4 w-4 opacity-50" />
-												</div>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
 							</div>
+
+							<FormField
+								control={form.control}
+								name="date"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("date")}</FormLabel>
+										<FormControl>
+											<div className="relative">
+												<Input
+													className="block h-10 w-full border-border/50 bg-muted/20 transition-all focus:bg-background [&::-webkit-calendar-picker-indicator]:opacity-0"
+													type="date"
+													{...field}
+												/>
+												<CalendarIcon className="pointer-events-none absolute top-3 right-3 h-4 w-4 opacity-50" />
+											</div>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="amount"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex items-end justify-between">
+											<FormLabel>{t("amount")}</FormLabel>
+
+											<div className="flex items-center gap-1 border-border/50 border-b transition-colors focus-within:border-primary">
+												<span className="text-muted-foreground text-sm">
+													{t("currency_symbol")}
+												</span>
+												<FormControl>
+													<MoneyInput
+														className="w-24 text-lg"
+														placeholder={t("amount_placeholder")}
+														value={Number(field.value) || 0}
+														onValueChange={field.onChange}
+													/>
+												</FormControl>
+											</div>
+										</div>
+
+										<Slider
+											defaultValue={[0]}
+											value={[Number(field.value) || 0]}
+											max={3000}
+											step={0.1}
+											onValueChange={(vals) => field.onChange(vals[0])}
+											className="py-4"
+										/>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
 							<Button
 								type="submit"
