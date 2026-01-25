@@ -67,4 +67,30 @@ describe("CategoryCard Component", () => {
 		expect(screen.getByText(/-200,00.*€/)).toBeInTheDocument()
 		expect(screen.getByText(/-200,00.*€/)).toHaveClass("text-destructive")
 	})
+
+	it("should handle zero budget correctly", () => {
+		const zeroBudgetProps = {
+			...defaultProps,
+			amountSpent: 0,
+			budget: 0,
+		}
+
+		render(
+			<NextIntlClientProvider locale="en" messages={messages}>
+				<CategoryCard {...zeroBudgetProps} />
+			</NextIntlClientProvider>,
+		)
+
+		expect(screen.getByText("0%")).toBeInTheDocument()
+
+		const remaining = screen.getByText((content, element) => {
+			return (
+				(content.includes("0,00") &&
+					element?.classList.contains("font-mono")) ||
+				false
+			)
+		})
+		expect(remaining).toBeInTheDocument()
+		expect(remaining).toHaveClass("text-emerald-600")
+	})
 })

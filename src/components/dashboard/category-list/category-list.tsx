@@ -26,7 +26,6 @@ export const CategoryList = ({
 					value: amount,
 				}
 			})
-			.filter((item) => item.value > 0)
 			.sort((a, b) => b.value - a.value)
 	}, [transactions, categories])
 

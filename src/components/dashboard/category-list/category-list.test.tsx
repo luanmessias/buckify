@@ -86,7 +86,7 @@ describe("CategoryList Component", () => {
 		expect(screen.getByTestId("card-Lazer")).toHaveTextContent("Lazer - 100")
 	})
 
-	it("should not render categories with 0 spent", () => {
+	it("should render categories with 0 spent", () => {
 		const transactionsWithUnusedCategory = [...mockTransactions]
 		const unusedCategory = {
 			id: "cat3",
@@ -109,7 +109,7 @@ describe("CategoryList Component", () => {
 			</NextIntlClientProvider>,
 		)
 
-		expect(screen.queryByTestId("card-Unused")).not.toBeInTheDocument()
+		expect(screen.getByTestId("card-Unused")).toBeInTheDocument()
 	})
 
 	it("should sort categories by spent amount (descending)", () => {

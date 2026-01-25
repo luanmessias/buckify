@@ -30,7 +30,8 @@ export const CategoryCard = ({
 	const queryString = searchParams.toString()
 	const queryPrefix = queryString ? "?" : ""
 
-	const percentage = Math.min((amountSpent / budget) * 100, 100)
+	const percentage =
+		budget === 0 ? 0 : Math.min((amountSpent / budget) * 100, 100)
 	const remaining = budget - amountSpent
 	const isOverBudget = remaining < 0
 
@@ -132,7 +133,7 @@ export const CategoryCard = ({
 							variant="small"
 							className={cn(
 								"font-bold font-mono text-sm",
-								remaining > 0
+								remaining >= 0
 									? "text-emerald-600 dark:text-emerald-500"
 									: "text-destructive",
 							)}
