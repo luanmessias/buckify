@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
+import { SearchX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -96,6 +97,17 @@ export const CategoryTransactionList = ({
 		} catch {
 			toast.error(t("error_updating"))
 		}
+	}
+
+	if (transactions.length === 0) {
+		return (
+			<div className="fade-in zoom-in-95 flex animate-in flex-col items-center justify-center gap-2 py-12 text-center text-muted-foreground duration-300">
+				<div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted/50">
+					<SearchX className="h-6 w-6" />
+				</div>
+				<p className="font-medium text-sm">{t("no_transactions_found")}</p>
+			</div>
+		)
 	}
 
 	return (

@@ -50,4 +50,15 @@ describe("CategoryTransactionList", () => {
 		expect(items[0]).toHaveTextContent("Transaction 1")
 		expect(items[1]).toHaveTextContent("Transaction 2")
 	})
+
+	it("should render 'no transactions found' when the list is empty", () => {
+		render(
+			<CategoryTransactionList
+				transactions={[]}
+				householdId="test-household"
+			/>,
+		)
+
+		expect(screen.getByText("no_transactions_found")).toBeInTheDocument()
+	})
 })
