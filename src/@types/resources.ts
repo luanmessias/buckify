@@ -50,6 +50,7 @@ interface Resources {
       "icon": "Icon",
       "monthly_budget": "Monthly Budget",
       "name_placeholder": "Ex: Supermarket",
+      "no_transactions_found": "No transactions found.",
       "remaining": "Remaining",
       "save_changes": "Save Changes",
       "search_transactions": "Search transactions...",
