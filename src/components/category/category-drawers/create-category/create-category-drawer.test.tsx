@@ -133,8 +133,11 @@ describe("CreateCategoryDrawer", () => {
 		const homeIcon = await screen.findByRole("button", { name: "home" })
 		await user.click(homeIcon)
 
+		await user.clear(nameInput)
 		await user.type(nameInput, "New Category")
+		await user.clear(descriptionInput)
 		await user.type(descriptionInput, "Category Description")
+		await user.clear(budgetInput)
 		await user.type(budgetInput, "500")
 
 		const form = document.querySelector("form")

@@ -97,7 +97,9 @@ describe("CreateExpenseDrawer", () => {
 			new Date().toISOString().split("T")[0],
 		)
 
+		await user.clear(amountInput)
 		await user.type(amountInput, "100")
+		await user.clear(descriptionInput)
 		await user.type(descriptionInput, "Test transaction")
 		fireEvent.change(dateInput, { target: { value: "2024-01-01" } })
 

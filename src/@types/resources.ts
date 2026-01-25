@@ -52,6 +52,7 @@ interface Resources {
       "remaining": "Remaining",
       "save_changes": "Save Changes",
       "total_spent": "Spent",
+      "transaction_updated": "Transaction updated successfully",
       "used_of_budget": "Used"
     },
     "Common": {
@@ -109,9 +110,14 @@ interface Resources {
       "description": "Description",
       "description_min_length": "The description must have at least 2 characters.",
       "duplicate_description": "This transaction might be a duplicate of an existing one.",
+      "edit_transaction": "Edit Transaction",
+      "edit_transaction_categories_select": "Category",
+      "edit_transaction_description": "Make changes to your transaction here. Click save when you're done.",
+      "edit_transaction_field_description": "Description",
       "error_parsing_statement": "Error parsing statement",
       "error_saving": "Error saving: {message}",
       "error_saving_transactions": "Error saving transactions",
+      "error_updating": "Error updating transaction",
       "example_dinner": "Ex: Dinner out",
       "expense_added": "Expense added successfully",
       "expense_added_success": "Expense added successfully!",
@@ -128,6 +134,7 @@ interface Resources {
       "reading_transactions": "Reading transactions...",
       "remaining": "Remaining",
       "remaining_label": "Remaining:",
+      "save_changes": "Save Changes",
       "saving": "Saving...",
       "select": "Select",
       "select_category": "Select a category.",
@@ -136,6 +143,7 @@ interface Resources {
       "spent": "spent",
       "supported_formats": "PDF or Image (JPG, PNG)",
       "total_spent": "Total Spent",
+      "transaction_updated": "Transaction updated successfully",
       "transactions_found": "{count} transactions found!"
     }
   }
