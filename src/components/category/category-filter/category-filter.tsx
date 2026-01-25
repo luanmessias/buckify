@@ -1,6 +1,6 @@
 "use client"
 
-import { Search } from "lucide-react"
+import { ArrowDownAZ, Calendar, DollarSign, Filter, Search } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Input } from "@/components/ui/input"
 import {
@@ -10,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
+import { Typography } from "@/components/ui/typography"
 
 export type SortOption = "date" | "amount" | "description"
 export type SortDirection = "asc" | "desc"
@@ -32,7 +33,6 @@ export const CategoryFilter = ({
 	onSortDirectionChange,
 }: CategoryFilterProps) => {
 	const t = useTranslations("Category")
-	const _tCommon = useTranslations("Common")
 
 	const handleSortChange = (value: string) => {
 		const [field, direction] = value.split("-") as [SortOption, SortDirection]
@@ -41,37 +41,71 @@ export const CategoryFilter = ({
 	}
 
 	return (
-		<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-			<div className="relative flex-1">
-				<Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
-				<Input
-					placeholder={t("search_transactions")}
-					value={searchTerm}
-					onChange={(e) => onSearchChange(e.target.value)}
-					className="pl-9"
-				/>
+		<div className="space-y-2">
+			<div className="flex items-center gap-2 px-1">
+				<Filter className="h-4 w-4 text-primary" />
+				<Typography variant="h4" className="font-semibold text-base md:text-lg">
+					{t("filter_title")}
+				</Typography>
 			</div>
-			<div className="w-full sm:w-[200px]">
-				<Select
-					value={`${sortBy}-${sortDirection}`}
-					onValueChange={handleSortChange}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder={t("sort_by")} />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="date-desc">{t("sort_date_desc")}</SelectItem>
-						<SelectItem value="date-asc">{t("sort_date_asc")}</SelectItem>
-						<SelectItem value="amount-desc">{t("sort_amount_desc")}</SelectItem>
-						<SelectItem value="amount-asc">{t("sort_amount_asc")}</SelectItem>
-						<SelectItem value="description-asc">
-							{t("sort_description_asc")}
-						</SelectItem>
-						<SelectItem value="description-desc">
-							{t("sort_description_desc")}
-						</SelectItem>
-					</SelectContent>
-				</Select>
+			<div className="flex gap-2">
+				<div className="relative flex-1">
+					<Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
+					<Input
+						placeholder={t("search_transactions")}
+						value={searchTerm}
+						onChange={(e) => onSearchChange(e.target.value)}
+						className="pl-9"
+					/>
+				</div>
+				<div className="w-[150px]">
+					<Select
+						value={`${sortBy}-${sortDirection}`}
+						onValueChange={handleSortChange}
+					>
+						<SelectTrigger>
+							<SelectValue placeholder={t("sort_by")} />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="date-desc">
+								<div className="flex items-center gap-2">
+									<Calendar className="h-4 w-4 text-muted-foreground" />
+									<span className="truncate">{t("sort_date_desc")}</span>
+								</div>
+							</SelectItem>
+							<SelectItem value="date-asc">
+								<div className="flex items-center gap-2">
+									<Calendar className="h-4 w-4 text-muted-foreground" />
+									<span className="truncate">{t("sort_date_asc")}</span>
+								</div>
+							</SelectItem>
+							<SelectItem value="amount-desc">
+								<div className="flex items-center gap-2">
+									<DollarSign className="h-4 w-4 text-muted-foreground" />
+									<span className="truncate">{t("sort_amount_desc")}</span>
+								</div>
+							</SelectItem>
+							<SelectItem value="amount-asc">
+								<div className="flex items-center gap-2">
+									<DollarSign className="h-4 w-4 text-muted-foreground" />
+									<span className="truncate">{t("sort_amount_asc")}</span>
+								</div>
+							</SelectItem>
+							<SelectItem value="description-asc">
+								<div className="flex items-center gap-2">
+									<ArrowDownAZ className="h-4 w-4 text-muted-foreground" />
+									<span className="truncate">{t("sort_description_asc")}</span>
+								</div>
+							</SelectItem>
+							<SelectItem value="description-desc">
+								<div className="flex items-center gap-2">
+									<ArrowDownAZ className="h-4 w-4 text-muted-foreground" />
+									<span className="truncate">{t("sort_description_desc")}</span>
+								</div>
+							</SelectItem>
+						</SelectContent>
+					</Select>
+				</div>
 			</div>
 		</div>
 	)
