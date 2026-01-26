@@ -1,0 +1,14 @@
+User Area (Aside Slider / Sheet):
+  ☐ Implement the Sheet Component (shadcn/ui sheet side="right") @ui @started(26-01-26 09:09)
+  ☐ Refactor Header: Move Logout & ThemeToggle to inside this menu @refactor
+  
+  Settings Form:
+    ☐ Fetch initial data (Current Family Name & Budget) @backend
+    ☐ Create the form layout (Inputs + Slider) @ui
+    ☐ Implement Zod Validation (min length, positive numbers)
+    ☐ Connect "Save Changes" to backend mutation @backend
+    ☐ Add Toast feedback on success
+
+  Danger Area (Delete Account):
+    ☐ Create the verification UI (Input: "DELETE")
+    ☐ Implement the deletion logic (Clean DB + Auth Signout) @critical

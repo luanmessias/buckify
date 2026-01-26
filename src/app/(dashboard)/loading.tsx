@@ -1,5 +1,5 @@
-import { CategoryCardSkeleton } from "@/components/dashboard/category-card/category-card-skeleton"
-import { SummarySkeleton } from "@/components/dashboard/summary/summary-skeleton"
+import { CategoryCardSkeleton } from "@/components/features/categories/components/category-card/category-card-skeleton"
+import { SummarySkeleton } from "@/components/features/dashboard/summary-cards/summary-skeleton"
 import { ListFilterSkeleton } from "@/components/ui/list-filter-skeleton"
 
 export default function Loading() {

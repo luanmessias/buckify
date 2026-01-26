@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { CategoryView } from "@/components/category/category-view/category-view"
+import { CategoryView } from "@/components/features/categories/components/category-view/category-view"
 import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
 
 import Loading from "./loading"

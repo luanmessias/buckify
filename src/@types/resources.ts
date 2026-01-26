@@ -162,6 +162,11 @@ interface Resources {
       "total_spent": "Total Spent",
       "transaction_updated": "Transaction updated successfully",
       "transactions_found": "{count} transactions found!"
+    },
+    "UserArea": {
+      "logout_description": "This action cannot be undone.",
+      "logout_title": "Are you absolutely sure?",
+      "open_button": "Open"
     }
   }
 }

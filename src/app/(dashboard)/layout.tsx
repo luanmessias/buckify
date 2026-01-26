@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { NavbarWrapper } from "@/components/layout/bottom-nav/bottom-nav"
 import { Header } from "@/components/layout/header/header"
-import { NavbarWrapper } from "@/components/navbar/navbar-wrapper/navbar-wrapper"
 
 export default function DashboardLayout({
 	children,

@@ -1,6 +1,6 @@
-import { CategoryHeaderSkeleton } from "@/components/category/category-header/category-header-skeleton"
-import { CategorySummarySkeleton } from "@/components/category/category-summary/category-summary-skeleton"
-import { CategoryTransactionListSkeleton } from "@/components/category/category-transaction-list/category-transaction-list-skeleton"
+import { CategoryHeaderSkeleton } from "@/components/features/categories/components/category-header/category-header-skeleton"
+import { CategorySummarySkeleton } from "@/components/features/categories/components/category-summary/category-summary-skeleton"
+import { CategoryTransactionListSkeleton } from "@/components/features/categories/components/category-transaction-list/category-transaction-list-skeleton"
 import { ListFilterSkeleton } from "@/components/ui/list-filter-skeleton"
 
 export default function Loading() {

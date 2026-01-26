@@ -1,0 +1,11 @@
+Inbox (Ideias & Brainstorm):
+  
+  Feature: Importação Inteligente (Bank Statement):
+    ☐ Checkbox "Show only new items": Filtrar transações já importadas (validar por Nome + Data + Valor) @import
+    ☐ Separar "Nome Original" vs "Descrição":
+        ☐ Criar campo `original_name` (imutável, vindo do banco)
+        ☐ Criar campo `description` (editável pelo usuário)
+        ☐ Na UI, mostrar a descrição, mas permitir ver o nome original (tooltip ou detalhes)
+    ☐ Auto-learning de Categorias:
+        ☐ Ao alterar categoria no import, perguntar: "Lembrar para o futuro?"
+        ☐ Criar tabela de regras: SE `original_name` CONTEM "Uber" ENTÃO category = "Transporte"

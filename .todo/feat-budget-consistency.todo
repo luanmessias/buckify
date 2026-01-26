@@ -1,0 +1,30 @@
+Budget Consistency Logic (Over-provisioning Check):
+  Analysis & Logic (The Brain):
+    ☐ Create a hook `useBudgetHealth` to centralize this logic @backend
+      ☐ Must return: `globalBudget`, `totalAllocatedCategories`, `remainingToAllocate`
+      ☐ Must return boolean: `isOverAllocated` (Allocated > Global)
+      ☐ Must return ratio: `allocationPercentage` (e.g., 110% used)
+
+  User Settings (Global Budget Slider):
+    ☐ Add "Real-time Check" on the budget slider change @ui
+    ☐ Show warning message if `newValue < totalAllocatedCategories`
+      ☐ Text: "Warning: Your category budgets sum (€ 2.500) exceeds this new limit."
+    ☐ Allow save, but keep the warning visible in the UI
+
+  Category Drawer (Edit/Create):
+    ☐ Show "Available to Allocate" context helper
+      ☐ Ex: "You have € 200 left to allocate" (or "-€ 50 over budget")
+    ☐ Add visual cue on the Slider input
+      ☐ If `value > remainingToAllocate`: Turn track red or show warning icon
+    ☐ Add a warning toast/alert upon saving if it causes over-allocation
+      ☐ "Category saved, but you are now € 50 over your global budget."
+
+  Dashboard / Home (The Persistent Warning):
+    ☐ Create `BudgetAlert` component @ui
+    ☐ Place it on the Dashboard (maybe below the Month Selector or near the main Chart)
+    ☐ Logic: Only render if `isOverAllocated === true`
+    ☐ Action: "Fix Now" button -> Opens User Settings or a Budget Review Modal
+
+  Edge Cases & Refinements:
+    ☐ Handle currency formatting in all warnings
+    ☐ Ensure 0 budget scenarios don't crash the logic (division by zero)

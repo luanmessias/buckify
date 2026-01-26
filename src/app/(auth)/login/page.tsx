@@ -5,14 +5,14 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
 import { devLogin } from "@/actions/dev-auth"
-import { RadiantButton } from "@/components/layout/radiant-button/radiant-button"
+import { Logo } from "@/components/common/logo/logo"
+import { RadiantButton } from "@/components/common/radiant-button/radiant-button"
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 } from "@/components/ui/card"
-import { Logo } from "@/components/ui/logo"
 import { isLocalhost } from "@/lib/auth-constants"
 import { auth, googleProvider } from "@/lib/firebase"
 

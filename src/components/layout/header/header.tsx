@@ -2,9 +2,9 @@
 
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
-import { LogoutButton } from "@/components/auth/logout-button/logout-button"
-import { ThemeToggle } from "@/components/layout/theme-toggle/theme-toggle"
-import { Logo } from "@/components/ui/logo"
+import { Logo } from "@/components/common/logo/logo"
+import { ThemeToggle } from "@/components/common/theme-toggle/theme-toggle"
+import { LogoutButton } from "@/components/features/auth/logout-button/logout-button"
 import { cn } from "@/lib/utils"
 
 export const Header = () => {
