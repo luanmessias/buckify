@@ -103,7 +103,7 @@ export const AddNavigation = () => {
 
 	const [createCategory, { loading: createCategoryLoading }] =
 		useMutation<CreateCategoryResult>(CREATE_CATEGORY, {
-			refetchQueries: ["GetCategories"],
+			refetchQueries: ["GetDashboardData", "GetCategories"],
 			awaitRefetchQueries: true,
 		})
 
