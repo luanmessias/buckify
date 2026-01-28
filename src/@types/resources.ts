@@ -82,6 +82,7 @@ interface Resources {
       "select_month": "Select Month"
     },
     "Components": {
+      "cancel": "Cancel",
       "no_icons_found": "No icons found.",
       "search_icon": "Search icon...",
       "select_icon": "Select icon..."
@@ -164,9 +165,39 @@ interface Resources {
       "transactions_found": "{count} transactions found!"
     },
     "UserArea": {
+      "header_title": "User Area",
       "logout_description": "This action cannot be undone.",
       "logout_title": "Are you absolutely sure?",
       "open_button": "Open"
+    },
+    "UserSettings": {
+      "budget_description": "Set your target monthly budget for spending limits.",
+      "budget_error_min": "Budget must be greater than 0",
+      "cancel_delete": "Cancel",
+      "danger_zone_description": "Irreversible actions regarding your account and data.",
+      "danger_zone_title": "Danger Zone",
+      "delete_account_button": "Delete Account",
+      "delete_button": "Delete Everything",
+      "delete_confirmation_label": "Type \"DELETE\" to confirm",
+      "delete_description": "This will permanently delete your household data, transactions, and account. This action cannot be undone.",
+      "delete_title": "Delete Household & Account",
+      "description": "Manage your household preferences and budget.",
+      "error_generic": "An error occurred while saving",
+      "error_toast": "Failed to update settings",
+      "family_name": "Family Name",
+      "family_name_description": "This is the name displayed for your household.",
+      "family_name_error_min": "Family name must be at least 2 characters",
+      "family_name_placeholder": "The Smiths",
+      "logout_label": "Logout",
+      "monthly_budget": "Monthly Budget",
+      "not_implemented": "This feature is not implemented yet",
+      "preferences_description": "Customize your experience.",
+      "preferences_title": "Preferences",
+      "save_changes": "Save Changes",
+      "saving": "Saving...",
+      "success_toast": "Settings updated successfully",
+      "theme_label": "Theme",
+      "title": "Family Settings"
     }
   }
 }
