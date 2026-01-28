@@ -7,10 +7,13 @@ import { ArrowDownAZ, DollarSign, Wallet } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useEffect, useMemo, useState } from "react"
+import type {
+	SortDirection,
+	SortOptionItem,
+} from "@/components/common/list-filter/list-filter"
+import { ListFilter } from "@/components/common/list-filter/list-filter"
 import { CategoryList } from "@/components/features/categories/components/category-list/category-list"
 import { Summary } from "@/components/features/dashboard/summary-cards/summary"
-import type { SortDirection, SortOptionItem } from "@/components/ui/list-filter"
-import { ListFilter } from "@/components/ui/list-filter"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"

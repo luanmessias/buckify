@@ -70,7 +70,7 @@ export const ListFilter = ({
 						placeholder={searchPlaceholder || t("search_transactions")}
 						value={searchTerm}
 						onChange={(e) => onSearchChange(e.target.value)}
-						className="pl-9"
+						className="h-10 pl-9"
 					/>
 				</div>
 				<div className="w-37.5">

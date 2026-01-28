@@ -7,8 +7,11 @@ import { ArrowDownAZ, Calendar, DollarSign } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useMemo, useState } from "react"
-import type { SortDirection, SortOptionItem } from "@/components/ui/list-filter"
-import { ListFilter } from "@/components/ui/list-filter"
+import type {
+	SortDirection,
+	SortOptionItem,
+} from "@/components/common/list-filter/list-filter"
+import { ListFilter } from "@/components/common/list-filter/list-filter"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
 import { CategoryHeader } from "../category-header/category-header"

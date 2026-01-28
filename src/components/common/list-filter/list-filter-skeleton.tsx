@@ -11,7 +11,7 @@ export const ListFilterSkeleton = () => {
 				<div className="relative flex-1">
 					<Skeleton className="h-10 w-full rounded-md" />
 				</div>
-				<div className="w-[150px]">
+				<div className="w-37.5">
 					<Skeleton className="h-10 w-full rounded-md" />
 				</div>
 			</div>
