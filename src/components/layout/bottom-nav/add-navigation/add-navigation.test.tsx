@@ -1,12 +1,19 @@
 import { useMutation } from "@apollo/client/react"
 import { fireEvent, render, screen } from "@testing-library/react"
+import { useParams } from "next/navigation"
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
-import { useAppSelector } from "@/lib/hooks"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks"
 import { AddNavigation } from "./add-navigation"
+
+vi.mock("next/navigation", () => ({
+	useParams: vi.fn(() => ({})),
+	useRouter: vi.fn(),
+}))
 
 vi.mock("@apollo/client/react", () => ({
 	ApolloProvider: ({ children }: { children: React.ReactNode }) => children,
 	useMutation: vi.fn(() => [vi.fn(), { loading: false }]),
+	useLazyQuery: vi.fn(() => [vi.fn(), { data: null }]),
 }))
 
 vi.mock("@/lib/utils", () => ({
@@ -45,12 +52,20 @@ vi.mock(
 		CreateExpenseDrawer: ({
 			isOpen,
 			onClose,
+			defaultCategoryId,
+			forceCategory,
 		}: {
 			isOpen: boolean
 			onClose: () => void
+			defaultCategoryId?: string
+			forceCategory?: boolean
 		}) =>
 			isOpen ? (
-				<div data-testid="create-expense-drawer">
+				<div
+					data-testid="create-expense-drawer"
+					data-default-category={defaultCategoryId}
+					data-force-category={forceCategory}
+				>
 					Create Expense Drawer{" "}
 					<button type="button" onClick={onClose}>
 						Close
@@ -62,6 +77,7 @@ vi.mock(
 
 vi.mock("@/lib/hooks", () => ({
 	useAppSelector: vi.fn(),
+	useAppDispatch: vi.fn(),
 }))
 
 vi.mock("@/actions/scan-statement", () => ({
@@ -84,7 +100,16 @@ vi.mock("@/actions/scan-statement", () => ({
 describe("AddNavigation Component", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
-		;(useAppSelector as unknown as Mock).mockReturnValue("test-household-id")
+		;(useAppSelector as unknown as Mock).mockImplementation((selector) => {
+			if (selector.toString().includes("household.id")) {
+				return "test-household-id"
+			}
+			if (selector.toString().includes("categories.items")) {
+				return []
+			}
+			return undefined
+		})
+		;(useAppDispatch as unknown as Mock).mockReturnValue(vi.fn())
 	})
 
 	it("should render the floating action button", () => {
@@ -157,5 +182,23 @@ describe("AddNavigation Component", () => {
 		})
 
 		expect(hasCorrectRefetch).toBe(true)
+	})
+
+	it("should pass categoryId and forceCategory to CreateExpenseDrawer when on category page", () => {
+		;(useParams as Mock).mockReturnValue({ id: "test-category-id" })
+
+		render(<AddNavigation />)
+
+		const fab = screen.getByRole("button", { name: "" })
+		fireEvent.click(fab)
+
+		const expenseButton = screen.getByText("add_expense").closest("button")
+		if (expenseButton) {
+			fireEvent.click(expenseButton)
+		}
+
+		const drawer = screen.getByTestId("create-expense-drawer")
+		expect(drawer).toHaveAttribute("data-default-category", "test-category-id")
+		expect(drawer).toHaveAttribute("data-force-category", "true")
 	})
 })

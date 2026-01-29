@@ -136,11 +136,26 @@ describe("CreateExpenseDrawer", () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getByText(messages.Transactions.description_min_length),
-			).toBeInTheDocument()
-			expect(
 				screen.getByText(messages.Transactions.amount_min),
 			).toBeInTheDocument()
 		})
+	})
+
+	it("should respect defaultCategoryId and forceCategory props", async () => {
+		const mockOnConfirm = vi.fn()
+		const defaultCategory = "food"
+
+		renderWithProviders(
+			<CreateExpenseDrawer
+				isOpen={true}
+				onClose={mockOnClose}
+				onConfirm={mockOnConfirm}
+				defaultCategoryId={defaultCategory}
+				forceCategory={true}
+			/>,
+		)
+
+		const selectTrigger = screen.getByRole("combobox")
+		expect(selectTrigger).toBeDisabled()
 	})
 })

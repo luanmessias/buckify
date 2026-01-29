@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon, Loader2, Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { MoneyInput } from "@/components/common/money-input/money-input"
@@ -47,6 +48,8 @@ interface CreateExpenseDrawerProps {
 	onClose: () => void
 	onConfirm: (transaction: CreateExpenseFormData) => Promise<void>
 	isSubmitting?: boolean
+	defaultCategoryId?: string
+	forceCategory?: boolean
 }
 
 const createFormSchema = (t: (key: string) => string) =>
@@ -62,6 +65,8 @@ export const CreateExpenseDrawer = ({
 	onClose,
 	onConfirm,
 	isSubmitting = false,
+	defaultCategoryId,
+	forceCategory = false,
 }: CreateExpenseDrawerProps) => {
 	const t = useTranslations("Transactions")
 	const tCommon = useTranslations("Common")
@@ -80,10 +85,16 @@ export const CreateExpenseDrawer = ({
 		defaultValues: {
 			description: "",
 			amount: 0,
-			categoryId: "casa",
+			categoryId: defaultCategoryId || "casa",
 			date: new Date().toISOString().split("T")[0],
 		},
 	})
+
+	useEffect(() => {
+		if (isOpen && defaultCategoryId) {
+			form.setValue("categoryId", defaultCategoryId)
+		}
+	}, [isOpen, defaultCategoryId, form])
 
 	async function onSubmit(values: CreateExpenseFormData) {
 		await onConfirm(values)
@@ -134,6 +145,7 @@ export const CreateExpenseDrawer = ({
 											<Select
 												onValueChange={field.onChange}
 												value={field.value}
+												disabled={forceCategory}
 											>
 												<FormControl>
 													<SelectTrigger className="h-10 border-border/50 bg-muted/20 transition-all focus:bg-background">

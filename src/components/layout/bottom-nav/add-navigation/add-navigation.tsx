@@ -1,18 +1,33 @@
 "use client"
 
 import { gql } from "@apollo/client"
-import { useMutation } from "@apollo/client/react"
+import { useLazyQuery, useMutation } from "@apollo/client/react"
 import { Plus, ScanText, Tag, Wallet } from "lucide-react"
+import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { CreateCategoryDrawer } from "@/components/features/categories/components/create-category-drawer/create-category-drawer"
 import { CreateExpenseDrawer } from "@/components/features/transactions/components/create-transaction-drawer/create-expense-drawer"
 import { ImportTransactionDrawer } from "@/components/features/transactions/components/import-transaction-drawer/import-transaction-drawer"
 import { ActionPill } from "@/components/layout/bottom-nav/action-pill/action-pill"
 import { Button } from "@/components/ui/button"
-import { useAppSelector } from "@/lib/hooks"
+import { setCategories } from "@/lib/features/categories/categories-slice"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks"
+import type { Category } from "@/lib/types"
 import { cn } from "@/lib/utils"
+
+const GET_CATEGORIES = gql`
+  query GetCategories($householdId: String!) {
+    getCategories(householdId: $householdId) {
+      id
+      name
+      budget
+      color
+      icon
+    }
+  }
+`
 
 const CREATE_TRANSACTION = gql`
   mutation CreateTransaction($householdId: String!, $transaction: CreateTransactionInput!) {
@@ -83,6 +98,10 @@ interface CreateCategoryResult {
 	createCategory: MutationResponse
 }
 
+interface GetCategoriesResult {
+	getCategories: Category[]
+}
+
 export const AddNavigation = () => {
 	const t = useTranslations("Transactions")
 	const tNav = useTranslations("Navigation")
@@ -90,10 +109,32 @@ export const AddNavigation = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [showImportDrawer, setShowImportDrawer] = useState(false)
 
+	const params = useParams()
+	const dispatch = useAppDispatch()
+	const categoryId = params?.id as string | undefined
+
 	const [showAddExpenseDrawer, setShowAddExpenseDrawer] = useState(false)
 	const [showAddCategoryDrawer, setShowAddCategoryDrawer] = useState(false)
 
 	const householdId = useAppSelector((state) => state.household.id)
+	const categories = useAppSelector((state) => state.categories.items)
+
+	const [fetchCategories, { data: categoriesData }] =
+		useLazyQuery<GetCategoriesResult>(GET_CATEGORIES)
+
+	useEffect(() => {
+		if (categories.length === 0 && householdId) {
+			fetchCategories({
+				variables: { householdId },
+			})
+		}
+	}, [categories.length, householdId, fetchCategories])
+
+	useEffect(() => {
+		if (categoriesData?.getCategories) {
+			dispatch(setCategories(categoriesData.getCategories))
+		}
+	}, [categoriesData, dispatch])
 
 	const [createTransaction, { loading: createLoading }] =
 		useMutation<CreateTransactionResult>(CREATE_TRANSACTION, {
@@ -308,6 +349,8 @@ export const AddNavigation = () => {
 				onClose={() => setShowAddExpenseDrawer(false)}
 				onConfirm={handleCreateExpenseConfirm}
 				isSubmitting={createLoading}
+				defaultCategoryId={categoryId}
+				forceCategory={!!categoryId}
 			/>
 
 			<CreateCategoryDrawer
