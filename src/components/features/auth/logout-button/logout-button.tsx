@@ -5,10 +5,17 @@ import { LogOut } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { logout } from "@/app/actions/auth"
-import { Button } from "@/components/ui/button"
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { auth } from "@/lib/firebase"
 
-export function LogoutButton() {
+interface LogoutButtonProps extends ButtonProps {}
+
+export function LogoutButton({
+	variant = "ghost",
+	size = "icon",
+	className,
+	...props
+}: LogoutButtonProps) {
 	const t = useTranslations("Transactions")
 
 	const router = useRouter()
@@ -24,10 +31,12 @@ export function LogoutButton() {
 
 	return (
 		<Button
-			variant="ghost"
-			size="icon"
+			variant={variant}
+			size={size}
 			onClick={handleLogout}
 			title={t("logout")}
+			className={className}
+			{...props}
 		>
 			<LogOut className="h-5 w-5" />
 		</Button>

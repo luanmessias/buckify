@@ -2,9 +2,17 @@
 
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { Button } from "@/ui/button"
+import { cn } from "@/lib/utils"
+import { Button, type ButtonProps } from "@/ui/button"
 
-export const ThemeToggle = () => {
+interface ThemeToggleProps extends ButtonProps {}
+
+export const ThemeToggle = ({
+	className,
+	variant = "ghost",
+	size = "icon",
+	...props
+}: ThemeToggleProps) => {
 	const { setTheme } = useTheme()
 
 	const toggleTheme = () => {
@@ -13,10 +21,15 @@ export const ThemeToggle = () => {
 
 	return (
 		<Button
-			variant="ghost"
-			size="icon"
+			variant={variant}
+			size={size}
 			onClick={toggleTheme}
-			className="relative h-9 w-9 cursor-pointer overflow-hidden rounded-full"
+			className={cn(
+				"relative cursor-pointer overflow-hidden",
+				size === "icon" && "h-9 w-9 rounded-full",
+				className,
+			)}
+			{...props}
 		>
 			<Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
 			<Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />

@@ -3,8 +3,7 @@
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { Logo } from "@/components/common/logo/logo"
-import { ThemeToggle } from "@/components/common/theme-toggle/theme-toggle"
-import { LogoutButton } from "@/components/features/auth/logout-button/logout-button"
+import { UserArea } from "@/components/features/auth/user-area/user-area"
 import { cn } from "@/lib/utils"
 
 export const Header = () => {
@@ -41,11 +40,8 @@ export const Header = () => {
 				"fixed top-0 right-0 left-0 z-50",
 				"h-16 w-full",
 				"flex items-center justify-between px-4 py-4",
-
 				"border-b bg-background/80 backdrop-blur-md",
-
 				"transition-transform duration-300 ease-in-out",
-
 				isVisible ? "translate-y-0" : "-translate-y-full",
 			)}
 		>
@@ -54,9 +50,7 @@ export const Header = () => {
 			</div>
 
 			<div className="flex items-center gap-2">
-				{" "}
-				<ThemeToggle />
-				<LogoutButton />
+				<UserArea />
 			</div>
 		</header>
 	)
