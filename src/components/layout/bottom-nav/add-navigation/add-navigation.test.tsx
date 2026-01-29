@@ -185,7 +185,18 @@ describe("AddNavigation Component", () => {
 	})
 
 	it("should pass categoryId and forceCategory to CreateExpenseDrawer when on category page", () => {
-		;(useParams as Mock).mockReturnValue({ id: "test-category-id" })
+		;(useParams as Mock).mockReturnValue({ id: "category-slug" })
+		;(useAppSelector as unknown as Mock).mockImplementation((selector) => {
+			if (selector.toString().includes("household.id")) {
+				return "test-household-id"
+			}
+			if (selector.toString().includes("categories.items")) {
+				return [
+					{ id: "category-uuid", slug: "category-slug", name: "Category" },
+				]
+			}
+			return undefined
+		})
 
 		render(<AddNavigation />)
 
@@ -198,7 +209,7 @@ describe("AddNavigation Component", () => {
 		}
 
 		const drawer = screen.getByTestId("create-expense-drawer")
-		expect(drawer).toHaveAttribute("data-default-category", "test-category-id")
+		expect(drawer).toHaveAttribute("data-default-category", "category-uuid")
 		expect(drawer).toHaveAttribute("data-force-category", "true")
 	})
 })

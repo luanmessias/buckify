@@ -5,7 +5,7 @@ import { useLazyQuery, useMutation } from "@apollo/client/react"
 import { Plus, ScanText, Tag, Wallet } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
 import { CreateCategoryDrawer } from "@/components/features/categories/components/create-category-drawer/create-category-drawer"
 import { CreateExpenseDrawer } from "@/components/features/transactions/components/create-transaction-drawer/create-expense-drawer"
@@ -111,13 +111,21 @@ export const AddNavigation = () => {
 
 	const params = useParams()
 	const dispatch = useAppDispatch()
-	const categoryId = params?.id as string | undefined
+	const categoryIdParam = params?.id as string | undefined
 
 	const [showAddExpenseDrawer, setShowAddExpenseDrawer] = useState(false)
 	const [showAddCategoryDrawer, setShowAddCategoryDrawer] = useState(false)
 
 	const householdId = useAppSelector((state) => state.household.id)
 	const categories = useAppSelector((state) => state.categories.items)
+
+	const activeCategoryId = useMemo(() => {
+		if (!categoryIdParam || categories.length === 0) return undefined
+		const category = categories.find(
+			(c) => c.id === categoryIdParam || c.slug === categoryIdParam,
+		)
+		return category?.id
+	}, [categories, categoryIdParam])
 
 	const [fetchCategories, { data: categoriesData }] =
 		useLazyQuery<GetCategoriesResult>(GET_CATEGORIES)
@@ -349,8 +357,8 @@ export const AddNavigation = () => {
 				onClose={() => setShowAddExpenseDrawer(false)}
 				onConfirm={handleCreateExpenseConfirm}
 				isSubmitting={createLoading}
-				defaultCategoryId={categoryId}
-				forceCategory={!!categoryId}
+				defaultCategoryId={activeCategoryId}
+				forceCategory={!!activeCategoryId}
 			/>
 
 			<CreateCategoryDrawer
