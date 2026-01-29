@@ -74,7 +74,7 @@ export const CategoryCard = ({
 							fill="transparent"
 							stroke="currentColor"
 							strokeWidth={strokeWidth}
-							className="text-muted/20"
+							className="text-muted-foreground/20"
 						/>
 						<circle
 							cx="50"
