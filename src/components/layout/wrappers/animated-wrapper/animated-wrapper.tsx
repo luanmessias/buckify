@@ -1,5 +1,5 @@
 import { type MotionProps, motion } from "framer-motion"
-import type { ElementType, ReactNode } from "react"
+import { type ElementType, type ReactNode, useMemo } from "react"
 
 interface AnimatedFadeInProps extends MotionProps {
 	children: ReactNode
@@ -17,7 +17,7 @@ export const AnimatedWrapper = ({
 	delay = 0,
 	...rest
 }: AnimatedFadeInProps) => {
-	const MotionComponent = motion.create(Tag)
+	const MotionComponent = useMemo(() => motion.create(Tag), [Tag])
 
 	const variants = {
 		hidden: {
