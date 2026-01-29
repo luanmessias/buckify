@@ -22,6 +22,7 @@ const GET_CATEGORIES = gql`
     getCategories(householdId: $householdId) {
       id
       name
+      slug
       budget
       color
       icon
