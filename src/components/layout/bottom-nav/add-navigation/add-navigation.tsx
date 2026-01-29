@@ -97,7 +97,7 @@ export const AddNavigation = () => {
 
 	const [createTransaction, { loading: createLoading }] =
 		useMutation<CreateTransactionResult>(CREATE_TRANSACTION, {
-			refetchQueries: ["GetDashboardData"],
+			refetchQueries: ["GetDashboardData", "GetCategoryData"],
 			awaitRefetchQueries: true,
 		})
 
@@ -109,7 +109,7 @@ export const AddNavigation = () => {
 
 	const [createManyTransactions, { loading: importLoading }] =
 		useMutation<CreateManyTransactionsResult>(CREATE_MANY_TRANSACTIONS, {
-			refetchQueries: ["GetDashboardData"],
+			refetchQueries: ["GetDashboardData", "GetCategoryData"],
 			awaitRefetchQueries: true,
 		})
 

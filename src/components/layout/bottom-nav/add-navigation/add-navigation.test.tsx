@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client/react"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { useAppSelector } from "@/lib/hooks"
@@ -140,5 +141,21 @@ describe("AddNavigation Component", () => {
 		fireEvent.click(screen.getByText("Close"))
 
 		expect(screen.queryByTestId("import-dialog")).not.toBeInTheDocument()
+	})
+
+	it("should configure useMutation with correct refetchQueries for transactions", () => {
+		render(<AddNavigation />)
+
+		const calls = (useMutation as Mock).mock.calls
+
+		const hasCorrectRefetch = calls.some((call) => {
+			const options = call[1]
+			return (
+				options?.refetchQueries?.includes("GetCategoryData") &&
+				options?.refetchQueries?.includes("GetDashboardData")
+			)
+		})
+
+		expect(hasCorrectRefetch).toBe(true)
 	})
 })
