@@ -14,6 +14,7 @@ import type {
 import { ListFilter } from "@/components/common/list-filter/list-filter"
 import { CategoryList } from "@/components/features/categories/components/category-list/category-list"
 import { Summary } from "@/components/features/dashboard/summary-cards/summary"
+import { AnimatedWrapper } from "@/components/layout/wrappers/animated-wrapper/animated-wrapper"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
@@ -152,17 +153,19 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 			/>
 
 			<div className="px-4">
-				<ListFilter
-					searchTerm={searchTerm}
-					onSearchChange={setSearchTerm}
-					sortBy={sortBy}
-					onSortChange={setSortBy}
-					sortDirection={sortDirection}
-					onSortDirectionChange={setSortDirection}
-					sortOptions={sortOptions}
-					searchPlaceholder={t("search_categories")}
-					title={tSort("filter_title")}
-				/>
+				<AnimatedWrapper>
+					<ListFilter
+						searchTerm={searchTerm}
+						onSearchChange={setSearchTerm}
+						sortBy={sortBy}
+						onSortChange={setSortBy}
+						sortDirection={sortDirection}
+						onSortDirectionChange={setSortDirection}
+						sortOptions={sortOptions}
+						searchPlaceholder={t("search_categories")}
+						title={tSort("filter_title")}
+					/>
+				</AnimatedWrapper>
 			</div>
 
 			<CategoryList data={filteredCategories} />

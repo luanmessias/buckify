@@ -88,7 +88,7 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 		<section className="px-4">
 			<AnimatedWrapper
 				className={cn(
-					"relative overflow-hidden rounded-xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 p-px shadow-xl shadow-zinc-300/50 dark:from-[#5D6F6E] dark:via-[#636E70] dark:to-[#A0D199] dark:shadow-2xl dark:shadow-black/50",
+					"relative overflow-hidden rounded-xl bg-linear-to-br from-zinc-200 via-zinc-100 to-zinc-50 p-px shadow-xl shadow-zinc-300/50 dark:from-[#5D6F6E] dark:via-[#636E70] dark:to-[#A0D199] dark:shadow-2xl dark:shadow-black/50",
 				)}
 			>
 				<div className="relative z-10 h-full rounded-xl bg-card p-6 text-card-foreground">
