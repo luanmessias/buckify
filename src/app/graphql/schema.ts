@@ -16,6 +16,16 @@ export const typeDefs = `#graphql
     createdBy: String
   }
 
+  type Household {
+    id: ID!
+    name: String!
+    ownerId: String!
+    members: [String]!
+    createdAt: Float!
+    budget: Float
+    currency: String
+  }
+
   type Category {
     id: String!
     budget: Float!
@@ -91,6 +101,12 @@ export const typeDefs = `#graphql
     categoryId: String
   }
 
+  input UpdateHouseholdInput {
+    name: String
+    budget: Float
+    currency: String
+  }
+
   type MutationResponse {
     success: Boolean!
     message: String
@@ -108,9 +124,12 @@ export const typeDefs = `#graphql
     createCategory(householdId: String!, category: CreateCategoryInput!): MutationResponse
     updateCategory(id: String!, householdId: String!, input: UpdateCategoryInput!): MutationResponse
     updateTransaction(id: String!, householdId: String!, input: UpdateTransactionInput!): TransactionMutationResponse
+    updateHousehold(id: ID!, input: UpdateHouseholdInput!): MutationResponse
+    deleteHousehold(id: ID!): MutationResponse
   }
 
   type Query {
+    household(id: ID!): Household
     getTransactions(startDate: String!, endDate: String!, householdId: String!, categoryId: String): [Transaction]
     getCategories(householdId: String!): [Category]
     getCategory(id: String!, householdId: String!): Category

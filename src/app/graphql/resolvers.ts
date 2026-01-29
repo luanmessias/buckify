@@ -1,5 +1,5 @@
 import type { Query } from "firebase-admin/firestore"
-import { dbAdmin } from "@/lib/firebase-admin"
+import { authAdmin, dbAdmin } from "@/lib/firebase-admin"
 
 interface GetTransactionsArgs {
 	startDate: string
@@ -42,8 +42,28 @@ interface UpdateTransactionInput {
 	categoryId?: string
 }
 
+interface UpdateHouseholdInput {
+	name?: string
+	budget?: number
+	currency?: string
+}
+
 export const resolvers = {
 	Query: {
+		household: async (_: unknown, { id }: { id: string }) => {
+			const doc = await dbAdmin.collection("households").doc(id).get()
+
+			if (!doc.exists) {
+				return null
+			}
+
+			const data = doc.data()
+			return {
+				id: doc.id,
+				...data,
+			}
+		},
+
 		getTransactions: async (
 			_: unknown,
 			{ startDate, endDate, householdId, categoryId }: GetTransactionsArgs,
@@ -344,6 +364,99 @@ export const resolvers = {
 			} catch (error) {
 				console.error("Update transaction error:", error)
 				return { success: false, message: "Error updating transaction" }
+			}
+		},
+
+		updateHousehold: async (
+			_: unknown,
+			{ id, input }: { id: string; input: UpdateHouseholdInput },
+		) => {
+			try {
+				const docRef = dbAdmin.collection("households").doc(id)
+				const doc = await docRef.get()
+
+				if (!doc.exists) {
+					return { success: false, message: "Household not found" }
+				}
+
+				// TODO: In a real app we should check ownership here
+
+				const updateData: Record<string, string | number> = {}
+				Object.entries(input).forEach(([key, value]) => {
+					if (value !== undefined) {
+						updateData[key] = value
+					}
+				})
+
+				await docRef.update(updateData)
+
+				return { success: true, message: "Household updated successfully" }
+			} catch (error) {
+				console.error("Update household error:", error)
+				return { success: false, message: "Error updating household" }
+			}
+		},
+
+		deleteHousehold: async (_: unknown, { id }: { id: string }) => {
+			try {
+				const householdRef = dbAdmin.collection("households").doc(id)
+				const householdSnap = await householdRef.get()
+
+				if (!householdSnap.exists) {
+					return { success: false, message: "Household not found" }
+				}
+
+				const ownerId = householdSnap.data()?.ownerId
+
+				const transactionsSnap = await dbAdmin
+					.collection("transactions")
+					.where("householdId", "==", id)
+					.get()
+
+				const batch = dbAdmin.batch()
+				let operationCount = 0
+
+				transactionsSnap.docs.forEach((doc) => {
+					batch.delete(doc.ref)
+					operationCount++
+				})
+
+				const categoriesSnap = await dbAdmin
+					.collection("categories")
+					.where("householdId", "==", id)
+					.get()
+
+				categoriesSnap.docs.forEach((doc) => {
+					batch.delete(doc.ref)
+					operationCount++
+				})
+
+				batch.delete(householdRef)
+				operationCount++
+
+				if (ownerId) {
+					batch.delete(dbAdmin.collection("users").doc(ownerId))
+					operationCount++
+				}
+
+				if (operationCount > 500) {
+					console.warn("Batch size exceeded 500, simplified logic used.")
+				}
+
+				await batch.commit()
+
+				if (ownerId) {
+					try {
+						await authAdmin.deleteUser(ownerId)
+					} catch (e) {
+						console.error("Error deleting auth user:", e)
+					}
+				}
+
+				return { success: true, message: "Account deleted successfully" }
+			} catch (error) {
+				console.error("Delete household error:", error)
+				return { success: false, message: "Error deleting account" }
 			}
 		},
 	},

@@ -20,3 +20,13 @@ export type Category = {
 export type ScannedTransaction = Omit<Transaction, "id"> & {
 	isPossibleDuplicate?: boolean
 }
+
+export type Household = {
+	id: string
+	name: string
+	ownerId: string
+	members: string[]
+	createdAt: number
+	budget?: number
+	currency?: string
+}

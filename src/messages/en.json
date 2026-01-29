@@ -170,6 +170,9 @@
     "open_button": "Open"
   },
   "UserSettings": {
+    "account_delete_error": "Failed to delete account",
+    "account_delete_generic_error": "An error occurred while deleting",
+    "account_deleted_success": "Account deleted successfully",
     "budget_description": "Set your target monthly budget for spending limits.",
     "budget_error_min": "Budget must be greater than 0",
     "cancel_delete": "Cancel",

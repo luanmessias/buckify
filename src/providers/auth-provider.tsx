@@ -6,13 +6,16 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
 import { createSession } from "@/app/actions/auth"
+import { setUser } from "@/lib/features/user/user-slice"
 import { auth } from "@/lib/firebase"
+import { useAppDispatch } from "@/lib/hooks"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const router = useRouter()
 	const t = useTranslations("Auth")
 	const sessionCreationInProgress = useRef(false)
 	const redirectChecked = useRef(false)
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		const handleLogin = async (user: User) => {
@@ -55,12 +58,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (user) {
+				dispatch(
+					setUser({
+						uid: user.uid,
+						email: user.email,
+						name: user.displayName,
+						photoURL: user.photoURL,
+					}),
+				)
+
 				await handleLogin(user)
+			} else {
+				dispatch(setUser(null))
 			}
 		})
 
 		return () => unsubscribe()
-	}, [router, t])
+	}, [router, t, dispatch])
 
 	return <>{children}</>
 }
