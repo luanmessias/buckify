@@ -12,6 +12,7 @@ import type {
 	SortOptionItem,
 } from "@/components/common/list-filter/list-filter"
 import { ListFilter } from "@/components/common/list-filter/list-filter"
+import { AnimatedWrapper } from "@/components/layout/wrappers/animated-wrapper/animated-wrapper"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
 import { CategoryHeader } from "../category-header/category-header"
@@ -135,15 +136,19 @@ export const CategoryView = ({
 				transactions={data.getTransactions}
 				category={data.getCategory}
 			/>
-			<ListFilter
-				searchTerm={searchTerm}
-				onSearchChange={setSearchTerm}
-				sortBy={sortBy}
-				onSortChange={setSortBy}
-				sortDirection={sortDirection}
-				onSortDirectionChange={setSortDirection}
-				sortOptions={sortOptions}
-			/>
+			<div className="px-4">
+				<AnimatedWrapper>
+					<ListFilter
+						searchTerm={searchTerm}
+						onSearchChange={setSearchTerm}
+						sortBy={sortBy}
+						onSortChange={setSortBy}
+						sortDirection={sortDirection}
+						onSortDirectionChange={setSortDirection}
+						sortOptions={sortOptions}
+					/>
+				</AnimatedWrapper>
+			</div>
 			<CategoryTransactionList
 				transactions={filteredTransactions}
 				householdId={householdId}

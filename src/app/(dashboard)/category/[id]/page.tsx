@@ -2,7 +2,6 @@ import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { CategoryView } from "@/components/features/categories/components/category-view/category-view"
-import { ApolloWrapper } from "@/components/providers/apollo-wrapper/apollo-wrapper"
 
 import Loading from "./loading"
 
@@ -26,10 +25,8 @@ export default async function CategoryPage({
 	const suspenseKey = `${id}-${month || "current"}`
 
 	return (
-		<ApolloWrapper>
-			<Suspense key={suspenseKey} fallback={<Loading />}>
-				<CategoryView categoryId={id} householdId={householdId} />
-			</Suspense>
-		</ApolloWrapper>
+		<Suspense key={suspenseKey} fallback={<Loading />}>
+			<CategoryView categoryId={id} householdId={householdId} />
+		</Suspense>
 	)
 }
