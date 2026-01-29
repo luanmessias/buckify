@@ -1,3 +1,6 @@
 Category List:
   ✔ add a neutral rounded bar color to keep the visual contrast @ui @done(26-01-28 21:40)
+
+User Area / User Form:
+  ✔ fix the user area scroll region, when the screen is no so hight the content is hidden with no possibilite of scroll. @done(26-01-29 10:00)
   
