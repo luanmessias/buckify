@@ -113,7 +113,7 @@ export const CategoryTransactionList = ({
 	return (
 		<div className="flex flex-col gap-2">
 			{transactions.map((transaction, index) => (
-				<AnimatedWrapper key={transaction.id} delay={index * 0.1}>
+				<AnimatedWrapper key={transaction.id} delay={index * 0.05}>
 					<CategoryTransactionItem
 						transaction={transaction}
 						onEdit={() => setSelectedTransaction(transaction)}

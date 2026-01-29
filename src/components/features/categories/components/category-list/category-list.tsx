@@ -14,7 +14,7 @@ export const CategoryList = ({ data }: CategoryListProps) => {
 	return (
 		<div className="grid grid-cols-1 gap-4 px-4 pb-8 md:grid-cols-2">
 			{data.map((category, index) => (
-				<AnimatedWrapper key={category.id} delay={index * 0.2}>
+				<AnimatedWrapper key={category.id} delay={index * 0.05}>
 					<CategoryCard
 						id={category.id}
 						name={category.name}

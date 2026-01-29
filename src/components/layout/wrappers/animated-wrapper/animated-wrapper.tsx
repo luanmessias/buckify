@@ -13,7 +13,7 @@ export const AnimatedWrapper = ({
 	children,
 	className = "",
 	as: Tag = "div",
-	duration = 0.5,
+	duration = 0.3,
 	delay = 0,
 	...rest
 }: AnimatedFadeInProps) => {
@@ -22,7 +22,7 @@ export const AnimatedWrapper = ({
 	const variants = {
 		hidden: {
 			opacity: 0,
-			filter: "blur(8px)",
+			filter: "blur(4px)",
 			y: 10,
 		},
 		visible: {
