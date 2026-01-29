@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, it, type Mock, vi } from "vitest"
 import { createSession } from "@/app/actions/auth"
 import messages from "@/messages/en.json"
 import { AuthProvider } from "@/providers/auth-provider"
+import StoreProvider from "@/providers/store-provider"
 import LoginPage from "./page"
 
 const { signInWithPopupMock, refreshMock, onAuthStateChangedMock } = vi.hoisted(
@@ -53,7 +54,9 @@ vi.mock("sonner", () => ({
 const renderWithProviders = (ui: React.ReactElement) => {
 	return render(
 		<NextIntlClientProvider locale="en" messages={messages}>
-			<AuthProvider>{ui}</AuthProvider>
+			<StoreProvider initialHouseholdId="mock-id">
+				<AuthProvider>{ui}</AuthProvider>
+			</StoreProvider>
 		</NextIntlClientProvider>,
 	)
 }
