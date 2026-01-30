@@ -39,4 +39,12 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 	},
 })
 
-export { handler as POST }
+export async function POST(req: NextRequest) {
+	const contentLength = req.headers.get("content-length")
+
+	if (!contentLength || Number(contentLength) === 0) {
+		return new Response("Bad Request: Empty Body", { status: 400 })
+	}
+
+	return handler(req)
+}
