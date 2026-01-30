@@ -39,4 +39,4 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 	},
 })
 
-export { handler as GET, handler as POST }
+export { handler as POST }
