@@ -20,7 +20,14 @@ export async function devLogin() {
 		throw new Error("Faltou o DEV_HOUSEHOLD_ID no .env")
 	}
 
-	const cookieStore = await cookies()
+	const cookieStore = cookies()
+
+	cookieStore.set("__session", "dev_session_bypassed", {
+		path: "/",
+		httpOnly: true,
+		sameSite: "lax",
+		secure: false,
+	})
 
 	cookieStore.set("householdId", householdId, {
 		path: "/",
@@ -29,9 +36,9 @@ export async function devLogin() {
 		secure: false,
 	})
 
-	cookieStore.set("__session", "dev_session_bypassed", {
+	cookieStore.set("buckify_dev_mode", "true", {
 		path: "/",
-		httpOnly: true,
+		httpOnly: false,
 		sameSite: "lax",
 		secure: false,
 	})
