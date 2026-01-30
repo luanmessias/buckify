@@ -34,6 +34,7 @@ export const UserArea = () => {
 			<SheetTrigger asChild>
 				<button
 					type="button"
+					data-testid="user-area-trigger-button"
 					className="rounded-full ring-offset-background transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 				>
 					<Avatar className="h-9 w-9 ring-2 ring-primary ring-offset-2 ring-offset-background">
@@ -71,7 +72,12 @@ export const UserArea = () => {
 				<ScrollArea className="-mr-6 flex-1 pr-6">
 					<div className="mt-6 mb-6 flex items-center gap-3">
 						<ThemeToggle variant="outline" size="default" className="flex-1" />
-						<LogoutButton variant="outline" size="default" className="flex-1" />
+						<LogoutButton
+							data-testid="user-area-logout-button"
+							variant="outline"
+							size="default"
+							className="flex-1"
+						/>
 					</div>
 
 					<div className="pb-6">

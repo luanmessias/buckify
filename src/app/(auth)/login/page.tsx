@@ -69,6 +69,7 @@ export default function LoginPage() {
 					<form action={devLogin} className="mt-4">
 						<button
 							type="submit"
+							data-testid="dev-mode-login-button"
 							className="w-full rounded-lg border border-emerald-500/50 bg-emerald-500/20 p-3 font-bold text-emerald-500 text-sm transition-all hover:bg-emerald-500/30"
 						>
 							{t("dev_mode_button")}
