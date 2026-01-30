@@ -1,0 +1,15 @@
+Security Refactor: Dev & Test Authentication Strategy:
+  ✔ Update Auth Constants @refactor @done(26-01-30 10:00)
+    ✔ Create `isTestEnvironment` helper in `src/lib/auth-constants.ts` (Check `process.env.CI` or `PLAYWRIGHT_TEST`) @done(26-01-30 10:00)
+    ✔ Ensure `isProduction` is strictly checking `NODE_ENV === 'production'` @done(26-01-30 10:00)
+
+  Secure Server Action (Backend) @critical @security
+    ✔ Refactor `src/actions/dev-auth.ts` @done(26-01-30 10:00)
+    ✔ Remove dependency on `NEXT_PUBLIC_DEV_MODE` public flag @done(26-01-30 10:00)
+    ✔ Implement Guard Clause: Throw error if `isProduction() && !isTestEnvironment()` @done(26-01-30 10:00)
+    ✔ Verify that `__session` cookie is still set to `dev_session_bypassed` for Middleware compatibility @done(26-01-30 10:00)
+
+  Update UI (Frontend) @ui
+    ✔ Refactor `src/app/(auth)/login/page.tsx` @done(26-01-30 10:00)
+    ✔ Replace `isDevMode` logic to use environment checks (hide button in Prod unless in Test context) @done(26-01-30 10:00)
+    ✔ Ensure the form calls the updated secure action @done(26-01-30 10:00)

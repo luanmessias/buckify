@@ -6,3 +6,6 @@ export const isLocalhost = () =>
 		window.location.hostname === "127.0.0.1")
 
 export const isProduction = () => process.env.NODE_ENV === "production"
+
+export const isTestEnvironment = () =>
+	process.env.NEXT_PUBLIC_PLAYWRIGHT_TEST === "true"

@@ -2,9 +2,17 @@
 
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { isProduction, isTestEnvironment } from "@/lib/auth-constants"
 
 export async function devLogin() {
-	if (process.env.NEXT_PUBLIC_DEV_MODE !== "true") return
+	if (isProduction() && !isTestEnvironment()) {
+		const error = new Error("Dev login not allowed in production")
+		console.error(
+			"Security violation: Attempted dev login in production",
+			error,
+		)
+		throw error
+	}
 
 	const householdId = process.env.DEV_HOUSEHOLD_ID
 

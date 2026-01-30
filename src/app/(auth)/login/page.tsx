@@ -13,7 +13,11 @@ import {
 	CardDescription,
 	CardHeader,
 } from "@/components/ui/card"
-import { isLocalhost } from "@/lib/auth-constants"
+import {
+	isLocalhost,
+	isProduction,
+	isTestEnvironment,
+} from "@/lib/auth-constants"
 import { auth, googleProvider } from "@/lib/firebase"
 
 export default function LoginPage() {
@@ -21,7 +25,7 @@ export default function LoginPage() {
 	const t = useTranslations("Auth")
 	const tCommon = useTranslations("Common")
 
-	const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === "true"
+	const isDevMode = !isProduction() || isTestEnvironment()
 
 	const handleGoogleLogin = () => {
 		setIsLoading(true)
