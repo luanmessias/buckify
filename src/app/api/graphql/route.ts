@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server"
 import { startServerAndCreateNextHandler } from "@as-integrations/next"
-import type { NextRequest } from "next/server"
+import { NextRequest } from "next/server"
 import { resolvers } from "@/app/graphql/resolvers"
 import { typeDefs } from "@/app/graphql/schema"
 import { authAdmin } from "@/lib/firebase-admin"
@@ -10,7 +10,7 @@ const server = new ApolloServer({
 	resolvers,
 })
 
-const handler = startServerAndCreateNextHandler<NextRequest>(server, {
+const apolloHandler = startServerAndCreateNextHandler<NextRequest>(server, {
 	context: async (req) => {
 		const token = req.cookies.get("__session")?.value
 
@@ -32,20 +32,27 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 				return { req, user }
 			} catch (_error) {}
 		}
-
 		return { req }
 	},
 })
 
 export async function POST(req: NextRequest) {
 	try {
-		return await handler(req)
-	} catch (error: unknown) {
-		if (error instanceof SyntaxError && error.message.includes("JSON")) {
-			console.warn("⚠️ [GraphQL] Requisição com JSON inválido bloqueada.")
-			return new Response("Bad Request: Invalid JSON Body", { status: 400 })
+		const bodyText = await req.text()
+
+		if (!bodyText || bodyText.trim().length === 0) {
+			return new Response("Bad Request: Empty Body", { status: 400 })
 		}
 
-		throw error
+		const newReq = new NextRequest(req, {
+			body: bodyText,
+			headers: req.headers,
+			method: req.method,
+		})
+
+		return await apolloHandler(newReq)
+	} catch (error: unknown) {
+		console.error("Erro na rota GraphQL:", error)
+		return new Response("Internal Server Error", { status: 500 })
 	}
 }

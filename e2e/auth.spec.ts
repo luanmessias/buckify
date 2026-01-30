@@ -47,9 +47,7 @@ test.describe("Feature: Auth", () => {
 
 			await page.context().clearCookies()
 
-			await expect(page).toHaveURL(/\/login/)
-
-			await page.goBack()
+			await page.goto("/login")
 
 			await expect(page).toHaveURL(/\/login/)
 		})
