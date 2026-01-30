@@ -26,13 +26,13 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 			}
 		}
 
-		try {
-			if (token) {
+		if (token) {
+			try {
 				const user = await authAdmin.verifyIdToken(token)
 				return { req, user }
+			} catch (error) {
+				console.error("Erro de Auth no GraphQL:", error)
 			}
-		} catch (error) {
-			console.error("Erro de Auth no GraphQL:", error)
 		}
 
 		return { req }
