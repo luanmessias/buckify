@@ -18,7 +18,17 @@ if (!projectId || !clientEmail || !privateKey) {
 }
 
 const formatPrivateKey = (key: string) => {
-	return key.replace(/\\n/g, "\n")
+	try {
+		const decoded = Buffer.from(key, "base64").toString("utf-8")
+
+		if (decoded.includes("-----BEGIN PRIVATE KEY-----")) {
+			return decoded.replace(/\\n/g, "\n")
+		}
+
+		return key.replace(/\\n/g, "\n")
+	} catch {
+		return key.replace(/\\n/g, "\n")
+	}
 }
 
 export const createFirebaseAdminApp = (config: FirebaseAdminConfig) => {
