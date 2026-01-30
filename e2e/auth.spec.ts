@@ -45,6 +45,8 @@ test.describe("Feature: Auth", () => {
 			const logoutButton = page.getByTestId("user-area-logout-button")
 			await logoutButton.click()
 
+			await page.context().clearCookies()
+
 			await expect(page).toHaveURL(/\/login/)
 
 			await page.goBack()

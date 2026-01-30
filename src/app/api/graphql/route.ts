@@ -30,9 +30,7 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 			try {
 				const user = await authAdmin.verifyIdToken(token)
 				return { req, user }
-			} catch (error) {
-				console.error("Erro de Auth no GraphQL:", error)
-			}
+			} catch (_error) {}
 		}
 
 		return { req }
@@ -40,11 +38,14 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 })
 
 export async function POST(req: NextRequest) {
-	const contentLength = req.headers.get("content-length")
+	try {
+		return await handler(req)
+	} catch (error: unknown) {
+		if (error instanceof SyntaxError && error.message.includes("JSON")) {
+			console.warn("⚠️ [GraphQL] Requisição com JSON inválido bloqueada.")
+			return new Response("Bad Request: Invalid JSON Body", { status: 400 })
+		}
 
-	if (!contentLength || Number(contentLength) === 0) {
-		return new Response("Bad Request: Empty Body", { status: 400 })
+		throw error
 	}
-
-	return handler(req)
 }
