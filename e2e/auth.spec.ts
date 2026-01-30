@@ -15,8 +15,8 @@ test.describe("Feature: Auth", () => {
 
 			await expect(page).toHaveURL("/")
 
-			const dashboardText = page.getByText(t("Transactions.month_summary"))
-			await expect(dashboardText).toBeVisible()
+			const userAvatarButton = page.getByTestId("user-area-trigger-button")
+			await expect(userAvatarButton).toBeVisible()
 		})
 
 		test("should keep the active session after reload the page", async ({
@@ -29,8 +29,8 @@ test.describe("Feature: Auth", () => {
 			await page.reload()
 			await page.waitForURL("/")
 
-			const dashboardText = page.getByText(t("Transactions.total_spent"))
-			await expect(dashboardText).toBeVisible()
+			const userAvatarButton = page.getByTestId("user-area-trigger-button")
+			await expect(userAvatarButton).toBeVisible()
 		})
 
 		test("it should logout from side menu button", async ({ page }) => {
