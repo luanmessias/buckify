@@ -58,6 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (user) {
+				await handleLogin(user)
 				dispatch(
 					setUser({
 						uid: user.uid,
@@ -66,15 +67,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 						photoURL: user.photoURL,
 					}),
 				)
-
-				await handleLogin(user)
 			} else {
-				dispatch(setUser(null))
+				const isDevMode =
+					typeof document !== "undefined" &&
+					document.cookie.includes("dev_session_bypassed")
+
+				if (isDevMode) {
+					console.log(
+						"🟢 [AuthProvider] Mantendo sessão fake de Dev Mode no Client",
+					)
+					dispatch(
+						setUser({
+							uid: "dev-user-id",
+							email: "dev@buckify.com",
+							name: "Developer Mode",
+							photoURL: null,
+						}),
+					)
+				} else {
+					dispatch(setUser(null))
+				}
 			}
 		})
 
 		return () => unsubscribe()
-	}, [router, t, dispatch])
+	}, [dispatch, router, t])
 
-	return <>{children}</>
+	return children
 }
