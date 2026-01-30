@@ -16,7 +16,7 @@ jobs:
     # 1. Instala o PNPM (Passo novo e obrigatório!)
     - uses: pnpm/action-setup@v4
       with:
-        version: 9 # Ou a versão que você usa localmente
+        version: 10 # Ou a versão que você usa localmente
 
     # 2. Configura o Node com cache para o pnpm
     - uses: actions/setup-node@v4
