@@ -2,7 +2,6 @@
 
 > **Note:** This project serves as a **QA & Automation Laboratory**, demonstrating my transition from Senior Frontend Developer to **QA Automation Engineer**.
 
-![Buckify Preview](caminho-para-imagem-do-app.png)
 
 ## 🎯 The Goal (The Pivot)
 I built this application to solve a personal need (budget buckets management) while simultaneously creating a complex environment to practice and demonstrate **Modern Testing Architectures**.
