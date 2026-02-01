@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { Logo } from "@/components/common/logo/logo"
@@ -36,6 +37,7 @@ export const Header = () => {
 
 	return (
 		<header
+			data-testid="main-header"
 			className={cn(
 				"fixed top-0 right-0 left-0 z-50",
 				"h-16 w-full",
@@ -46,7 +48,13 @@ export const Header = () => {
 			)}
 		>
 			<div>
-				<Logo className="h-7 text-primary" title={t("logo_title")} />
+				<Link href="/">
+					<Logo
+						data-testid="header-logo"
+						className="h-7 text-primary"
+						title={t("logo_title")}
+					/>
+				</Link>
 			</div>
 
 			<div className="flex items-center gap-2">
