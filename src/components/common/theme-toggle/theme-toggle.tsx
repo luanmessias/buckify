@@ -2,8 +2,8 @@
 
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Button, type ButtonProps } from "@/ui/button"
 
 interface ThemeToggleProps extends ButtonProps {}
 
