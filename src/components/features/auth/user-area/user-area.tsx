@@ -37,7 +37,10 @@ export const UserArea = () => {
 					data-testid="user-area-trigger-button"
 					className="rounded-full ring-offset-background transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 				>
-					<Avatar className="h-9 w-9 ring-2 ring-primary ring-offset-2 ring-offset-background">
+					<Avatar
+						data-testid="user-area-avatar"
+						className="h-9 w-9 ring-2 ring-primary ring-offset-2 ring-offset-background"
+					>
 						<AvatarImage
 							src={photoURL || ""}
 							alt={name || "User Avatar"}
@@ -51,9 +54,16 @@ export const UserArea = () => {
 				</button>
 			</SheetTrigger>
 
-			<SheetContent side="right" className="flex h-full flex-col">
+			<SheetContent
+				data-testid="user-sheet-content"
+				side="right"
+				className="flex h-full flex-col"
+			>
 				<SheetHeader className="flex flex-row items-center gap-4 space-y-0 text-left">
-					<Avatar className="h-12 w-12 ring-2 ring-primary ring-offset-2 ring-offset-background">
+					<Avatar
+						data-testid="user-area-profile-photo"
+						className="h-12 w-12 ring-2 ring-primary ring-offset-2 ring-offset-background"
+					>
 						<AvatarImage
 							src={photoURL || ""}
 							alt={name || "User Avatar"}
