@@ -1,18 +1,18 @@
 Category Danger Area:
   Backend (GraphQL & Logic):
-    ☐ Update `src/app/graphql/schema.ts` to add `deleteCategory` mutation
+    ✔ Update `src/app/graphql/schema.ts` to add `deleteCategory` mutation @done(26-02-04 09:50)
       - Input: `categoryId: String!`, `householdId: String!`, `transferToCategoryId: String` (optional)
       - Response: `MutationResponse`
-    ☐ Update `src/app/graphql/resolvers.ts` to implement `deleteCategory`
+    ✔ Update `src/app/graphql/resolvers.ts` to implement `deleteCategory` @done(26-02-04 09:50)
       - Case 1: `transferToCategoryId` provided -> Update all transactions from `categoryId` to `transferToCategoryId`, then delete `categoryId`
       - Case 2: No transfer -> Delete all transactions associated with `categoryId`, then delete `categoryId`
 
   Frontend (Components):
-    ☐ Create `CategoryDangerZone` component in `src/components/features/categories/components/category-danger-zone/`
+    ✔ Create `CategoryDangerZone` component in `src/components/features/categories/components/category-danger-zone/` @done(26-02-04 09:50)
       - Use `Card` component with destructive styling (red border/text)
       - Add a generic explanation text about the danger of this action
       - Add a "Delete Category" button (variant="destructive")
-    ☐ Create `DeleteCategoryDialog` (or Drawer for mobile)
+    ✔ Create `DeleteCategoryDialog` (or Drawer for mobile) @done(26-02-04 09:50)
       - Steps/Content:
         1. Warning message: "This action cannot be undone."
         2. "What to do with existing transactions?" option:
@@ -22,8 +22,8 @@ Category Danger Area:
         4. Final "Delete" button (disabled until input matches)
 
   Integration:
-    ☐ Add `CategoryDangerZone` to `CategoryView` (bottom of page)
-    ☐ Fetch other categories to populate the "Move to" select in the dialog
-    ☐ Handle `deleteCategory` mutation execution
-    ☐ On success: Redirect to Dashboard (`/`)
-    ☐ On error: Show toast/alert
+    ✔ Add `CategoryDangerZone` to `CategoryView` (bottom of page) @done(26-02-04 09:50)
+    ✔ Fetch other categories to populate the "Move to" select in the dialog @done(26-02-04 09:50)
+    ✔ Handle `deleteCategory` mutation execution @done(26-02-04 09:50)
+    ✔ On success: Redirect to Dashboard (`/`) @done(26-02-04 09:50)
+    ✔ On error: Show toast/alert @done(26-02-04 09:50)

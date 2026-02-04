@@ -5,7 +5,7 @@ User Area / User Form:
   ✔ fix the user area scroll region, when the screen is no so hight the content is hidden with no possibilite of scroll. @done(26-01-29 10:00)
   
 Category Area:
-  ☐ fix the behavior when we add new spent in a category and return to dashboard the category is not updating the budget with the new spent.
+  ☐ fix the behavior when we add new spent in a category and return to dashboard the category is not updating the budget with the new spent. @done(26-01-04 14:20)
 
 General:
-  ☐ fix the toas position, displaying on bottom of the page the toast appear in front of the main menu.
+  ✔ fix the toast position, displaying on bottom of the page the toast appear in front of the main menu. @done(26-02-04 14:25)

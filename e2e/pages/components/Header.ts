@@ -3,6 +3,7 @@ import type { Locator, Page } from "@playwright/test"
 export class HeaderComponent {
 	readonly page: Page
 	readonly logo: Locator
+	readonly userAvatarButton: Locator
 
 	constructor(page: Page) {
 		this.page = page

@@ -172,7 +172,7 @@ describe("AddNavigation Component", () => {
 	it("should configure useMutation with correct refetchQueries for transactions", () => {
 		render(<AddNavigation />)
 
-		const calls = (useMutation as Mock).mock.calls
+		const calls = (useMutation as unknown as Mock).mock.calls
 
 		const hasCorrectRefetch = calls.some((call) => {
 			const options = call[1]

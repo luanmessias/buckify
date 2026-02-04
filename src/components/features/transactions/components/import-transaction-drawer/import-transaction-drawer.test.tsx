@@ -87,7 +87,18 @@ describe("ImportTransactionDrawer", () => {
 				isPossibleDuplicate: false,
 			},
 		]
-		const mockCategories = [{ id: "cat1", name: "Food" }]
+		const mockCategories = [
+			{
+				id: "cat1",
+				name: "Food",
+				slug: "food",
+				householdId: "h1",
+				budget: 1000,
+				color: "#000",
+				icon: "utensils",
+				description: "Food",
+			},
+		]
 
 		;(scanBankStatement as unknown as Mock).mockResolvedValue({
 			success: true,
@@ -178,7 +189,18 @@ describe("ImportTransactionDrawer", () => {
 		;(scanBankStatement as unknown as Mock).mockResolvedValue({
 			success: true,
 			data: mockTransactions,
-			categories: [{ id: "cat1", name: "Food" }],
+			categories: [
+				{
+					id: "cat1",
+					name: "Food",
+					slug: "food",
+					householdId: "h1",
+					budget: 1000,
+					color: "#000",
+					icon: "utensils",
+					description: "Food",
+				},
+			],
 		})
 
 		renderWithProvider(
