@@ -13,8 +13,10 @@ import type {
 } from "@/components/common/list-filter/list-filter"
 import { ListFilter } from "@/components/common/list-filter/list-filter"
 import { AnimatedWrapper } from "@/components/layout/wrappers/animated-wrapper/animated-wrapper"
+import { Separator } from "@/components/ui/separator"
 import { useAppDispatch } from "@/lib/hooks"
 import type { Category, Transaction } from "@/lib/types"
+import { CategoryDangerZone } from "../category-danger-zone/category-danger-zone"
 import { CategoryHeader } from "../category-header/category-header"
 import { CategorySummary } from "../category-summary/category-summary"
 import { CategoryTransactionList } from "../category-transaction-list/category-transaction-list"
@@ -136,23 +138,33 @@ export const CategoryView = ({
 				transactions={data.getTransactions}
 				category={data.getCategory}
 			/>
-			<div className="px-4">
-				<AnimatedWrapper>
-					<ListFilter
-						searchTerm={searchTerm}
-						onSearchChange={setSearchTerm}
-						sortBy={sortBy}
-						onSortChange={setSortBy}
-						sortDirection={sortDirection}
-						onSortDirectionChange={setSortDirection}
-						sortOptions={sortOptions}
-					/>
-				</AnimatedWrapper>
-			</div>
+			{data.getTransactions.length > 0 && (
+				<div>
+					<AnimatedWrapper>
+						<ListFilter
+							searchTerm={searchTerm}
+							onSearchChange={setSearchTerm}
+							sortBy={sortBy}
+							onSortChange={setSortBy}
+							sortDirection={sortDirection}
+							onSortDirectionChange={setSortDirection}
+							sortOptions={sortOptions}
+						/>
+					</AnimatedWrapper>
+				</div>
+			)}
 			<CategoryTransactionList
 				transactions={filteredTransactions}
 				householdId={householdId}
 			/>
+
+			<div className="mt-4">
+				<Separator className="mb-4" />
+				<CategoryDangerZone
+					category={data.getCategory}
+					householdId={householdId}
+				/>
+			</div>
 		</div>
 	)
 }

@@ -30,7 +30,7 @@ export const typeDefs = `#graphql
     id: String!
     budget: Float!
     color: String
-    description: String!
+    description: String
     icon: String
     name: String!
     slug: String
@@ -80,7 +80,7 @@ export const typeDefs = `#graphql
 
   input CreateCategoryInput {
     name: String!
-    description: String!
+    description: String
     budget: Float!
     color: String
     icon: String
@@ -126,6 +126,7 @@ export const typeDefs = `#graphql
     updateTransaction(id: String!, householdId: String!, input: UpdateTransactionInput!): TransactionMutationResponse
     updateHousehold(id: ID!, input: UpdateHouseholdInput!): MutationResponse
     deleteHousehold(id: ID!): MutationResponse
+    deleteCategory(id: ID!, householdId: String!, transferToCategoryId: String): MutationResponse
   }
 
   type Query {

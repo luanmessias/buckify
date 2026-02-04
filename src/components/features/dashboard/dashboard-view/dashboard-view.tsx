@@ -73,6 +73,7 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 			endDate,
 			householdId,
 		},
+		fetchPolicy: "cache-and-network",
 	})
 
 	useEffect(() => {
@@ -152,21 +153,23 @@ export function DashboardView({ householdId }: DashboardViewProps) {
 				categories={data.getCategories}
 			/>
 
-			<div className="px-4">
-				<AnimatedWrapper>
-					<ListFilter
-						searchTerm={searchTerm}
-						onSearchChange={setSearchTerm}
-						sortBy={sortBy}
-						onSortChange={setSortBy}
-						sortDirection={sortDirection}
-						onSortDirectionChange={setSortDirection}
-						sortOptions={sortOptions}
-						searchPlaceholder={t("search_categories")}
-						title={tSort("filter_title")}
-					/>
-				</AnimatedWrapper>
-			</div>
+			{data.getCategories.length > 0 && (
+				<div className="px-4">
+					<AnimatedWrapper>
+						<ListFilter
+							searchTerm={searchTerm}
+							onSearchChange={setSearchTerm}
+							sortBy={sortBy}
+							onSortChange={setSortBy}
+							sortDirection={sortDirection}
+							onSortDirectionChange={setSortDirection}
+							sortOptions={sortOptions}
+							searchPlaceholder={t("search_categories")}
+							title={tSort("filter_title")}
+						/>
+					</AnimatedWrapper>
+				</div>
+			)}
 
 			<CategoryList data={filteredCategories} />
 		</div>

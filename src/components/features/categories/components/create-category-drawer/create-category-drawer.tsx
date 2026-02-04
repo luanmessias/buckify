@@ -30,7 +30,7 @@ import { Slider } from "@/components/ui/slider"
 
 type CreateCategoryFormData = {
 	name: string
-	description: string
+	description?: string
 	budget: number
 	color?: string
 	icon?: string
@@ -46,7 +46,7 @@ interface CreateCategoryDrawerProps {
 const createFormSchema = (t: (key: string) => string) =>
 	z.object({
 		name: z.string().min(2, t("name_min_length")),
-		description: z.string().min(2, t("description_min_length")),
+		description: z.string().optional(),
 		budget: z.coerce.number().min(0.01, t("budget_min")),
 		color: z.string().optional(),
 		icon: z.string().optional(),
@@ -65,6 +65,7 @@ export const CreateCategoryDrawer = ({
 	const handleOpenChange = (open: boolean) => {
 		if (!open) {
 			onClose()
+			form.reset()
 		}
 	}
 

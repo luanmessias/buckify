@@ -20,14 +20,26 @@ vi.mock("../user-settings/user-settings", () => ({
 	UserSettings: () => <div data-testid="user-settings">UserSettings</div>,
 }))
 
+interface AvatarProps {
+	children: React.ReactNode
+	className?: string
+}
+
+interface AvatarImageProps {
+	src: string
+	alt: string
+	className?: string
+}
+
 vi.mock("@/components/ui/avatar", () => ({
-	Avatar: ({ children, className }: any) => (
+	Avatar: ({ children, className }: AvatarProps) => (
 		<div className={className}>{children}</div>
 	),
-	AvatarImage: ({ src, alt, className }: any) => (
+	AvatarImage: ({ src, alt, className }: AvatarImageProps) => (
+		// biome-ignore lint/performance/noImgElement: mock component
 		<img src={src} alt={alt} className={className} />
 	),
-	AvatarFallback: ({ children, className }: any) => (
+	AvatarFallback: ({ children, className }: AvatarProps) => (
 		<div className={className}>{children}</div>
 	),
 }))

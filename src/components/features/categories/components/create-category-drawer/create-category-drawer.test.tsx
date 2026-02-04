@@ -175,9 +175,6 @@ describe("CreateCategoryDrawer", () => {
 				screen.getByText(messages.Categories.name_min_length),
 			).toBeInTheDocument()
 			expect(
-				screen.getByText(messages.Categories.description_min_length),
-			).toBeInTheDocument()
-			expect(
 				screen.getByText(messages.Categories.budget_min),
 			).toBeInTheDocument()
 		})

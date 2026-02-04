@@ -459,5 +459,23 @@ export const resolvers = {
 				return { success: false, message: "Error deleting account" }
 			}
 		},
+
+		deleteCategory: async (
+			_: unknown,
+			{
+				id,
+				householdId,
+				transferToCategoryId,
+			}: {
+				id: string
+				householdId: string
+				transferToCategoryId?: string
+			},
+		) => {
+			const { deleteCategory } = await import(
+				"@/lib/features/categories/delete-category"
+			)
+			return deleteCategory({ id, householdId, transferToCategoryId })
+		},
 	},
 }

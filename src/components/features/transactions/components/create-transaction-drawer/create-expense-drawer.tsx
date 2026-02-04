@@ -75,6 +75,7 @@ export const CreateExpenseDrawer = ({
 	const handleOpenChange = (open: boolean) => {
 		if (!open) {
 			onClose()
+			form.reset()
 		}
 	}
 

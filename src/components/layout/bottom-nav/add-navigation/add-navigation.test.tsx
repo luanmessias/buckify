@@ -8,6 +8,7 @@ import { AddNavigation } from "./add-navigation"
 vi.mock("next/navigation", () => ({
 	useParams: vi.fn(() => ({})),
 	useRouter: vi.fn(),
+	usePathname: vi.fn(() => "/"),
 }))
 
 vi.mock("@apollo/client/react", () => ({

@@ -3,7 +3,7 @@
 import { gql } from "@apollo/client"
 import { useLazyQuery, useMutation } from "@apollo/client/react"
 import { Plus, ScanText, Tag, Wallet } from "lucide-react"
-import { useParams } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
@@ -89,7 +89,7 @@ interface CreateTransactionInput {
 
 interface CreateCategoryInput {
 	name: string
-	description: string
+	description?: string
 	budget: number
 	color?: string
 	icon?: string
@@ -111,8 +111,13 @@ export const AddNavigation = () => {
 	const [showImportDrawer, setShowImportDrawer] = useState(false)
 
 	const params = useParams()
+	const _pathname = usePathname()
 	const dispatch = useAppDispatch()
 	const categoryIdParam = params?.id as string | undefined
+
+	useEffect(() => {
+		setIsOpen(false)
+	}, [])
 
 	const [showAddExpenseDrawer, setShowAddExpenseDrawer] = useState(false)
 	const [showAddCategoryDrawer, setShowAddCategoryDrawer] = useState(false)
@@ -282,10 +287,22 @@ export const AddNavigation = () => {
 
 	return (
 		<>
-			<div className="visible absolute -top-6 left-1/2 flex -translate-x-1/2 items-center justify-center">
+			{isOpen && (
+				<button
+					type="button"
+					className="pointer-events-auto fixed inset-0 z-40 h-full w-full cursor-default bg-background/80 backdrop-blur-xs"
+					onClick={() => setIsOpen(false)}
+					onKeyDown={(e) => {
+						if (e.key === "Escape") setIsOpen(false)
+					}}
+					tabIndex={0}
+					aria-label="Close menu"
+				/>
+			)}
+			<div className="pointer-events-auto fixed bottom-0 left-1/2 z-50 flex -translate-x-1/2 items-end justify-center pb-6">
 				<div
 					className={cn(
-						"absolute bottom-24 flex flex-col-reverse items-center gap-3",
+						"absolute bottom-24 z-50 flex flex-col-reverse items-center gap-3",
 						isOpen ? "pointer-events-auto" : "pointer-events-none",
 					)}
 				>
