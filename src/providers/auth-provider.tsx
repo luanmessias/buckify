@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			} else {
 				const isDevMode =
 					typeof document !== "undefined" &&
-					document.cookie.includes("dev_session_bypassed")
+					document.cookie.includes("buckify_dev_mode=true")
 
 				if (isDevMode) {
 					console.log(
@@ -81,7 +81,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 							uid: "dev-user-id",
 							email: "dev@buckify.com",
 							name: "Developer Mode",
-							photoURL: null,
+							photoURL:
+								"https://api.dicebear.com/9.x/avataaars/svg?seed=BuckifyDev",
 						}),
 					)
 				} else {
