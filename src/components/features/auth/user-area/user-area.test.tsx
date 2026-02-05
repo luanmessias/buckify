@@ -91,7 +91,9 @@ describe("UserArea Component", () => {
 			</NextIntlClientProvider>,
 		)
 
-		const triggerButton = screen.getByTestId("user-area-trigger-button")
+		const triggerButton = screen.getByRole("button", {
+			name: "trigger_aria_label",
+		})
 		fireEvent.click(triggerButton)
 
 		expect(await screen.findByText("John Doe")).toBeInTheDocument()
@@ -105,7 +107,9 @@ describe("UserArea Component", () => {
 			</NextIntlClientProvider>,
 		)
 
-		const triggerButton = screen.getByTestId("user-area-trigger-button")
+		const triggerButton = screen.getByRole("button", {
+			name: "trigger_aria_label",
+		})
 		fireEvent.click(triggerButton)
 
 		expect(await screen.findByTestId("theme-toggle")).toBeInTheDocument()

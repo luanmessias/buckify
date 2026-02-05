@@ -19,5 +19,8 @@
 	"cSpell.words": ["turbopack"],
 	"[html]": {
 		"editor.defaultFormatter": "vscode.html-language-features"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
 	}
 }

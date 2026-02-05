@@ -34,7 +34,7 @@ export const UserArea = () => {
 			<SheetTrigger asChild>
 				<button
 					type="button"
-					data-testid="user-area-trigger-button"
+					aria-label={t("trigger_aria_label")}
 					className="rounded-full ring-offset-background transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 				>
 					<Avatar
@@ -83,7 +83,6 @@ export const UserArea = () => {
 					<div className="mt-6 mb-6 flex items-center gap-3">
 						<ThemeToggle variant="outline" size="default" className="flex-1" />
 						<LogoutButton
-							data-testid="user-area-logout-button"
 							variant="outline"
 							size="default"
 							className="flex-1"

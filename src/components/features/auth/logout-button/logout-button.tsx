@@ -8,7 +8,7 @@ import { logout } from "@/app/actions/auth"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { auth } from "@/lib/firebase"
 
-interface LogoutButtonProps extends ButtonProps {}
+interface LogoutButtonProps extends ButtonProps { }
 
 export function LogoutButton({
 	variant = "ghost",
@@ -16,7 +16,7 @@ export function LogoutButton({
 	className,
 	...props
 }: LogoutButtonProps) {
-	const t = useTranslations("Transactions")
+	const t = useTranslations("UserArea")
 
 	const router = useRouter()
 
@@ -34,7 +34,7 @@ export function LogoutButton({
 			variant={variant}
 			size={size}
 			onClick={handleLogout}
-			title={t("logout")}
+			title={t("logout_button")}
 			className={className}
 			{...props}
 		>

@@ -9,6 +9,7 @@ import { createSession } from "@/app/actions/auth"
 import { setUser } from "@/lib/features/user/user-slice"
 import { auth } from "@/lib/firebase"
 import { useAppDispatch } from "@/lib/hooks"
+import { MOCK_DEV_USER, DEV_MODE_COOKIE_NAME } from "@/lib/constants/dev-mode"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const router = useRouter()
@@ -70,21 +71,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			} else {
 				const isDevMode =
 					typeof document !== "undefined" &&
-					document.cookie.includes("buckify_dev_mode=true")
+					document.cookie.includes(`${DEV_MODE_COOKIE_NAME}=true`)
 
 				if (isDevMode) {
-					console.log(
-						"🟢 [AuthProvider] Mantendo sessão fake de Dev Mode no Client",
-					)
-					dispatch(
-						setUser({
-							uid: "dev-user-id",
-							email: "dev@buckify.com",
-							name: "Developer Mode",
-							photoURL:
-								"https://api.dicebear.com/9.x/avataaars/svg?seed=BuckifyDev",
-						}),
-					)
+					console.log("🟢 [AuthProvider] Mantendo sessão fake de Dev Mode")
+
+					dispatch(setUser(MOCK_DEV_USER))
 				} else {
 					dispatch(setUser(null))
 				}
