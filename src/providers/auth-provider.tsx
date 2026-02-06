@@ -6,10 +6,10 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
 import { createSession } from "@/app/actions/auth"
+import { DEV_MODE_COOKIE_NAME, MOCK_DEV_USER } from "@/lib/constants/dev-mode"
 import { setUser } from "@/lib/features/user/user-slice"
 import { auth } from "@/lib/firebase"
 import { useAppDispatch } from "@/lib/hooks"
-import { MOCK_DEV_USER, DEV_MODE_COOKIE_NAME } from "@/lib/constants/dev-mode"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const router = useRouter()

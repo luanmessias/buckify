@@ -8,7 +8,7 @@ import { logout } from "@/app/actions/auth"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { auth } from "@/lib/firebase"
 
-interface LogoutButtonProps extends ButtonProps { }
+interface LogoutButtonProps extends ButtonProps {}
 
 export function LogoutButton({
 	variant = "ghost",
@@ -35,6 +35,7 @@ export function LogoutButton({
 			size={size}
 			onClick={handleLogout}
 			title={t("logout_button")}
+			aria-label={t("logout_button")}
 			className={className}
 			{...props}
 		>

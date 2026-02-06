@@ -198,27 +198,27 @@ export const UserSettings = () => {
 									<FormItem>
 										<FormLabel>{t("monthly_budget")}</FormLabel>
 
-										<FormControl>
-											<div className="space-y-4">
-												<div className="flex items-center gap-4">
-													<Typography
-														as="span"
-														variant="large"
-														className="w-24 font-bold text-2xl"
-													>
-														€{field.value}
-													</Typography>
+										<div className="space-y-4">
+											<div className="flex items-center gap-4">
+												<Typography
+													as="span"
+													variant="large"
+													className="w-24 font-bold text-2xl"
+												>
+													€{field.value}
+												</Typography>
 
-													<Slider
-														min={100}
-														max={10000}
-														step={50}
-														value={[field.value]}
-														onValueChange={(vals) => field.onChange(vals[0])}
-														className="flex-1"
-													/>
-												</div>
+												<Slider
+													min={100}
+													max={10000}
+													step={50}
+													value={[field.value]}
+													onValueChange={(vals) => field.onChange(vals[0])}
+													className="flex-1"
+												/>
+											</div>
 
+											<FormControl>
 												<Input
 													type="number"
 													{...field}
@@ -226,8 +226,8 @@ export const UserSettings = () => {
 														field.onChange(Number(e.target.value))
 													}
 												/>
-											</div>
-										</FormControl>
+											</FormControl>
+										</div>
 
 										<FormDescription>{t("budget_description")}</FormDescription>
 
@@ -264,6 +264,7 @@ export const UserSettings = () => {
 				{!showDangerZone ? (
 					<Button
 						variant="ghost"
+						aria-label={t("delete_account_button")}
 						className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
 						onClick={() => setShowDangerZone(true)}
 					>
@@ -290,11 +291,15 @@ export const UserSettings = () => {
 						</div>
 
 						<div className="space-y-2">
-							<Label className="text-red-700 dark:text-red-400">
+							<Label
+								htmlFor="delete-input"
+								className="text-red-700 dark:text-red-400"
+							>
 								{t("delete_confirmation_label")}
 							</Label>
 
 							<Input
+								id="delete-input"
 								value={deleteConfirmation}
 								onChange={(e) => setDeleteConfirmation(e.target.value)}
 								className="bg-white dark:bg-black"
@@ -307,6 +312,7 @@ export const UserSettings = () => {
 								disabled={deleteConfirmation !== "DELETE" || deleting}
 								onClick={handleDeleteAccount}
 								className="w-full sm:w-auto"
+								aria-label={t("delete_button")}
 							>
 								{deleting ? (
 									<Loader2 className="mr-2 h-4 w-4 animate-spin" />

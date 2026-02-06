@@ -82,11 +82,7 @@ export const UserArea = () => {
 				<ScrollArea className="-mr-6 flex-1 pr-6">
 					<div className="mt-6 mb-6 flex items-center gap-3">
 						<ThemeToggle variant="outline" size="default" className="flex-1" />
-						<LogoutButton
-							variant="outline"
-							size="default"
-							className="flex-1"
-						/>
+						<LogoutButton variant="outline" size="default" className="flex-1" />
 					</div>
 
 					<div className="pb-6">

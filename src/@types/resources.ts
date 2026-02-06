@@ -159,7 +159,6 @@ interface Resources {
       "file_too_large": "File too large (Max 4MB)",
       "hidden_categories": "+{count} hidden categories",
       "import_title": "Import Statement with AI",
-      "logout": "Logout",
       "month_summary": "Month Summary",
       "new_expense": "New Expense",
       "others": "Others",
@@ -181,9 +180,12 @@ interface Resources {
     },
     "UserArea": {
       "header_title": "User Area",
+      "logout_button": "Logout",
       "logout_description": "This action cannot be undone.",
       "logout_title": "Are you absolutely sure?",
-      "open_button": "Open"
+      "open_button": "Open",
+      "theme_toggle_button": "Theme Toggle",
+      "trigger_aria_label": "Open User Area"
     },
     "UserSettings": {
       "account_delete_error": "Failed to delete account",

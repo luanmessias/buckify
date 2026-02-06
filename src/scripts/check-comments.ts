@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import { globSync } from "glob"
 
-const files = globSync("src/**/*.{ts,tsx,css}", {
+const files = globSync("{src,e2e}/**/*.{ts,tsx,css}", {
 	ignore: ["node_modules/**", "src/lib/ai/prompts/**"],
 })
 let hasError = false

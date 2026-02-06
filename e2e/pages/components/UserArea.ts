@@ -1,32 +1,56 @@
 import type { Locator, Page } from "@playwright/test"
+import { t } from "@/e2e/utils/i18n-helper"
+import { MOCK_DEV_USER } from "@/lib/constants/dev-mode"
 
-export class UserAreaComponent {
-	readonly page: Page
+import { BasePage } from "../BasePage"
+import { UserSettingsComponent } from "./UserSettings"
+
+export class UserAreaComponent extends BasePage {
+	readonly content: Locator
 	readonly logoutButton: Locator
 	readonly triggerButton: Locator
-	readonly familyNameInput: Locator
 	readonly closeButton: Locator
 	readonly profilePhoto: Locator
+	readonly userName: Locator
+	readonly userEmail: Locator
+	readonly themeToggleButton: Locator
+
+	readonly settings: UserSettingsComponent
 
 	constructor(page: Page) {
-		this.page = page
-		this.logoutButton = page.getByTestId("user-area-logout-button")
-		this.triggerButton = page.getByTestId("user-area-trigger-button")
-		this.familyNameInput = page.getByLabel("Family Name")
-		this.closeButton = page.getByTestId("user-area-close-button")
-		this.profilePhoto = page.getByTestId("user-area-profile-photo")
+		super(page)
+		this.content = page.getByTestId("user-sheet-content")
+		this.settings = new UserSettingsComponent(page, this.content)
+
+		this.logoutButton = page.getByRole("button", {
+			name: t("UserArea.logout_button"),
+		})
+		this.triggerButton = page.getByRole("button", {
+			name: t("UserArea.trigger_aria_label"),
+		})
+		this.closeButton = page.getByRole("button", { name: "Close" })
+		this.profilePhoto = page.getByTestId("user-area-avatar")
+		this.userName = page.getByText(MOCK_DEV_USER.name)
+		this.userEmail = page.getByText(MOCK_DEV_USER.email)
+		this.themeToggleButton = page.getByRole("button", {
+			name: t("UserArea.theme_toggle_button"),
+		})
 	}
 
 	async openUserArea() {
 		await this.triggerButton.click()
+		await this.content.waitFor({ state: "visible" })
+	}
+
+	async closeUserArea() {
+		await this.closeButton.click()
 	}
 
 	async logout() {
 		await this.logoutButton.click()
 	}
 
-	async updateFamilyName(name: string) {
-		await this.familyNameInput.fill(name)
-		await this.page.getByRole("button", { name: "Save Changes" }).click()
+	async themeToggle() {
+		await this.themeToggleButton.click()
 	}
 }

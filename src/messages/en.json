@@ -179,10 +179,11 @@
   },
   "UserArea": {
     "header_title": "User Area",
+    "logout_button": "Logout",
     "logout_description": "This action cannot be undone.",
     "logout_title": "Are you absolutely sure?",
-    "logout_button": "Logout",
     "open_button": "Open",
+    "theme_toggle_button": "Theme Toggle",
     "trigger_aria_label": "Open User Area"
   },
   "UserSettings": {

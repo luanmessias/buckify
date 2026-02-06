@@ -68,7 +68,13 @@ export const CategorySummary = ({
 					</Typography>
 
 					<div className="relative mt-4 h-48 w-full max-w-75">
-						<ResponsiveContainer width="100%" height="100%">
+						<ResponsiveContainer
+							width="100%"
+							height="100%"
+							minWidth={10}
+							minHeight={10}
+							debounce={1}
+						>
 							<PieChart>
 								<defs>
 									<linearGradient

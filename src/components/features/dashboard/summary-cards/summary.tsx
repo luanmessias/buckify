@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useMemo } from "react"
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
+import { Cell, Pie, PieChart, Tooltip } from "recharts"
 import { MonthSelector } from "@/components/common/month-selector/month-selector"
 import { AnimatedWrapper } from "@/components/layout/wrappers/animated-wrapper/animated-wrapper"
 import { Typography } from "@/components/ui/typography"
@@ -106,40 +106,38 @@ export const Summary = ({ transactions, categories }: SummaryProps) => {
 					<div className="flex flex-col items-center justify-between gap-8 md:flex-row">
 						<div className="relative h-60 w-60 shrink-0">
 							{hasData ? (
-								<ResponsiveContainer width="100%" height="100%">
-									<PieChart>
-										<Pie
-											data={chartData}
-											dataKey="value"
-											nameKey="name"
-											cx="50%"
-											cy="50%"
-											innerRadius={85}
-											outerRadius={100}
-											paddingAngle={5}
-											cornerRadius={4}
-											stroke="none"
-										>
-											{chartData.map((entry) => (
-												<Cell
-													key={entry.id}
-													fill={entry.color || "#333"}
-													className="stroke-2 stroke-card"
-												/>
-											))}
-										</Pie>
-										<Tooltip
-											cursor={false}
-											formatter={(value: number | undefined) =>
-												formatCurrency(value ?? 0)
-											}
-											contentStyle={tooltipStyle}
-											itemStyle={{
-												color: theme === "dark" ? "#e5e5e5" : "#09090b",
-											}}
-										/>
-									</PieChart>
-								</ResponsiveContainer>
+								<PieChart width={240} height={240}>
+									<Pie
+										data={chartData}
+										dataKey="value"
+										nameKey="name"
+										cx="50%"
+										cy="50%"
+										innerRadius={85}
+										outerRadius={100}
+										paddingAngle={5}
+										cornerRadius={4}
+										stroke="none"
+									>
+										{chartData.map((entry) => (
+											<Cell
+												key={entry.id}
+												fill={entry.color || "#333"}
+												className="stroke-2 stroke-card"
+											/>
+										))}
+									</Pie>
+									<Tooltip
+										cursor={false}
+										formatter={(value: number | undefined) =>
+											formatCurrency(value ?? 0)
+										}
+										contentStyle={tooltipStyle}
+										itemStyle={{
+											color: theme === "dark" ? "#e5e5e5" : "#09090b",
+										}}
+									/>
+								</PieChart>
 							) : (
 								<div className="fade-in flex h-full w-full animate-in items-center justify-center rounded-full border-15 border-muted/10 duration-500" />
 							)}

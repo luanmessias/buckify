@@ -1,6 +1,7 @@
 "use client"
 
 import { Moon, Sun } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -13,10 +14,11 @@ export const ThemeToggle = ({
 	size = "icon",
 	...props
 }: ThemeToggleProps) => {
-	const { setTheme } = useTheme()
+	const { setTheme, resolvedTheme } = useTheme()
+	const t = useTranslations("UserArea")
 
 	const toggleTheme = () => {
-		setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"))
+		setTheme(resolvedTheme === "light" ? "dark" : "light")
 	}
 
 	return (
@@ -24,6 +26,7 @@ export const ThemeToggle = ({
 			variant={variant}
 			size={size}
 			onClick={toggleTheme}
+			aria-label={t("theme_toggle_button")}
 			className={cn(
 				"relative cursor-pointer overflow-hidden",
 				size === "icon" && "h-9 w-9 rounded-full",
