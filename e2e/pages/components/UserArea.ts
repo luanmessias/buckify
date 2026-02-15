@@ -1,4 +1,4 @@
-import type { Locator, Page } from "@playwright/test"
+import { expect, type Locator, type Page } from "@playwright/test"
 import { t } from "@/e2e/utils/i18n-helper"
 import { MOCK_DEV_USER } from "@/lib/constants/dev-mode"
 
@@ -38,9 +38,10 @@ export class UserAreaComponent extends BasePage {
 	}
 
 	async openUserArea() {
-		await this.triggerButton.waitFor({ state: "visible" })
-		await this.triggerButton.click({ force: true })
-		await this.content.waitFor({ state: "visible" })
+		await expect(async () => {
+			await this.triggerButton.click({ force: true })
+			await this.content.waitFor({ state: "visible", timeout: 1000 })
+		}).toPass()
 	}
 
 	async closeUserArea() {
