@@ -98,10 +98,16 @@ export const UserSettings = () => {
 
 	const { isDirty } = form.formState
 
+	const { dirtyFields } = form.formState
+
 	useEffect(() => {
-		if (currentName) form.setValue("name", currentName)
-		if (currentBudget) form.setValue("budget", currentBudget)
-	}, [currentName, currentBudget, form])
+		if (currentName && !dirtyFields.name) {
+			form.setValue("name", currentName)
+		}
+		if (currentBudget && !dirtyFields.budget) {
+			form.setValue("budget", currentBudget)
+		}
+	}, [currentName, currentBudget, form, dirtyFields.name, dirtyFields.budget])
 
 	const onSubmit = async (values: SettingsFormValues) => {
 		if (!householdId) return
