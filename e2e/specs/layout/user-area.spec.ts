@@ -74,7 +74,7 @@ test.describe("Component: UserArea", () => {
 		await expect(sunIcon).toBeVisible()
 	})
 
-	test("update familly settings", async () => {
+	test("update familly settings", async ({ page }) => {
 		const newFamilyName = `Family ${Date.now()}`
 		const newFamilyBudget = Math.floor(Math.random() * 500).toString()
 
@@ -99,6 +99,7 @@ test.describe("Component: UserArea", () => {
 		})
 
 		await test.step("Check saved data", async () => {
+			await page.waitForTimeout(1000)
 			await userArea.reload()
 			await userArea.openUserArea()
 

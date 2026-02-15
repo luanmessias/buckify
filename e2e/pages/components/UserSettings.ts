@@ -50,15 +50,27 @@ export class UserSettingsComponent extends BasePage {
 	}
 
 	async updateFamilyName(name: string) {
+		await this.page.waitForTimeout(500) // FIXME: Wait for initial data hydration
 		await this.familyNameInput.fill(name)
+		await this.familyNameInput.blur()
 	}
 
 	async updateFamilyBudget(budget: string) {
+		await this.page.waitForTimeout(500) // FIXME: Wait for initial data hydration
 		await this.familyBudgetInput.fill(budget)
+		await this.familyBudgetInput.blur()
 	}
 
 	async saveChanges() {
-		await this.saveButton.click()
+		const responsePromise = this.page.waitForResponse(
+			(response) =>
+				response.url().includes("/graphql") &&
+				response.status() === 200 &&
+				(response.request().postData()?.includes("UpdateHousehold") ?? false),
+		)
+		await this.saveButton.scrollIntoViewIfNeeded()
+		await this.saveButton.click({ force: true })
+		await responsePromise
 	}
 
 	async deleteAccount() {

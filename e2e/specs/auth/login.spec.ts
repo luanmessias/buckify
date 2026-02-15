@@ -24,6 +24,7 @@ test.describe("Feature: Auth", () => {
 			page,
 		}) => {
 			await loginPage.loginWithDevMode()
+			await page.waitForURL("/")
 			await expect(page).toHaveURL("/")
 			await expect(headerComponent.logo).toBeVisible()
 		})
@@ -44,8 +45,7 @@ test.describe("Feature: Auth", () => {
 			await userAreaComponent.openUserArea()
 			await userAreaComponent.logout()
 
-			await page.context().clearCookies()
-
+			await page.waitForURL(/\/login/)
 			await expect(page).toHaveURL(/\/login/)
 		})
 	})

@@ -20,7 +20,7 @@ export default defineConfig({
 	/* Retry on CI only */
 	retries: process.env.CI ? 2 : 0,
 	/* Opt out of parallel tests on CI. */
-	workers: process.env.CI ? 1 : undefined,
+	workers: 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: "html",
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -85,5 +85,8 @@ export default defineConfig({
 		url: "http://localhost:3000",
 		reuseExistingServer: !process.env.CI, // Se rodar local, usa o que já tá aberto
 		timeout: 120 * 1000, // Dá 2 min de tolerância pro Next.js subir no CI (às vezes demora)
+		env: {
+			NEXT_PUBLIC_PLAYWRIGHT_TEST: "true",
+		},
 	},
 })

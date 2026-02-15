@@ -38,7 +38,8 @@ export class UserAreaComponent extends BasePage {
 	}
 
 	async openUserArea() {
-		await this.triggerButton.click()
+		await this.triggerButton.waitFor({ state: "visible" })
+		await this.triggerButton.click({ force: true })
 		await this.content.waitFor({ state: "visible" })
 	}
 
@@ -47,7 +48,9 @@ export class UserAreaComponent extends BasePage {
 	}
 
 	async logout() {
-		await this.logoutButton.click()
+		await this.logoutButton.waitFor({ state: "visible" })
+		await this.logoutButton.scrollIntoViewIfNeeded()
+		await this.logoutButton.click({ force: true })
 	}
 
 	async themeToggle() {
