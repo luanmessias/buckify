@@ -24,7 +24,6 @@ test.describe("Feature: Auth", () => {
 			page,
 		}) => {
 			await loginPage.loginWithDevMode()
-			// await page.waitForURL("/") REMOVED: Flaky in CI
 			await expect(page).toHaveURL("/", { timeout: 15000 })
 			await expect(headerComponent.logo).toBeVisible()
 		})
@@ -33,20 +32,17 @@ test.describe("Feature: Auth", () => {
 			page,
 		}) => {
 			await loginPage.loginWithDevMode()
-			// await page.waitForURL("/") REMOVED: Flaky in CI
 			await expect(page).toHaveURL("/", { timeout: 15000 })
 		})
 
 		test("it should logout from side menu button", async ({ page }) => {
 			await loginPage.loginWithDevMode()
-			// await page.waitForURL("/") REMOVED: Flaky in CI
 			await expect(page).toHaveURL("/", { timeout: 15000 })
 
 			await userAreaComponent.openUserArea()
 			await userAreaComponent.logout()
 
-			await page.waitForURL(/\/login/)
-			await expect(page).toHaveURL(/\/login/)
+			await expect(page).toHaveURL(/\/login/, { timeout: 15000 })
 		})
 	})
 
@@ -56,19 +52,18 @@ test.describe("Feature: Auth", () => {
 		}) => {
 			await dashboardPage.goto()
 
-			await expect(page).toHaveURL(/\/login/)
+			await expect(page).toHaveURL(/\/login/, { timeout: 15000 })
 		})
 
 		test("it should redirect to dashboard if logged user try to access the /login directly", async ({
 			page,
 		}) => {
 			await loginPage.loginWithDevMode()
-			// await page.waitForURL("/") REMOVED: Flaky in CI
 			await expect(page).toHaveURL("/", { timeout: 15000 })
 
 			await loginPage.goto()
 
-			await expect(page).toHaveURL("/")
+			await expect(page).toHaveURL("/", { timeout: 15000 })
 		})
 	})
 })

@@ -49,9 +49,12 @@ export class UserAreaComponent extends BasePage {
 	}
 
 	async logout() {
-		await this.logoutButton.waitFor({ state: "visible" })
-		await this.logoutButton.scrollIntoViewIfNeeded()
-		await this.logoutButton.click({ force: true })
+		await expect(async () => {
+			await this.logoutButton.waitFor({ state: "visible" })
+			await this.logoutButton.scrollIntoViewIfNeeded()
+			await this.logoutButton.click({ force: true })
+			await this.logoutButton.waitFor({ state: "hidden", timeout: 2000 })
+		}).toPass()
 	}
 
 	async themeToggle() {

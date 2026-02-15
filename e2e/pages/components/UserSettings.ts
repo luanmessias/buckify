@@ -50,13 +50,13 @@ export class UserSettingsComponent extends BasePage {
 	}
 
 	async updateFamilyName(name: string) {
-		await this.page.waitForTimeout(500) // FIXME: Wait for initial data hydration
+		await this.page.waitForTimeout(500)
 		await this.familyNameInput.fill(name)
 		await this.familyNameInput.blur()
 	}
 
 	async updateFamilyBudget(budget: string) {
-		await this.page.waitForTimeout(500) // FIXME: Wait for initial data hydration
+		await this.page.waitForTimeout(500)
 		await this.familyBudgetInput.fill(budget)
 		await this.familyBudgetInput.blur()
 	}
