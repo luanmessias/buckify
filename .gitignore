@@ -44,7 +44,6 @@ next-env.d.ts
 GEMINI.md
 /.gemini/
 /.agent/
-/.github/
 
 # Playwright
 node_modules/
