@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
-import { LoginPage } from "@/e2e/pages/auth/LoginPage"
-import { HeaderComponent } from "@/e2e/pages/components/Header"
+import { HeaderComponent } from "@/e2e/models/components/Header"
+import { LoginPage } from "@/e2e/models/pages/LoginPage"
 
 test.describe("Layout: Header Component", () => {
 	test.beforeEach(async ({ page }) => {

@@ -1,6 +1,6 @@
 import { ListFilterSkeleton } from "@/components/common/list-filter/list-filter-skeleton"
 import { CategoryCardSkeleton } from "@/components/features/categories/components/category-card/category-card-skeleton"
-import { SummarySkeleton } from "@/components/features/dashboard/summary-cards/summary-skeleton"
+import { SummarySkeleton } from "@/components/features/dashboard/summary/summary-skeleton"
 
 export default function Loading() {
 	return (

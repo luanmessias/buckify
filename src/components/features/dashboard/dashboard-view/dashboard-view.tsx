@@ -13,7 +13,7 @@ import type {
 } from "@/components/common/list-filter/list-filter"
 import { ListFilter } from "@/components/common/list-filter/list-filter"
 import { CategoryList } from "@/components/features/categories/components/category-list/category-list"
-import { Summary } from "@/components/features/dashboard/summary-cards/summary"
+import { Summary } from "@/components/features/dashboard/summary/summary"
 import { AnimatedWrapper } from "@/components/layout/wrappers/animated-wrapper/animated-wrapper"
 import { setCategories } from "@/lib/features/categories/categories-slice"
 import { useAppDispatch } from "@/lib/hooks"

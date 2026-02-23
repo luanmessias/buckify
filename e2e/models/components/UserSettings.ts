@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test"
 import { t } from "@/e2e/utils/i18n-helper"
-import { BasePage } from "../BasePage"
+import { BasePage } from "../pages/BasePage"
 
 export class UserSettingsComponent extends BasePage {
 	readonly container: Locator

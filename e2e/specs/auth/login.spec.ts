@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test"
-import { LoginPage } from "@/e2e/pages/auth/LoginPage"
-import { HeaderComponent } from "@/e2e/pages/components/Header"
-import { UserAreaComponent } from "@/e2e/pages/components/UserArea"
-import { DashboardPage } from "@/e2e/pages/dashboard/DashboardPage"
+import { HeaderComponent } from "@/e2e/models/components/Header"
+import { UserAreaComponent } from "@/e2e/models/components/UserArea"
+import { DashboardPage } from "@/e2e/models/pages/DashboardPage"
+import { LoginPage } from "@/e2e/models/pages/LoginPage"
 
 test.describe("Feature: Auth", () => {
 	let loginPage: LoginPage

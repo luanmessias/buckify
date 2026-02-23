@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
-import { LoginPage } from "@/e2e/pages/auth/LoginPage"
-import { UserAreaComponent } from "@/e2e/pages/components/UserArea"
+import { UserAreaComponent } from "@/e2e/models/components/UserArea"
+import { LoginPage } from "@/e2e/models/pages/LoginPage"
 import { t } from "@/e2e/utils/i18n-helper"
 import { MOCK_DEV_USER } from "@/lib/constants/dev-mode"
 

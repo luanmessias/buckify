@@ -2,7 +2,7 @@ import { expect, type Locator, type Page } from "@playwright/test"
 import { t } from "@/e2e/utils/i18n-helper"
 import { MOCK_DEV_USER } from "@/lib/constants/dev-mode"
 
-import { BasePage } from "../BasePage"
+import { BasePage } from "../pages/BasePage"
 import { UserSettingsComponent } from "./UserSettings"
 
 export class UserAreaComponent extends BasePage {
